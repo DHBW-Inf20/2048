@@ -5,12 +5,12 @@
 ### Gruppenmitglieder:
 + Jonas Weiß 
 + Jonathan Schwab 
-+ Adrian Liehner (ich)
++ Adrian Liehner
 + Reinhold Jooß
 + Felix Wochele
 
 ## Kopieren des Repositorys: 
 
 ```shell
-git clone https://github.com/FelixWochele/Project_2048.git
+git clone https://github.com/FelixWochele/2048.git
 ```
