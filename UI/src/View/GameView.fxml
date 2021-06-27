@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="mainPane" maxHeight="600.0" maxWidth="600.0" minHeight="600.0" minWidth="600.0" prefHeight="600.0" prefWidth="600.0" stylesheets="@../Styles/boardStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewModel.Game.GameViewModel">
+   <children>
+      <Label fx:id="myLabel" layoutX="251.0" layoutY="487.0" text="Label">
+         <font>
+            <Font size="42.0" />
+         </font></Label>
+      <Pane id="board" fx:id="board" layoutX="150.0" layoutY="150.0" maxHeight="300.0" maxWidth="300.0" minHeight="300.0" minWidth="300.0" prefHeight="300.0" prefWidth="300.0" stylesheets="@../Styles/boardStyle.css" />
+   </children>
+</Pane>
