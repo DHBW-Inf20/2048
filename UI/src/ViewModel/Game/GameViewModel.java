@@ -35,7 +35,7 @@ public class GameViewModel implements IGameViewModel{
      *
      * @param boardSize
      */
-    public void setBoardSize(int boardSize){
+    public void setTileCount(int boardSize){
         this.boardSize = boardSize;
         myLabel.setText("Size: " + boardSize);
     }

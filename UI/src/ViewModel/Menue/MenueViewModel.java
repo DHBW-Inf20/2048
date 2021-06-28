@@ -11,7 +11,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -30,8 +32,13 @@ public class MenueViewModel extends Application implements IMenueViewModel, Init
     private Button buttonNewGame;
 
     //Globale Variablen
-    private int boardSize;
+    private int tileCount;
 
+    //Einstelbare Konstanten
+    int minWindowWidth = 500;
+    int minWindowHeight = 700;
+    int windowWidth = 600;
+    int windowHeight = 800;
 
     /**
      * Wird beim öffnen der Applikation ausgeführt
@@ -43,11 +50,18 @@ public class MenueViewModel extends Application implements IMenueViewModel, Init
     @Override
     public void start(Stage primaryStage) throws Exception {
 
+        //Erzeuge eine Szene aus MenueView.fxml
         Parent root = FXMLLoader.load(getClass().getResource("/View/MenueView.fxml"));
         primaryStage.setTitle("2048");
-        Scene menueScene = new Scene(root);
+
+        //TODO: Resizeable ... Wie? ... Ist das so richtig?
+
+        Scene menueScene = new Scene(root, windowWidth, windowHeight);
         primaryStage.setScene(menueScene);
-        primaryStage.setResizable(false);
+
+        primaryStage.setMinWidth(minWindowWidth);
+        primaryStage.setMinHeight(minWindowHeight);
+        //primaryStage.setResizable(false);
 
 
         primaryStage.show();
@@ -67,18 +81,17 @@ public class MenueViewModel extends Application implements IMenueViewModel, Init
     public void initialize(URL location, ResourceBundle resources) {
 
         //initialisiere das Label
-        boardSize = (int) sliderSize.getValue();
-        buttonNewGame.setText("New " + boardSize + "x" + boardSize);
+        tileCount = (int) sliderSize.getValue();
+        buttonNewGame.setText("New " + tileCount + "x" + tileCount);
 
         //Anonymer ActionListener für den Slider -> stetzt das Label auf den Wert
         sliderSize.valueProperty().addListener((observable, oldValue, newValue) -> {
 
-            boardSize = (int) sliderSize.getValue();
-            buttonNewGame.setText("New " + boardSize + "x" + boardSize);
+            tileCount = (int) sliderSize.getValue();
+            buttonNewGame.setText("New " + tileCount + "x" + tileCount);
         });
 
     }
-
 
     /**
      * Wird beim Drücken von "New Game" ausgeführt
@@ -88,31 +101,56 @@ public class MenueViewModel extends Application implements IMenueViewModel, Init
      */
     public void onButtonPressNewGame(ActionEvent event) throws IOException {
 
+        //TODO: Ist es Klug alles an der gameBoard Size festzumachen?
+
+        //Variablen mit einstellbaren Konstanten
+        double gameBoardSize = 450;
+        double gameBoardGap = gameBoardSize * 0.02;
+        double tileSize = (gameBoardSize - (gameBoardGap * (tileCount + 1))) / tileCount;
+
         //Erzeuge eine Szene aus GameView.fxml
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/GameView.fxml"));
         Parent root = loader.load();
-        Scene scene = new Scene(root);
-
+        Scene scene = new Scene(root, windowWidth, windowHeight);
 
         //Übergebe dem Controler die notwendigen Daten
         GameViewModel gameViewModel = loader.getController();
-        gameViewModel.setBoardSize(boardSize);
+        gameViewModel.setTileCount(tileCount);
 
+        //Hole das Pane(/board) aus der .fxml anhand der ID
         Pane pane = (Pane) scene.lookup("#board");
 
-        int gap = 7;
+        //Setze die größe des Panes auf die vorgegebenen
+        pane.setPrefSize(gameBoardSize, gameBoardSize);
+        pane.setMinHeight(gameBoardSize);
+        pane.setMaxHeight(gameBoardSize);
+        pane.setMinWidth(gameBoardSize);
+        pane.setMaxWidth(gameBoardSize);
 
-        for (int j = 0; j < boardSize; j++) {
-            for (int k = 0; k < boardSize; k++) {
+        //TODO: Restiliche Elemente Hinzufügen
+        //Legt die größen der Elemente in Abhängigkeit der größe der Spielfelds fest
+        HBox hBox = (HBox) scene.lookup("#gameBoardHBox");
+        hBox.setPrefWidth(gameBoardSize);
+        hBox.setMinWidth(gameBoardSize);
 
-                //TODO: Kommentare
+        VBox vBoxL = (VBox) scene.lookup("#gameBoardBVBoxL");
+        vBoxL.setPrefWidth(gameBoardSize/2);
+        vBoxL.setMinWidth(gameBoardSize/2);
 
-                //Errechne die Position der Tiles TODO: Außen nicht gap/2 sonder nur gap!
-                double posX = ((300.0/boardSize) * j) + gap/2.0;
-                double posY = ((300.0/boardSize) * k) + gap/2.0;
+        VBox vBoxR = (VBox) scene.lookup("#gameBoardBVBoxR");
+        vBoxR.setPrefWidth(gameBoardSize/2);
+        vBoxR.setMinWidth(gameBoardSize/2);
 
-                //Erzeuge Rechteck;
-                Rectangle rectangle = new Rectangle(posX, posY, 300.0 / boardSize - gap, 300.0 / boardSize - gap);
+        //Erzeuge die Hintergurnd Tiles wie bei einem 2D-Array
+        for (int j = 0; j < tileCount; j++) {
+            for (int k = 0; k < tileCount; k++) {
+
+                //Errechne die Position der einzelnen Tiles
+                double posX = gameBoardGap * (j + 1) + (tileSize * j);
+                double posY = gameBoardGap * (k + 1) + (tileSize * k);
+
+                //Erzeuge Rechteck für die Tiles
+                Rectangle rectangle = new Rectangle(posX, posY, tileSize, tileSize);
                 rectangle.setArcWidth(20);
                 rectangle.setArcHeight(20);
                 rectangle.setFill(Color.rgb(204, 192, 179));
@@ -121,7 +159,6 @@ public class MenueViewModel extends Application implements IMenueViewModel, Init
                 pane.getChildren().add(rectangle);
             }
         }
-
 
         //Erzeuge eine neue Stage für die GameView
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -140,7 +177,6 @@ public class MenueViewModel extends Application implements IMenueViewModel, Init
         //TODO: On buttonpress Option
     }
 
-
     /**
      * Wird beim Drücken auf "Credits" ausgeführt
      *
@@ -150,5 +186,4 @@ public class MenueViewModel extends Application implements IMenueViewModel, Init
 
         //TODO: On buttonpress Credits
     }
-
 }
