@@ -31,5 +31,7 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="javafx-swt" level="application" />
+    <orderEntry type="module" module-name="Controller" exported="" />
   </component>
 </module>

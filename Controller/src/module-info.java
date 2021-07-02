@@ -1,5 +1,3 @@
-module FXTest {
-    requires javafx.fxml;
-    requires javafx.controls;
-    opens sample;
+module Controller {
+    exports Game;
 }

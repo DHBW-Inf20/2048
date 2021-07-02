@@ -1,6 +1,7 @@
-package ViewModel.Menue;
+package View.Menue;
 
-import ViewModel.Game.GameViewModel;
+import Game.GameController;
+import View.Game.GameView;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,7 +24,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class MenueViewModel extends Application implements IMenueViewModel, Initializable {
+public class MenueView extends Application implements IMenueView, Initializable {
     //Binding variables
     @FXML
     private Slider sliderSize;
@@ -50,7 +51,7 @@ public class MenueViewModel extends Application implements IMenueViewModel, Init
     public void start(Stage primaryStage) throws Exception {
 
         //Erzeuge eine Szene aus MenueView.fxml
-        Parent root = FXMLLoader.load(getClass().getResource("/View/MenueView.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/View/Menue/MenueView.fxml"));
         primaryStage.setTitle("2048");
 
         //TODO: Resizeable ... Wie? ... Ist das so richtig?
@@ -78,7 +79,6 @@ public class MenueViewModel extends Application implements IMenueViewModel, Init
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         //initialisiere das Label
         tileCount = (int) sliderSize.getValue();
         buttonNewGame.setText("New " + tileCount + "x" + tileCount);
@@ -108,12 +108,12 @@ public class MenueViewModel extends Application implements IMenueViewModel, Init
         double tileSize = (gameBoardSize - (gameBoardGap * (tileCount + 1))) / tileCount;
 
         //Erzeuge eine Szene aus GameView.fxml
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/GameView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Game/GameView.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root, windowWidth, windowHeight);
 
         //Übergebe dem Controler die notwendigen Daten
-        GameViewModel gameViewModel = loader.getController();
+        GameView gameViewModel = loader.getController();
         gameViewModel.setTileCount(tileCount);
 
         //Hole das Pane(/board) aus der .fxml anhand der ID

@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="676.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewModel.Game.GameViewModel">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="676.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Game.GameView">
    <children>
       <HBox fx:id="gameBoardHBox" alignment="CENTER" prefHeight="181.0" prefWidth="676.0">
          <children>
@@ -33,7 +33,7 @@
             </VBox>
          </children>
       </HBox>
-      <Pane id="board" fx:id="board" maxHeight="300.0" maxWidth="300.0" minHeight="300.0" minWidth="300.0" prefHeight="300.0" prefWidth="300.0" stylesheets="@../Styles/boardStyle.css" />
+      <Pane id="board" fx:id="board" maxHeight="300.0" maxWidth="300.0" minHeight="300.0" minWidth="300.0" prefHeight="300.0" prefWidth="300.0" stylesheets="@../../Styles/boardStyle.css" />
       <Label fx:id="myLabel" text="Label">
          <font>
             <Font size="42.0" />
