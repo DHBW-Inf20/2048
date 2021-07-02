@@ -34,6 +34,9 @@ public class MenueViewModel extends Application implements IMenueViewModel, Init
     //Globale Variablen
     private int tileCount;
 
+    //ftghru
+
+
     //Einstelbare Konstanten
     int minWindowWidth = 500;
     int minWindowHeight = 700;
