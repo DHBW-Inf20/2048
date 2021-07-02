@@ -24,8 +24,7 @@ import java.util.ResourceBundle;
 
 
 public class MenueViewModel extends Application implements IMenueViewModel, Initializable {
-    //Hallo zusammen
-    //Binding Variablen
+    //Binding variables
     @FXML
     private Slider sliderSize;
     @FXML
@@ -34,10 +33,7 @@ public class MenueViewModel extends Application implements IMenueViewModel, Init
     //Globale Variablen
     private int tileCount;
 
-    //ftghru
-
-
-    //Einstelbare Konstanten
+    //Einstellbare Konstanten
     int minWindowWidth = 500;
     int minWindowHeight = 700;
     int windowWidth = 600;
