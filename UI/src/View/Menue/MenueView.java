@@ -1,6 +1,8 @@
 package View.Menue;
 
+import Game.DataClasses.GameModes;
 import Game.GameController;
+import Game.IGameController;
 import View.Game.GameView;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -47,6 +49,17 @@ public class MenueView extends Application implements IMenueView, Initializable 
      * @param primaryStage
      * @throws Exception
      */
+
+
+    public MenueView()
+    {
+        IGameController controller = new GameController(tiles -> {
+
+        });
+        controller.startGame(GameModes.random,false,4);
+    }
+
+
     @Override
     public void start(Stage primaryStage) throws Exception {
 

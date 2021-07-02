@@ -1,5 +1,6 @@
 package View.Game;
 
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -22,13 +23,9 @@ public class GameView implements IGameView
     }
 
 
-    /**
-     * Setzt die größe des Spielfelds -> wird von MenueViewModel gesetzt
-     *
-     * @param boardSize
-     */
     public void setTileCount(int boardSize){
         this.boardSize = boardSize;
         myLabel.setText("Size: " + boardSize);
     }
+
 }
