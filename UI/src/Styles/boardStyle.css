@@ -1,0 +1,11 @@
+.root{
+    -fx-background-color:"#f5f1e9";
+}
+
+#board{
+
+    -fx-background-color:"#bbada0";
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+
+}

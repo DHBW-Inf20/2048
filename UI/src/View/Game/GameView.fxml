@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="676.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Game.GameView">
+   <children>
+      <HBox fx:id="gameBoardHBox" alignment="CENTER" prefHeight="181.0" prefWidth="676.0">
+         <children>
+            <VBox fx:id="gameBoardBVBoxL" alignment="CENTER" prefHeight="123.0" prefWidth="164.0">
+               <children>
+                  <AnchorPane prefHeight="168.0" prefWidth="164.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="118.0" layoutX="19.0" layoutY="35.0" stroke="BLACK" strokeType="INSIDE" width="127.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
+            <VBox fx:id="gameBoardBVBoxR" alignment="CENTER" prefHeight="141.0" prefWidth="136.0" spacing="50.0">
+               <children>
+                  <AnchorPane prefHeight="378.0" prefWidth="136.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="18.0" layoutY="106.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="44.0" layoutX="18.0" layoutY="47.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <Pane id="board" fx:id="board" maxHeight="300.0" maxWidth="300.0" minHeight="300.0" minWidth="300.0" prefHeight="300.0" prefWidth="300.0" stylesheets="@../../Styles/boardStyle.css" />
+      <Label fx:id="myLabel" text="Label">
+         <font>
+            <Font size="42.0" />
+         </font>
+      </Label>
+   </children>
+</VBox>

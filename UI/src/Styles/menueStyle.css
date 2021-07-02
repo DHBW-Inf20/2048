@@ -1,0 +1,26 @@
+.root{
+    -fx-background-color:"#f5f1e9";
+}
+
+#buttonNewGame{
+    -fx-background-color:"#cabcb3";
+    -fx-text-fill:"white";
+
+}
+
+#buttonOptions{
+    -fx-background-color:"#cabcb3";
+    -fx-text-fill:"white";
+
+}
+
+#buttonCredits{
+    -fx-background-color:"#cabcb3";
+    -fx-text-fill:"white";
+
+}
+
+#labelSize{
+    -fx-text-fill:"black";
+    -fx-font-size:30;
+}
