@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -16,7 +18,11 @@
                <children>
                   <AnchorPane prefHeight="168.0" prefWidth="164.0">
                      <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="118.0" layoutX="19.0" layoutY="35.0" stroke="BLACK" strokeType="INSIDE" width="127.0" />
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="-5.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Styles/icon.png" />
+                           </image>
+                        </ImageView>
                      </children>
                   </AnchorPane>
                </children>

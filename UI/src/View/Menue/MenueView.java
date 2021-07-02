@@ -3,7 +3,7 @@ package View.Menue;
 import Game.DataClasses.GameModes;
 import Game.GameController;
 import Game.IGameController;
-import View.Game.GameView;
+import View.ModusMenue.ModusMenueView;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,11 +14,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -32,15 +31,26 @@ public class MenueView extends Application implements IMenueView, Initializable 
     private Slider sliderSize;
     @FXML
     private Button buttonNewGame;
+    @FXML
+    private ToggleButton toggleButton;
+
 
     //Globale Variablen
     private int tileCount;
+    private boolean kiMode = false;
 
     //Einstellbare Konstanten
-    int minWindowWidth = 500;
-    int minWindowHeight = 700;
-    int windowWidth = 600;
-    int windowHeight = 800;
+    private final int minWindowWidth = 500;
+    private final int minWindowHeight = 700;
+    private final int windowWidth = 600;
+    private final int windowHeight = 800;
+
+    public MenueView() {
+        IGameController controller = new GameController(tiles -> {
+
+        });
+        controller.startGame(GameModes.random, false, 4);
+    }
 
     /**
      * Wird beim öffnen der Applikation ausgeführt
@@ -49,25 +59,15 @@ public class MenueView extends Application implements IMenueView, Initializable 
      * @param primaryStage
      * @throws Exception
      */
-
-
-    public MenueView()
-    {
-        IGameController controller = new GameController(tiles -> {
-
-        });
-        controller.startGame(GameModes.random,false,4);
-    }
-
-
     @Override
     public void start(Stage primaryStage) throws Exception {
 
         //Erzeuge eine Szene aus MenueView.fxml
         Parent root = FXMLLoader.load(getClass().getResource("/View/Menue/MenueView.fxml"));
-        primaryStage.setTitle("2048");
 
-        //TODO: Resizeable ... Wie? ... Ist das so richtig?
+        //Füge Titel und Icon hinzu
+        primaryStage.setTitle("2048");
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/Styles/icon.png")));
 
         Scene menueScene = new Scene(root, windowWidth, windowHeight);
         primaryStage.setScene(menueScene);
@@ -105,72 +105,32 @@ public class MenueView extends Application implements IMenueView, Initializable 
 
     }
 
-    /**
-     * Wird beim Drücken von "New Game" ausgeführt
-     *
-     * @param event
-     * @throws IOException
-     */
+
     public void onButtonPressNewGame(ActionEvent event) throws IOException {
 
-        //TODO: Ist es Klug alles an der gameBoard Size festzumachen?
 
-        //Variablen mit einstellbaren Konstanten
-        double gameBoardSize = 450;
-        double gameBoardGap = gameBoardSize * 0.02;
-        double tileSize = (gameBoardSize - (gameBoardGap * (tileCount + 1))) / tileCount;
-
-        //Erzeuge eine Szene aus GameView.fxml
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Game/GameView.fxml"));
+        //Erzeuge eine Szene aus ModusMenueView.fxml
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/ModusMenue/ModusMenueView.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root, windowWidth, windowHeight);
 
         //Übergebe dem Controler die notwendigen Daten
-        GameView gameViewModel = loader.getController();
-        gameViewModel.setTileCount(tileCount);
+        ModusMenueView modusMenueView = loader.getController();
+        modusMenueView.setWindowDimensions(windowWidth, windowHeight, minWindowWidth, minWindowHeight);
+        modusMenueView.setKiMode(kiMode);
+        modusMenueView.setTileCount(tileCount);
 
-        //Hole das Pane(/board) aus der .fxml anhand der ID
-        Pane pane = (Pane) scene.lookup("#board");
+        //erstelle eine Togglegruppe für die Radiobuttons
+        ToggleButton toggleButtonRamdom = (ToggleButton) scene.lookup("#buttonRandom");
+        ToggleButton toggleButtonMinMax = (ToggleButton) scene.lookup("#buttonMinMax");
+        ToggleButton toggleButtonCorporate = (ToggleButton) scene.lookup("#buttonCorporate");
 
-        //Setze die größe des Panes auf die vorgegebenen
-        pane.setPrefSize(gameBoardSize, gameBoardSize);
-        pane.setMinHeight(gameBoardSize);
-        pane.setMaxHeight(gameBoardSize);
-        pane.setMinWidth(gameBoardSize);
-        pane.setMaxWidth(gameBoardSize);
+        ToggleGroup toggleGroup = new ToggleGroup();
+        toggleButtonRamdom.setToggleGroup(toggleGroup);
+        toggleButtonMinMax.setToggleGroup(toggleGroup);
+        toggleButtonCorporate.setToggleGroup(toggleGroup);
 
-        //TODO: Restiliche Elemente Hinzufügen
-        //Legt die größen der Elemente in Abhängigkeit der größe der Spielfelds fest
-        HBox hBox = (HBox) scene.lookup("#gameBoardHBox");
-        hBox.setPrefWidth(gameBoardSize);
-        hBox.setMinWidth(gameBoardSize);
-
-        VBox vBoxL = (VBox) scene.lookup("#gameBoardBVBoxL");
-        vBoxL.setPrefWidth(gameBoardSize/2);
-        vBoxL.setMinWidth(gameBoardSize/2);
-
-        VBox vBoxR = (VBox) scene.lookup("#gameBoardBVBoxR");
-        vBoxR.setPrefWidth(gameBoardSize/2);
-        vBoxR.setMinWidth(gameBoardSize/2);
-
-        //Erzeuge die Hintergurnd Tiles wie bei einem 2D-Array
-        for (int j = 0; j < tileCount; j++) {
-            for (int k = 0; k < tileCount; k++) {
-
-                //Errechne die Position der einzelnen Tiles
-                double posX = gameBoardGap * (j + 1) + (tileSize * j);
-                double posY = gameBoardGap * (k + 1) + (tileSize * k);
-
-                //Erzeuge Rechteck für die Tiles
-                Rectangle rectangle = new Rectangle(posX, posY, tileSize, tileSize);
-                rectangle.setArcWidth(20);
-                rectangle.setArcHeight(20);
-                rectangle.setFill(Color.rgb(204, 192, 179));
-
-                //rectangle.setStyle("-fx-background-color: \"#ccc0b3\"; -fx-background-radius: 50 50 50 50; -fx-border-radius: 50 50 50 50;");
-                pane.getChildren().add(rectangle);
-            }
-        }
+        toggleButtonRamdom.setSelected(true);
 
         //Erzeuge eine neue Stage für die GameView
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -180,14 +140,18 @@ public class MenueView extends Application implements IMenueView, Initializable 
     }
 
     /**
-     * Wird beim Drücken auf "Options" ausgeführt
-     *
-     * @param event
+     * Wird durch den toggle button ausgeführt
      */
-    public void onButtonPressOptions(ActionEvent event) {
+    public void switchKiMode() {
+        kiMode = !kiMode;
 
-        //TODO: On buttonpress Option
+        if (kiMode) {
+            toggleButton.setText("KI: On");
+        } else {
+            toggleButton.setText("KI: Off");
+        }
     }
+
 
     /**
      * Wird beim Drücken auf "Credits" ausgeführt

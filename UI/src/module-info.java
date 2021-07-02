@@ -1,7 +1,8 @@
 module FXTest {
     requires javafx.fxml;
     requires javafx.controls;
-    opens View.Game;
     requires Controller;
+    opens View.Game;
     opens View.Menue;
+    opens View.ModusMenue;
 }
