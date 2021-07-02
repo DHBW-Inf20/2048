@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 
 
 public class MenueViewModel extends Application implements IMenueViewModel, Initializable {
-
+    //Hallo zusammen
     //Binding Variablen
     @FXML
     private Slider sliderSize;
