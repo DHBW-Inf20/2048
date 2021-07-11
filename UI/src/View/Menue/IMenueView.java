@@ -1,6 +1,5 @@
 package View.Menue;
 
-public interface IMenueView
-{
+public interface IMenueView {
 
 }

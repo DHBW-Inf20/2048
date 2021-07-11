@@ -5,4 +5,5 @@ module FXTest {
     opens View.Game;
     opens View.Menue;
     opens View.ModusMenue;
+    opens View.Credits;
 }

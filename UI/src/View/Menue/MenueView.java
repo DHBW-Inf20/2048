@@ -26,6 +26,7 @@ import java.util.ResourceBundle;
 
 
 public class MenueView extends Application implements IMenueView, Initializable {
+
     //Binding variables
     @FXML
     private Slider sliderSize;
@@ -34,22 +35,23 @@ public class MenueView extends Application implements IMenueView, Initializable 
     @FXML
     private ToggleButton toggleButton;
 
-
     //Globale Variablen
     private int tileCount;
     private boolean kiMode = false;
 
-    //Einstellbare Konstanten
+    //Einstellbare Konstanten für die Fenstergröße
     private final int minWindowWidth = 500;
     private final int minWindowHeight = 700;
     private final int windowWidth = 600;
     private final int windowHeight = 800;
 
-    public MenueView() {
-        IGameController controller = new GameController(tiles -> {
 
-        });
-        controller.startGame(GameModes.random, false, 4);
+    /**
+     * Konsruktor
+     *
+     */
+    public MenueView() {
+
     }
 
     /**
@@ -80,9 +82,15 @@ public class MenueView extends Application implements IMenueView, Initializable 
         primaryStage.show();
     }
 
+    /**
+     * Ist die initiale Funktion
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }
+
 
     /**
      * Initialisiert die interaktive Elemente (Slider)
@@ -106,37 +114,21 @@ public class MenueView extends Application implements IMenueView, Initializable 
     }
 
 
+    /**
+     * Wird beim klicken auf "New Game" Ausgeführt -> erzeugt das nächste Fenster
+     *
+     * @param event
+     * @throws IOException
+     */
     public void onButtonPressNewGame(ActionEvent event) throws IOException {
 
 
-        //Erzeuge eine Szene aus ModusMenueView.fxml
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/ModusMenue/ModusMenueView.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root, windowWidth, windowHeight);
-
-        //Übergebe dem Controler die notwendigen Daten
-        ModusMenueView modusMenueView = loader.getController();
-        modusMenueView.setWindowDimensions(windowWidth, windowHeight, minWindowWidth, minWindowHeight);
-        modusMenueView.setKiMode(kiMode);
-        modusMenueView.setTileCount(tileCount);
-
-        //erstelle eine Togglegruppe für die Radiobuttons
-        ToggleButton toggleButtonRamdom = (ToggleButton) scene.lookup("#buttonRandom");
-        ToggleButton toggleButtonMinMax = (ToggleButton) scene.lookup("#buttonMinMax");
-        ToggleButton toggleButtonCorporate = (ToggleButton) scene.lookup("#buttonCorporate");
-
-        ToggleGroup toggleGroup = new ToggleGroup();
-        toggleButtonRamdom.setToggleGroup(toggleGroup);
-        toggleButtonMinMax.setToggleGroup(toggleGroup);
-        toggleButtonCorporate.setToggleGroup(toggleGroup);
-
-        toggleButtonRamdom.setSelected(true);
-
-        //Erzeuge eine neue Stage für die GameView
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
-
+        //Erzeugt neue Instanz des Controlers und ruft Methode zum Erzeugen des Fesnters auf
+        ModusMenueView modusMenue = new ModusMenueView();
+        modusMenue.setWindowDimensions(windowWidth, windowHeight, minWindowWidth, minWindowHeight);
+        modusMenue.setTileCount(tileCount);
+        modusMenue.setKiMode(kiMode);
+        modusMenue.createModusMenueScene(event);
     }
 
     /**
@@ -158,8 +150,19 @@ public class MenueView extends Application implements IMenueView, Initializable 
      *
      * @param event
      */
-    public void onButtonPressCredits(ActionEvent event) {
+    public void onButtonPressCredits(ActionEvent event) throws IOException {
 
-        //TODO: On buttonpress Credits
+        //TODO: ff Auslagern -> siehe TODO in CreditsView
+
+        //Erzeuge eine Szene aus ModusMenueView.fxml
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Credits/CreditsView.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root, windowWidth, windowHeight);
+
+        //Erzeuge eine neue Stage für die GameView
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+
     }
 }

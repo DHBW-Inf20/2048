@@ -9,3 +9,16 @@
     -fx-border-radius: 10 10 10 10;
 
 }
+
+
+#highscoreBox{
+    -fx-background-color:"#bbada0";
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+
+#scoreBox{
+    -fx-background-color:"#bbada0";
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
