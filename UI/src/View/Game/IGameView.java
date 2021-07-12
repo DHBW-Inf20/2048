@@ -2,12 +2,14 @@ package View.Game;
 
 import Game.DataClasses.Tile;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.scene.Scene;
 
 import java.io.IOException;
 
 public interface IGameView {
 
-    void createGameScene(ActionEvent event) throws IOException;
+    void createGameScene(Event event, Scene scene) throws IOException;
 
     void setKiMode(boolean kiMode);
 
@@ -15,6 +17,6 @@ public interface IGameView {
 
     void setHighscore(int highscore);
 
-    void setScore(int score);
+    void setScoreLabel(int score);
 
 }

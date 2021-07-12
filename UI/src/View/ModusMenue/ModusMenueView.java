@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -20,16 +21,13 @@ import java.io.IOException;
 
 public class ModusMenueView implements IModusMenueView {
 
-
     //Globale Veriablen
     private int minWindowHeight;
     private int minWindowWidth;
     private int windowHeight;
     private int windowWidth;
     private int tileCount;
-
     private boolean kiMode;
-
 
     /**
      * Kosntruktor
@@ -46,18 +44,7 @@ public class ModusMenueView implements IModusMenueView {
      * @throws IOException
      */
     @Override
-    public void createModusMenueScene(Event event) throws IOException {
-
-        //Erzeuge eine Szene aus ModusMenueView.fxml
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/ModusMenue/ModusMenueView.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root, windowWidth, windowHeight);
-
-        //Übergebe dem Controler die notwendigen Daten
-        ModusMenueView modusMenueView = loader.getController();
-        modusMenueView.setWindowDimensions(windowWidth, windowHeight, minWindowWidth, minWindowHeight);
-        modusMenueView.setKiMode(kiMode);
-        modusMenueView.setTileCount(tileCount);
+    public void createModusMenueScene(Event event, Scene scene) throws IOException {
 
         //erstelle eine Togglegruppe für die Radiobuttons
         ToggleButton toggleButtonRamdom = (ToggleButton) scene.lookup("#buttonRandom");
@@ -85,12 +72,21 @@ public class ModusMenueView implements IModusMenueView {
      */
     public void onButtonPressPlay(ActionEvent event) throws IOException {
 
-        //Erzeugt neue Instanz des Controlers und ruft Methode zum Erzeugen des Fesnters auf
-        GameView gameView = new GameView();
-        gameView.setWindowDimensions(windowWidth, windowHeight, minWindowWidth, minWindowHeight);
-        gameView.setTileCount(tileCount);
+
+        //TODO: Wenn ich diese Funktion wie die anderen auslager in den eigentlichen Gamecontroler, dann funktioniert databinding nichtmehr ... wieso? Wegen loader.getControler()?
+
+
+        //Erzeuge eine Szene aus GameView.fxml
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Game/GameView.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root, windowWidth, windowHeight);
+
+        //WICHTIG: Bei databinding geht es nur so -> Es kann nicht alles (4 Zeilen oben drüber) ausgelagert werden loader.getControler ist notwendig.
+        GameView gameView = loader.getController();
+        gameView.setLabel();
         gameView.setKiMode(kiMode);
-        gameView.createGameScene(event);
+        gameView.setTileCount(tileCount);
+        gameView.createGameScene(event, scene);
     }
 
     /**

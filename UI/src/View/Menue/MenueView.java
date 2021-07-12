@@ -3,6 +3,7 @@ package View.Menue;
 import Game.DataClasses.GameModes;
 import Game.GameController;
 import Game.IGameController;
+import View.Credits.CreditsView;
 import View.ModusMenue.ModusMenueView;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -122,13 +123,30 @@ public class MenueView extends Application implements IMenueView, Initializable 
      */
     public void onButtonPressNewGame(ActionEvent event) throws IOException {
 
+        //Erzeuge eine Szene aus ModusMenueView.fxml
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/ModusMenue/ModusMenueView.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root, windowWidth, windowHeight);
 
-        //Erzeugt neue Instanz des Controlers und ruft Methode zum Erzeugen des Fesnters auf
-        ModusMenueView modusMenue = new ModusMenueView();
+        //Übergebe dem Controler die notwendigen Daten
+        ModusMenueView modusMenue = loader.getController();
         modusMenue.setWindowDimensions(windowWidth, windowHeight, minWindowWidth, minWindowHeight);
         modusMenue.setTileCount(tileCount);
         modusMenue.setKiMode(kiMode);
-        modusMenue.createModusMenueScene(event);
+        modusMenue.createModusMenueScene(event, scene);
+    }
+
+
+    /**
+     * Wird beim Drücken auf "Credits" ausgeführt
+     *
+     * @param event
+     */
+    public void onButtonPressCredits(ActionEvent event) throws IOException {
+
+        CreditsView creditsView = new CreditsView();
+        creditsView.setWindowDimensions(windowWidth, windowHeight, minWindowWidth, minWindowHeight);
+        creditsView.createSceneCredits(event);
     }
 
     /**
@@ -142,27 +160,5 @@ public class MenueView extends Application implements IMenueView, Initializable 
         } else {
             toggleButton.setText("KI: Off");
         }
-    }
-
-
-    /**
-     * Wird beim Drücken auf "Credits" ausgeführt
-     *
-     * @param event
-     */
-    public void onButtonPressCredits(ActionEvent event) throws IOException {
-
-        //TODO: ff Auslagern -> siehe TODO in CreditsView
-
-        //Erzeuge eine Szene aus ModusMenueView.fxml
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Credits/CreditsView.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root, windowWidth, windowHeight);
-
-        //Erzeuge eine neue Stage für die GameView
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
-
     }
 }

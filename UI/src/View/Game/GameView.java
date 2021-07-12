@@ -2,6 +2,7 @@ package View.Game;
 
 
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -37,23 +38,23 @@ public class GameView implements IGameView {
     private boolean kiMode;
     private int tileCount;
 
+    private GameView gameView;
+
     /**
      * Kosntruktor
-     *
      */
     public GameView() {
 
     }
 
     /**
-     *
      * Erzeugt einen neue Scene für den Controler, wird vom Modusmenü aufgerufen
      *
      * @param event
      * @throws IOException
      */
     @Override
-    public void createGameScene(ActionEvent event) throws IOException {
+    public void createGameScene(Event event, Scene scene) throws IOException {
 
         //Variablen mit einstellbaren Konstanten
         double gameBoardSize = 450; // Bei verstellen müssen noch die Stadart fxml werte geändert werden -> Schriftgröße/png größen/etc
@@ -61,13 +62,15 @@ public class GameView implements IGameView {
         double tileSize = (gameBoardSize - (gameBoardGap * (tileCount + 1))) / tileCount;
         double scoreBoxSize = ((gameBoardSize / 3) * 0.7);
 
-        //Erzeuge eine Szene aus GameView.fxml
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Game/GameView.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root, windowWidth, windowHeight);
 
-        //Übergebe dem Controler die notwendigen Daten
-        //GameView gameViewModel = loader.getController();
+        scene.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.PLUS) {
+                System.out.println("+ key was pressed");
+
+                int var = Integer.parseInt(scoreLabel.getText());
+                setScoreLabel(var + 4);
+            }
+        });
 
         //Hole das Pane(/board) aus der .fxml anhand der ID
         Pane pane = (Pane) scene.lookup("#board");
@@ -79,9 +82,7 @@ public class GameView implements IGameView {
         pane.setMinWidth(gameBoardSize);
         pane.setMaxWidth(gameBoardSize);
 
-        //TODO: Restiliche Elemente Hinzufügen
-
-        //TODO: Größe anpassen!!!!
+        //TODO: Restiliche Elemente Hinzufügen -> Menü/Back Button
 
         //Legt die größen der Elemente in Abhängigkeit der größe der Spielfelds fest
         HBox hBox = (HBox) scene.lookup("#gameBoardHBox");
@@ -113,6 +114,7 @@ public class GameView implements IGameView {
         scoreBox.setMaxWidth(scoreBoxSize);
         scoreBox.setMaxHeight(scoreBoxSize);
 
+
         //Erzeuge die Hintergurnd Tiles wie bei einem 2D-Array
         for (int j = 0; j < tileCount; j++) {
             for (int k = 0; k < tileCount; k++) {
@@ -135,6 +137,9 @@ public class GameView implements IGameView {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
+
+        //Hilfslabe zum debuggen
+        setLabel();
     }
 
 
@@ -145,7 +150,7 @@ public class GameView implements IGameView {
      */
     @Override
     public void setKiMode(boolean kiMode) {
-
+        this.kiMode = kiMode;
     }
 
     /**
@@ -175,10 +180,9 @@ public class GameView implements IGameView {
      * @param score
      */
     @Override
-    public void setScore(int score) {
+    public void setScoreLabel(int score) {
         scoreLabel.setText(Integer.toString(score));
     }
-
 
     /**
      * Bekommt die Fenster größe von der Vorgänger Methode
@@ -193,5 +197,14 @@ public class GameView implements IGameView {
         this.windowHeight = windowHeight;
         this.minWindowWidth = minWindowWidth;
         this.minWindowHeight = windowHeight;
+    }
+
+
+    public void setLabel() {
+        if (kiMode) {
+            myLabel.setText("KI -> ON!!!");
+        } else {
+            myLabel.setText("KI -> OFF!!!");
+        }
     }
 }
