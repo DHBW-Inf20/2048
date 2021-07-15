@@ -18,6 +18,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -144,9 +145,15 @@ public class MenueView extends Application implements IMenueView, Initializable 
      */
     public void onButtonPressCredits(ActionEvent event) throws IOException {
 
-        CreditsView creditsView = new CreditsView();
+        //Erzeuge eine Szene aus ModusMenueView.fxml
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Credits/CreditsView.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root, windowWidth, windowHeight);
+
+
+        CreditsView creditsView = loader.getController();
         creditsView.setWindowDimensions(windowWidth, windowHeight, minWindowWidth, minWindowHeight);
-        creditsView.createSceneCredits(event);
+        creditsView.createSceneCredits(event, scene);
     }
 
     /**

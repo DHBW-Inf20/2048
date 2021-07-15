@@ -24,13 +24,14 @@ public class CreditsView implements ICreditsView {
 
     }
 
-
-    public void createSceneCredits(Event event) throws IOException {
-
-        //Erzeuge eine Szene aus ModusMenueView.fxml
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Credits/CreditsView.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root, windowWidth, windowHeight);
+    /**
+     * Erstellt die Senen -> wird vom Menü aus aufgerufen
+     *
+     * @param event
+     * @param scene
+     * @throws IOException
+     */
+    public void createSceneCredits(Event event, Scene scene) throws IOException {
 
         //Erzeuge eine neue Stage für die GameView
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -38,7 +39,12 @@ public class CreditsView implements ICreditsView {
         stage.show();
     }
 
-
+    /**
+     * Wird beim Drücken des Buttons "Back" ausgeführt -> Öffnet die Menü Scene
+     * *
+     * @param event
+     * @throws IOException
+     */
     public void onButtonPressBack(ActionEvent event) throws IOException {
 
         //Erzeuge eine Szene aus ModusMenueView.fxml
@@ -46,16 +52,20 @@ public class CreditsView implements ICreditsView {
         Parent root = loader.load();
         Scene scene = new Scene(root, windowWidth, windowHeight);
 
-        MenueView menueView = loader.getController();
-
         //Erzeuge eine neue Stage für die GameView
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
-
-        //TODO: BACK BUTTON -> Funtioniert nur nach dem man das Winodow resized ... aber Warum?
     }
 
+    /**
+     * Übergibt die Parameter der Fenstergröße
+     *
+     * @param windowWidth
+     * @param windowHeight
+     * @param minWindowWidth
+     * @param minWindowHeight
+     */
     @Override
     public void setWindowDimensions(int windowWidth, int windowHeight, int minWindowWidth, int minWindowHeight) {
 

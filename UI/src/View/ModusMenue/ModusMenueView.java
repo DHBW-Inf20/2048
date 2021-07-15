@@ -86,6 +86,7 @@ public class ModusMenueView implements IModusMenueView {
         gameView.setLabel();
         gameView.setKiMode(kiMode);
         gameView.setTileCount(tileCount);
+        gameView.setWindowDimensions(windowWidth, windowHeight, minWindowWidth, minWindowHeight);
         gameView.createGameScene(event, scene);
     }
 

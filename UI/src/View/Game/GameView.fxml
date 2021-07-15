@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -24,12 +25,13 @@
                   </ImageView>
                </children>
             </VBox>
-            <VBox fx:id="gameBoardVBoxM" alignment="CENTER" prefHeight="141.0" prefWidth="136.0" spacing="50.0">
+            <VBox prefWidth="20.0" />
+            <VBox fx:id="gameBoardVBoxM" alignment="CENTER" spacing="5.0">
                <children>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                  <StackPane>
                      <children>
                         <Pane />
-                        <VBox fx:id="highscoreBox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" stylesheets="@../../Styles/boardStyle.css">
+                        <VBox fx:id="highscoreBox" alignment="CENTER" stylesheets="@../../Styles/boardStyle.css">
                            <children>
                               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Score:">
                                  <font>
@@ -48,14 +50,15 @@
                         </VBox>
                      </children>
                   </StackPane>
+                  <Button fx:id="buttonHighscore" mnemonicParsing="false" stylesheets="@../../Styles/boardStyle.css" text="Highscore Board" />
                </children>
             </VBox>
-            <VBox fx:id="gameBoardVBoxR" alignment="CENTER" prefHeight="141.0" prefWidth="136.0">
+            <VBox fx:id="gameBoardVBoxR" alignment="CENTER" spacing="5.0">
                <children>
-                  <StackPane prefHeight="150.0" prefWidth="200.0" stylesheets="@../../Styles/boardStyle.css">
+                  <StackPane stylesheets="@../../Styles/boardStyle.css">
                      <children>
                         <Pane fx:id="scoreBox" />
-                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+                        <VBox alignment="CENTER">
                            <children>
                               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Highscore:">
                                  <font>
@@ -71,6 +74,7 @@
                         </VBox>
                      </children>
                   </StackPane>
+                  <Button fx:id="buttonMenue" mnemonicParsing="false" onAction="#onButtonPressMenue" stylesheets="@../../Styles/boardStyle.css" text="Menu" />
                </children>
             </VBox>
          </children>
