@@ -1,0 +1,15 @@
+.root{
+    -fx-background-color:"#f9f8ee";
+}
+
+#buttonBack{
+    -fx-background-color:"#baac9f";
+    -fx-text-fill: "white";
+
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+
+#buttonBack:hover{
+    -fx-background-color:"#c4b6aa";
+}

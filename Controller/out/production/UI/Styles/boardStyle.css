@@ -1,0 +1,57 @@
+.root{
+    -fx-background-color:"#f5f1e9";
+}
+
+#board{
+
+    -fx-background-color:"#bbada0";
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+
+}
+
+
+#highscoreBox{
+    -fx-background-color:"#bbada0";
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+
+#scoreBox{
+    -fx-background-color:"#bbada0";
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+
+
+#buttonMenue{
+    -fx-background-color:"#ee985b";
+    -fx-text-fill: "white";
+
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+
+#buttonMenue:hover{
+    -fx-background-color:"#eeA85f";
+}
+
+#buttonHighscore{
+    -fx-background-color:"#ee985b";
+    -fx-text-fill: "white";
+
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+
+#buttonHighscore:hover{
+    -fx-background-color:"#eeA85f";
+}
+
+#pane{
+    -fx-background-color:"#ee985b";
+
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+
+}

@@ -1,0 +1,44 @@
+.root{
+    -fx-background-color:"#f9f8ee";
+}
+
+#buttonNewGame{
+    -fx-background-color:"#baac9f";
+    -fx-text-fill: "white";
+
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+
+#buttonNewGame:hover{
+    -fx-background-color:"#c4b6aa";
+}
+
+#buttonKI{
+    -fx-background-color:"#83d0f5";
+    -fx-text-fill: "white";
+
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+
+#buttonKI:selected{
+    -fx-background-color:"#8baddc";
+}
+
+#buttonCredits{
+    -fx-background-color:"#baac9f";
+    -fx-text-fill:"white";
+
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+#buttonCredits:hover{
+    -fx-background-color:"#c4b6aa";
+}
+
+
+#labelSize{
+    -fx-text-fill:"black";
+    -fx-font-size:30;
+}

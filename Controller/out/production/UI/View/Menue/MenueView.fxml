@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="710.0" prefWidth="400.0" spacing="25.0" stylesheets="@../../Styles/menueStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Menue.MenueView">
+   <children>
+      <StackPane prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <Text id="heading" fx:id="heading" fill="#766e65" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="heading" text="2048">
+               <font>
+                  <Font name="Helvetica‭ ‬עבה" size="96.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="419.0" fitWidth="270.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../Styles/icon.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
+      <HBox prefHeight="0.0" />
+      <Button id="buttonNewGame" fx:id="buttonNewGame" alignment="CENTER" mnemonicParsing="false" onAction="#onButtonPressNewGame" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/menueStyle.css" text="New Game">
+         <font>
+            <Font name="Helvetica‭ ‬עבה" size="38.0" />
+         </font>
+      </Button>
+      <Slider fx:id="sliderSize" max="10.0" maxWidth="250.0" min="4.0" prefWidth="250.0" value="7.0" />
+      <ToggleButton id="buttonKI" fx:id="toggleButton" mnemonicParsing="false" onAction="#switchKiMode" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/menueStyle.css" text="KI: Off">
+         <font>
+            <Font name="Helvetica‭ ‬עבה" size="38.0" />
+         </font>
+      </ToggleButton>
+      <HBox prefHeight="0.0" />
+      <Button id="buttonCredits" fx:id="buttonCredits" alignment="CENTER" mnemonicParsing="false" onAction="#onButtonPressCredits" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/menueStyle.css" text="Credits">
+         <font>
+            <Font name="Helvetica‭ ‬עבה" size="38.0" />
+         </font>
+      </Button>
+   </children>
+</VBox>
