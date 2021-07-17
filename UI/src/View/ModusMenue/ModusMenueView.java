@@ -67,7 +67,7 @@ public class ModusMenueView implements IModusMenueView {
     /**
      * Wird beim betätigen des Buttons ausgeführt -> Erzeugt das Spielfenster
      *
-     * @param event
+     * @param event Event
      * @throws IOException
      */
     public void onButtonPressPlay(ActionEvent event) throws IOException {
@@ -94,10 +94,10 @@ public class ModusMenueView implements IModusMenueView {
      * So wird die größe vom Menü übergeben.
      * Wird zum erzeugen des Spielfeld-Fensters benötigt.
      *
-     * @param windowWidth
-     * @param windowHeight
-     * @param minWindowWidth
-     * @param minWindowHeight
+     * @param windowWidth Fensterhöhe
+     * @param windowHeight Fensterbreite
+     * @param minWindowWidth Maximale Fensterhöhe
+     * @param minWindowHeight Maximale Fensterbreite
      */
     @Override
     public void setWindowDimensions(int windowWidth, int windowHeight, int minWindowWidth, int minWindowHeight) {
@@ -111,7 +111,7 @@ public class ModusMenueView implements IModusMenueView {
      * Setzt die Spielfeldgröße.
      * Wird so vom Menü übergeben.
      *
-     * @param tileCount
+     * @param tileCount Anzahl der Tiless
      */
     @Override
     public void setTileCount(int tileCount) {
@@ -122,7 +122,7 @@ public class ModusMenueView implements IModusMenueView {
      * Setzt den Modus für die Ki auf Wahr oder Falsch.
      * Wir so vom Menü übergeben.
      *
-     * @param kiMode
+     * @param kiMode Ki-Modus
      */
     @Override
     public void setKiMode(boolean kiMode) {

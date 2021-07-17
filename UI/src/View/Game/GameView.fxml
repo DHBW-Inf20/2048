@@ -50,7 +50,11 @@
                         </VBox>
                      </children>
                   </StackPane>
-                  <Button fx:id="buttonHighscore" mnemonicParsing="false" stylesheets="@../../Styles/boardStyle.css" text="Highscore Board" />
+                  <Button fx:id="buttonMenue" mnemonicParsing="false" onAction="#onButtonPressMenue" stylesheets="@../../Styles/boardStyle.css" text="Menu">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
                </children>
             </VBox>
             <VBox fx:id="gameBoardVBoxR" alignment="CENTER" spacing="5.0">
@@ -74,7 +78,10 @@
                         </VBox>
                      </children>
                   </StackPane>
-                  <Button fx:id="buttonMenue" mnemonicParsing="false" onAction="#onButtonPressMenue" stylesheets="@../../Styles/boardStyle.css" text="Menu" />
+                  <Button fx:id="buttonHighscore" mnemonicParsing="false" stylesheets="@../../Styles/boardStyle.css" text="Highscore">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
                </children>
             </VBox>
          </children>

@@ -1,6 +1,8 @@
 package Game.DataClasses;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 
 public class Tile {
 
@@ -15,7 +17,7 @@ public class Tile {
     private int posX;
     private int posY;
 
-    public Pane pane;
+    public StackPane stackPane;
 
 
     public Tile(int number, Tile preFieldA, Tile preFieldB, int posX, int posY) {
@@ -36,12 +38,18 @@ public class Tile {
         double gameBoardGap = gameBoardSize * 0.02;
         double tileSize = (gameBoardSize - (gameBoardGap * (tileCount + 1))) / tileCount;
 
-        this.pane = new Pane();
-        pane.setPrefWidth(tileSize);
-        pane.setPrefHeight(tileSize);
-        pane.setId("pane");
+        this.stackPane = new StackPane();
+        stackPane.setPrefWidth(tileSize);
+        stackPane.setPrefHeight(tileSize);
+
+        stackPane.setId("stackPane" + number);
+
+        Text text = new Text(String.valueOf(number));
+        text.setId("tileText" + number);
+        stackPane.getChildren().add(text);
 
         //TODO: Zahl einfügen und Farbe je nach Zahl anpassen
+
     }
 
 
@@ -51,7 +59,7 @@ public class Tile {
     }
 
     public Pane getPane() {
-        return pane;
+        return stackPane;
     }
 
     public int getNumber() {
@@ -64,6 +72,14 @@ public class Tile {
 
     public int getPosY() {
         return posY;
+    }
+
+    public Tile getPreFieldA() {
+        return preFieldA;
+    }
+
+    public Tile getPreFieldB() {
+        return preFieldB;
     }
 
     public boolean checkForPreTiles() {

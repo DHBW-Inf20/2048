@@ -119,7 +119,7 @@ public class MenueView extends Application implements IMenueView, Initializable 
     /**
      * Wird beim klicken auf "New Game" Ausgeführt -> erzeugt das nächste Fenster
      *
-     * @param event
+     * @param event Event
      * @throws IOException
      */
     public void onButtonPressNewGame(ActionEvent event) throws IOException {
@@ -141,7 +141,7 @@ public class MenueView extends Application implements IMenueView, Initializable 
     /**
      * Wird beim Drücken auf "Credits" ausgeführt
      *
-     * @param event
+     * @param event Event
      */
     public void onButtonPressCredits(ActionEvent event) throws IOException {
 

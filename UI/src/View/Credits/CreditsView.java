@@ -27,8 +27,8 @@ public class CreditsView implements ICreditsView {
     /**
      * Erstellt die Senen -> wird vom Menü aus aufgerufen
      *
-     * @param event
-     * @param scene
+     * @param event Event
+     * @param scene Scene
      * @throws IOException
      */
     public void createSceneCredits(Event event, Scene scene) throws IOException {
@@ -42,7 +42,7 @@ public class CreditsView implements ICreditsView {
     /**
      * Wird beim Drücken des Buttons "Back" ausgeführt -> Öffnet die Menü Scene
      * *
-     * @param event
+     * @param event Event
      * @throws IOException
      */
     public void onButtonPressBack(ActionEvent event) throws IOException {
@@ -61,10 +61,10 @@ public class CreditsView implements ICreditsView {
     /**
      * Übergibt die Parameter der Fenstergröße
      *
-     * @param windowWidth
-     * @param windowHeight
-     * @param minWindowWidth
-     * @param minWindowHeight
+     * @param windowWidth Fensterhöhe
+     * @param windowHeight  Fensterbreite
+     * @param minWindowWidth Maximale Fensterhöhe
+     * @param minWindowHeight Maximale Fensterbreite
      */
     @Override
     public void setWindowDimensions(int windowWidth, int windowHeight, int minWindowWidth, int minWindowHeight) {
