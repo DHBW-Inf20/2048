@@ -1,5 +1,6 @@
 package View.ModusMenue;
 
+import Game.DataClasses.GameModes;
 import View.Game.GameView;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -9,12 +10,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -28,6 +23,7 @@ public class ModusMenueView implements IModusMenueView {
     private int windowWidth;
     private int tileCount;
     private boolean kiMode;
+    private GameModes gameMode;
 
     /**
      * Kosntruktor
@@ -56,7 +52,9 @@ public class ModusMenueView implements IModusMenueView {
         toggleButtonMinMax.setToggleGroup(toggleGroup);
         toggleButtonCorporate.setToggleGroup(toggleGroup);
 
+        //Selectiert den Random button beim Aufruf der Scene
         toggleButtonRamdom.setSelected(true);
+        gameMode = GameModes.random;
 
         //Erzeuge eine neue Stage für die GameView
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -86,6 +84,7 @@ public class ModusMenueView implements IModusMenueView {
         gameView.setLabel();
         gameView.setKiMode(kiMode);
         gameView.setTileCount(tileCount);
+        gameView.setGameMode(gameMode);
         gameView.setWindowDimensions(windowWidth, windowHeight, minWindowWidth, minWindowHeight);
         gameView.createGameScene(event, scene);
     }
@@ -127,6 +126,21 @@ public class ModusMenueView implements IModusMenueView {
     @Override
     public void setKiMode(boolean kiMode) {
         this.kiMode = kiMode;
+    }
+
+    @Override
+    public void setGamemodeRandom(){
+        this.gameMode = GameModes.random;
+    }
+
+    @Override
+    public void setGamemodeCooperative() {
+        this.gameMode = GameModes.cooperative;
+    }
+
+    @Override
+    public void setGamemodeMinMax(){
+        this.gameMode = GameModes.minMax;
     }
 
 }

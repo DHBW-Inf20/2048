@@ -1,5 +1,6 @@
 package View.Game;
 
+import Game.DataClasses.GameModes;
 import Game.DataClasses.Tile;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -19,4 +20,5 @@ public interface IGameView {
 
     void setScoreLabel(int score);
 
+    void setGameMode(GameModes gameMode);
 }

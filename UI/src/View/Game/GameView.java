@@ -2,21 +2,21 @@ package View.Game;
 
 
 import Game.DataClasses.Directions;
+import Game.DataClasses.GameModes;
 import Game.DataClasses.Tile;
+import Game.GameController;
+import Game.TileChangeListener;
 import View.Menue.MenueView;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Point2D;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.effect.Light;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -29,7 +29,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 public class GameView implements IGameView {
 
@@ -57,6 +56,7 @@ public class GameView implements IGameView {
 
     private boolean kiMode;
     private int tileCount;
+    private GameModes gameMode;
 
     //Spielfelder die übergeben werden
     private Tile nextGameBoard[][];
@@ -72,6 +72,7 @@ public class GameView implements IGameView {
     //TESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTEST
     int variable = 0;
     Tile testBoard[][];
+
 
     /**
      * Kosntruktor
@@ -175,41 +176,60 @@ public class GameView implements IGameView {
 
         //TODO: HIER SPIELFELD ERZEUGEN ... WENN FERTIG
         //Get actual Gamboar
+        GameController gameController = new GameController(new TileChangeListener() {
+
+            @Override
+            public void change(Tile[][] tiles) {
+
+                nextGameBoard = tiles;
+                System.out.println("Set new GameBoard in GameView!");
+            }
+        });
+
+        gameController.startGame(gameMode, true, tileCount);
 
         prevGameBoard = new Tile[tileCount][tileCount];
-        testBoard = new Tile[tileCount][tileCount];
+
+        //Initialisierungs Move
+        move();
+
+        //testBoard = new Tile[tileCount][tileCount];
 
         //Hilfslabe zum debuggen
         setLabel();
 
+
         //Keylistener auf der Scene
         scene.setOnKeyPressed(e -> {
+
             if (e.getCode() == KeyCode.W) {
-                move(Directions.UP);
+                gameController.makeMove(Directions.UP);
+                move();
             }
             if (e.getCode() == KeyCode.S) {
-                move(Directions.DOWN);
+                gameController.makeMove(Directions.DOWN);
+                move();
             }
             if (e.getCode() == KeyCode.A) {
-                move(Directions.LEFT);
+                gameController.makeMove(Directions.LEFT);
+                move();
             }
             if (e.getCode() == KeyCode.D) {
-                move(Directions.RIGHT);
+                gameController.makeMove(Directions.RIGHT);
+                move();
             }
             //Score Test
             if (e.getCode() == KeyCode.PLUS) {
                 System.out.println("+ key was pressed");
 
                 int var = Integer.parseInt(scoreLabel.getText());
-                if(var == 0){
+                if (var == 0) {
                     var = 1;
                 }
-                setScoreLabel(2*var);
+                setScoreLabel(2 * var);
             }
         });
-
     }
-
 
     /**
      * Wird beim Drücken des Buttons "Menu" ausgeführt -> Öffnet die Menü Scene
@@ -233,7 +253,7 @@ public class GameView implements IGameView {
     }
 
 
-    private void move(Directions direction) {
+    private void move() {
 
 
         boolean newTileFlag = true;
@@ -241,8 +261,17 @@ public class GameView implements IGameView {
         //Hier gameBoard denn move(direction) übergeben und neues Array anfordern
         //Das hier ist erstmal eine Testmethode
         //TESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTEST
-        nextGameBoard = new Tile[tileCount][tileCount];
-        nextGameBoard = getArrayForTesting();
+        //nextGameBoard = new Tile[tileCount][tileCount];
+
+        /*
+        if(direction == Directions.INIT){
+            nextGameBoard = prevGameBoard;
+            System.out.println("TEST");
+        }else {
+            nextGameBoard = getArrayForTesting();
+        }
+
+         */
 
         //Falls aus einem grund kein Update mehr kommt darf auch nichtsmehr passieren -> sonst gibts einen Exception
         int testForDuplicateCounter = 0;
@@ -250,14 +279,16 @@ public class GameView implements IGameView {
         for (int j = 0; j < tileCount; j++) {
             for (int k = 0; k < tileCount; k++) {
 
-                if(prevGameBoard[j][k] == nextGameBoard[j][k]){
+                if (prevGameBoard[j][k] == nextGameBoard[j][k]) {
                     testForDuplicateCounter++;
                 }
             }
         }
-        if(testForDuplicateCounter == 16){
+        if (testForDuplicateCounter == 16) {
             return;
         }
+
+        //System.out.println("Break");
 
         //Itteriert über das Spielfeld
         for (int posX = 0; posX < tileCount; posX++) {
@@ -271,7 +302,7 @@ public class GameView implements IGameView {
                         for (int s = 0; s < tileCount; s++) {
                             if (nextGameBoard[posX][posY] == prevGameBoard[r][s]) {
                                 //make transition
-                                transition(nextGameBoard[posX][posY], posX, posY, false, null);
+                                transition(nextGameBoard[posX][posY], posX, posY, false, 0, null);
 
                                 newTileFlag = false;
                                 break;
@@ -281,7 +312,8 @@ public class GameView implements IGameView {
 
                     //Wenn im letzten Spielfeld kein Tile gefunden wurde wird hier ein neues erzeugt
                     if (newTileFlag) {
-                        System.out.println("neues Feld erzeugen");
+
+                        //Add new Tile
 
                         Pane tilePane = nextGameBoard[posX][posY].getPane();
 
@@ -297,10 +329,24 @@ public class GameView implements IGameView {
                     }
                 }
                 //Fall preTiles vorhanden sind -> animation der preTiles und darstellen des neuen Tiles
-                else if(nextGameBoard[posX][posY] != null){
+                else if (nextGameBoard[posX][posY] != null) {
 
-                    transition(nextGameBoard[posX][posY].getPreFieldA(), posX,posY, true, null);
-                    transition(nextGameBoard[posX][posY].getPreFieldB(), posX,posY, true, nextGameBoard[posX][posY]);
+                    //TODO: PROBLEM DIE TILES WERDEN SCHON VOR ENEDE DER TRANSITION AUF NULL GESETZT UND DIE PANES KÖNNE NICHT GELÖSCHT WERDEN
+                    //MUSS IRGENDWIE DAS PROGRAMM PAUSIEREN ODER ERST NACHE DER TRANSITION LÖSCHEN
+
+                    /**
+                     * if (!field[j][k].checkForPreTiles()) {
+                     *       field[j][k].clearPreTiles();
+                     *}
+                     *
+                     * Das vllt von Gameboard  -> move , auf nach die animation verschieben, aber habe jz keine Lust mehr
+                     *
+                     */
+
+
+                    transition(nextGameBoard[posX][posY].getPreFieldA(), posX, posY, true, 0, null);
+
+                    transition(nextGameBoard[posX][posY].getPreFieldB(), posX, posY, true, 1, nextGameBoard[posX][posY]);
                 }
             }
         }
@@ -313,23 +359,21 @@ public class GameView implements IGameView {
             }
         }
 
+
         //Gewinnabfrage
         checkForWin();
     }
 
     /**
-     *
      * Führt die Animation des Tiles aus und generiert ggf. danach ein neues Tile und  löscht das alte
      *
-     * @param tile Tile welches die Animation ausführt
-     * @param posX  Zielposition in X
-     * @param posY  Zielposition in Y
+     * @param tile                      Tile welches die Animation ausführt
+     * @param posX                      Zielposition in X
+     * @param posY                      Zielposition in Y
      * @param deleteAfterTransitionFlag Falls wahr wird das Tile nach der Animation gelöscht
-     * @param tielToCreate  Das Tile welches nach der Animation dergestellt werden soll
+     * @param tielToCreate              Das Tile welches nach der Animation dergestellt werden soll
      */
-    private void transition(Tile tile, int posX, int posY, boolean deleteAfterTransitionFlag, Tile tielToCreate) {
-
-        System.out.println("transition");
+    private void transition(Tile tile, int posX, int posY, boolean deleteAfterTransitionFlag, int x, Tile tielToCreate) {
 
         TranslateTransition translateTransition = new TranslateTransition();
 
@@ -341,36 +385,34 @@ public class GameView implements IGameView {
         translateTransition.setDuration(new Duration(100));
         translateTransition.play();
 
-        if(deleteAfterTransitionFlag) {
-            translateTransition.setOnFinished(a -> deleteParents(tile));
+
+        if (deleteAfterTransitionFlag && x == 0) {
+            System.out.println("Delete 1");
+            System.out.println("X:" + tile.getPosX() + "  Y:" + tile.getPosY());
+            removeTile(tile);
+            //translateTransition.setOnFinished(a -> removeTile(tile));
         }
-        if(tielToCreate != null) {
-            translateTransition.setOnFinished(a -> createTile(tielToCreate,posX,posY));
+        if (deleteAfterTransitionFlag && x == 1) {
+            System.out.println("Delete 2");
+            System.out.println("X:" + tile.getPosX() + "  Y:" + tile.getPosY());
+            removeTile(tile);
+            //translateTransition.setOnFinished(a -> removeTile(tile));
         }
-    }
 
-    /**
-     * Entfernt die alten Tiles vom Spielfeld
-     *
-     * @param tile Tile welches gelöscht wird
-     */
-    private void deleteParents(Tile tile) {
 
-        System.out.println("remove");
-        pane.getChildren().remove(tile.getPane());
-
+        if (tielToCreate != null) {
+            translateTransition.setOnFinished(a -> createTile(tielToCreate, posX, posY));
+        }
     }
 
     /**
      * Generiet ein neues Tile nach der Animation der preTiles
      *
      * @param tile Tile welches dargestellt wird
-     * @param posX  Position in X an der es dargestellt wird
-     * @param posY  Position in Y an der es dagestellt wird
+     * @param posX Position in X an der es dargestellt wird
+     * @param posY Position in Y an der es dagestellt wird
      */
     private void createTile(Tile tile, int posX, int posY) {
-
-        System.out.println("add");
 
         tile.getPane().setLayoutX(gameBoardGap * (posX + 1) + (tileSize * posX));
         tile.getPane().setLayoutY(gameBoardGap * (posY + 1) + (tileSize * posY));
@@ -380,12 +422,26 @@ public class GameView implements IGameView {
         zoomInTile(tile);
     }
 
+
+    /**
+     * Entfernt das Tile bzw die Pane vom grafischen Spielfeld
+     *
+     * @param tile Zu entfernendes Tile
+     */
+    private void removeTile(Tile tile) {
+        System.out.println("\nRemove Tile");
+        System.out.println("X:" + tile.getPosX() + "  Y:" + tile.getPosY());
+        pane.getChildren().remove(tile.getPane());
+
+    }
+
+
     /**
      * Tiles für einen Zoomefeckt um 10% vergrößern
      *
      * @param tile Tile auf welches der Effeckt angewendet wird
      */
-    private void zoomInTile(Tile tile){
+    private void zoomInTile(Tile tile) {
 
         ScaleTransition scaleTransition = new ScaleTransition();
         scaleTransition.setDuration(new Duration(50));
@@ -402,7 +458,7 @@ public class GameView implements IGameView {
      *
      * @param tile Tile auf welches der Effeckt angewendet wird
      */
-    private void zoomOutTile(Tile tile){
+    private void zoomOutTile(Tile tile) {
 
         ScaleTransition scaleTransition = new ScaleTransition();
         scaleTransition.setDuration(new Duration(50));
@@ -414,13 +470,12 @@ public class GameView implements IGameView {
 
     /**
      * Gewinnabrgrage -> Wenn gewonnen zeige Siegerbildschirm
-     *
      */
-    private void checkForWin(){
+    private void checkForWin() {
 
         //TODO: GEWINNABFRAGE
         //Wenn das erste Mal gewonnen wurde wird der Gewinnerscreen angezeigt
-        if(false && winScreen == 0){
+        if (false && winScreen == 0) {
 
             StackPane winnerPane = new StackPane();
             winnerPane.setPrefHeight(gameBoardSize);
@@ -436,7 +491,7 @@ public class GameView implements IGameView {
             winScreen++;
         }
         //Wenn gewonnen wurde aber man noch weiterspielt wird der Gewinnerscreen wieder entfernt
-        else if(winScreen == 1){
+        else if (winScreen == 1) {
             pane.getChildren().remove(scene.lookup("#winPane"));
             pane.getChildren().remove(scene.lookup("#winText"));
         }
@@ -483,6 +538,11 @@ public class GameView implements IGameView {
         scoreLabel.setText(Integer.toString(score));
     }
 
+    @Override
+    public void setGameMode(GameModes gameMode) {
+        this.gameMode = gameMode;
+    }
+
     public void setLabel() {
         if (kiMode) {
             myLabel.setText("KI -> ON!!!");
@@ -494,9 +554,9 @@ public class GameView implements IGameView {
     /**
      * Bekommt die Fenster größe von der Vorgänger Methode
      *
-     * @param windowWidth Fensterhöhe
-     * @param windowHeight Fensterbreite
-     * @param minWindowWidth Maximale Fensterbreite
+     * @param windowWidth     Fensterhöhe
+     * @param windowHeight    Fensterbreite
+     * @param minWindowWidth  Maximale Fensterbreite
      * @param minWindowHeight Maximale Fensterhöhe
      */
     public void setWindowDimensions(int windowWidth, int windowHeight, int minWindowWidth, int minWindowHeight) {
@@ -562,7 +622,7 @@ public class GameView implements IGameView {
         if (variable == 2) {
             System.out.println("Get third Array");
 
-            Tile tile = new Tile(4, testBoard[0][2], testBoard[0][0], 0,3);
+            Tile tile = new Tile(4, testBoard[0][2], testBoard[0][0], 0, 3);
 
             testBoard[0][0] = null;
             testBoard[0][2] = null;

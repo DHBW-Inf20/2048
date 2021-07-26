@@ -5,5 +5,6 @@ public enum Directions
     LEFT,
     RIGHT,
     DOWN,
-    UP
+    UP,
+    INIT
 }

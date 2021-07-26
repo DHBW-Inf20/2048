@@ -14,4 +14,11 @@ public interface IModusMenueView {
     void setTileCount(int tileCount);
 
     void setWindowDimensions(int windowWidth, int windowHeight, int minWindowWidth, int minWindowHeight);
+
+    void setGamemodeMinMax();
+
+    void setGamemodeCooperative();
+
+    void setGamemodeRandom();
+
 }
