@@ -3,7 +3,7 @@
 <img align="right" width="220" height="75" src="DHBW_Logo.png">
 
 ### Gruppenmitglieder:
-+ Jonas Weiß 
++ Jonas Weis 
 + Jonathan Schwab 
 + Adrian Liehner
 + Reinhold Jooß
@@ -13,4 +13,7 @@
 
 ```shell
 git clone https://github.com/FelixWochele/2048.git
+git add * 
+git commit -m "Commit-Message"
+git push origin main
 ```
