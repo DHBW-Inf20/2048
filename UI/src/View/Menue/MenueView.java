@@ -4,6 +4,8 @@ import Game.DataClasses.GameModes;
 import Game.GameController;
 import Game.IGameController;
 import View.Credits.CreditsView;
+import View.Credits.ICreditsView;
+import View.ModusMenue.IModusMenueView;
 import View.ModusMenue.ModusMenueView;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -27,7 +29,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class MenueView extends Application implements IMenueView, Initializable {
+public class MenueView extends Application implements Initializable {
 
     //Binding variables
     @FXML
@@ -46,6 +48,9 @@ public class MenueView extends Application implements IMenueView, Initializable 
     private final int minWindowHeight = 700;
     private final int windowWidth = 600;
     private final int windowHeight = 800;
+
+    private IModusMenueView modusMenue;
+    private ICreditsView creditsView;
 
 
     /**
@@ -130,7 +135,7 @@ public class MenueView extends Application implements IMenueView, Initializable 
         Scene scene = new Scene(root, windowWidth, windowHeight);
 
         //Übergebe dem Controler die notwendigen Daten
-        ModusMenueView modusMenue = loader.getController();
+        modusMenue = loader.getController();
         modusMenue.setWindowDimensions(windowWidth, windowHeight, minWindowWidth, minWindowHeight);
         modusMenue.setTileCount(tileCount);
         modusMenue.setKiMode(kiMode);
@@ -151,7 +156,7 @@ public class MenueView extends Application implements IMenueView, Initializable 
         Scene scene = new Scene(root, windowWidth, windowHeight);
 
 
-        CreditsView creditsView = loader.getController();
+        creditsView = loader.getController();
         creditsView.setWindowDimensions(windowWidth, windowHeight, minWindowWidth, minWindowHeight);
         creditsView.createSceneCredits(event, scene);
     }

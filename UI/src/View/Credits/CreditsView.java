@@ -39,6 +39,8 @@ public class CreditsView implements ICreditsView {
         stage.show();
     }
 
+
+
     /**
      * Wird beim Drücken des Buttons "Back" ausgeführt -> Öffnet die Menü Scene
      * *
@@ -74,4 +76,6 @@ public class CreditsView implements ICreditsView {
         this.minWindowWidth = minWindowWidth;
         this.minWindowHeight = minWindowHeight;
     }
+
+
 }

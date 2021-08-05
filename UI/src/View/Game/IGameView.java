@@ -21,4 +21,8 @@ public interface IGameView {
     void setScoreLabel(int score);
 
     void setGameMode(GameModes gameMode);
+
+    void setLabel();
+
+    void setWindowDimensions(int windowWidth, int windowHeight, int minWindowWidth, int minWindowHeight);
 }

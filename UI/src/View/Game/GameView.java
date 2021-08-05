@@ -5,6 +5,7 @@ import Game.DataClasses.Directions;
 import Game.DataClasses.GameModes;
 import Game.DataClasses.Tile;
 import Game.GameController;
+import Game.IGameController;
 import Game.TileChangeListener;
 import View.Menue.MenueView;
 import javafx.animation.ScaleTransition;
@@ -26,7 +27,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
+import javafx.u11til.Duration;
 
 import java.io.IOException;
 
@@ -59,8 +60,8 @@ public class GameView implements IGameView {
     private GameModes gameMode;
 
     //Spielfelder die übergeben werden
-    private Tile nextGameBoard[][];
-    private Tile prevGameBoard[][];
+    private Tile[][] nextGameBoard;
+    private Tile[][] prevGameBoard;
 
     private Scene scene;
     //Ist das "Spielfeld" worauf alles hinzugefügt und bewegt wird.
@@ -71,7 +72,11 @@ public class GameView implements IGameView {
 
     //TESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTEST
     int variable = 0;
-    Tile testBoard[][];
+    Tile[][] testBoard;
+
+    private IGameController gameController;
+
+
 
 
     /**
@@ -79,6 +84,15 @@ public class GameView implements IGameView {
      */
     public GameView() {
 
+        this.gameController = new GameController(new TileChangeListener() {
+
+            @Override
+            public void change(Tile[][] tiles) {
+
+                nextGameBoard = tiles;
+                System.out.println("Set new GameBoard in GameView!");
+            }
+        });
 
     }
 
@@ -176,15 +190,7 @@ public class GameView implements IGameView {
 
         //TODO: HIER SPIELFELD ERZEUGEN ... WENN FERTIG
         //Get actual Gamboar
-        GameController gameController = new GameController(new TileChangeListener() {
 
-            @Override
-            public void change(Tile[][] tiles) {
-
-                nextGameBoard = tiles;
-                System.out.println("Set new GameBoard in GameView!");
-            }
-        });
 
         gameController.startGame(gameMode, true, tileCount);
 
@@ -475,7 +481,7 @@ public class GameView implements IGameView {
 
         //TODO: GEWINNABFRAGE
         //Wenn das erste Mal gewonnen wurde wird der Gewinnerscreen angezeigt
-        if (false && winScreen == 0) {
+        if (false&& winScreen == 0) { //TODO
 
             StackPane winnerPane = new StackPane();
             winnerPane.setPrefHeight(gameBoardSize);
