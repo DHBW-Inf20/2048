@@ -1,0 +1,52 @@
+.root{
+    -fx-background-color:"#f9f8ee";
+}
+
+#buttonPlay{
+    -fx-background-color:"#baac9f";
+    -fx-text-fill: "white";
+
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+
+#buttonPlay:hover{
+    -fx-background-color:"#c4b6aa";
+}
+
+#buttonMinMax{
+    -fx-background-color:"#83d0f5";
+    -fx-text-fill: "white";
+
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+
+#buttonMinMax:selected{
+    -fx-background-color:"#8baddc";
+}
+
+#buttonRandom{
+    -fx-background-color:"#83d0f5";
+    -fx-text-fill: "white";
+
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+
+#buttonRandom:selected{
+    -fx-background-color:"#8baddc";
+}
+
+
+#buttonCorporate{
+    -fx-background-color:"#83d0f5";
+    -fx-text-fill: "white";
+
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+
+#buttonCorporate:selected{
+    -fx-background-color:"#8baddc";
+}

@@ -9,3 +9,176 @@
     -fx-border-radius: 10 10 10 10;
 
 }
+
+
+#highscoreBox{
+    -fx-background-color:"#bbada0";
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+
+#scoreBox{
+    -fx-background-color:"#bbada0";
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+
+
+#buttonMenue{
+    -fx-background-color:"#ee985b";
+    -fx-text-fill: "white";
+
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+
+#buttonMenue:hover{
+    -fx-background-color:"#eeA85f";
+}
+
+#buttonHighscore{
+    -fx-background-color:"#ee985b";
+    -fx-text-fill: "white";
+
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+
+#buttonHighscore:hover{
+    -fx-background-color:"#eeA85f";
+}
+
+#winPane{
+    -fx-background-color:"#ee985b";
+    -fx-opacity: 0.5;
+    -fx-text-fill: "white";
+
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+#winText{
+    -fx-fill: "#ffffff";
+    -fx-font: 60pt Helvetica;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+#stackPane2{
+    -fx-background-color:"#eee4da";
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+#tileText2{
+    -fx-fill: "#766e65";
+    -fx-font: 40pt Helvetica;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+#stackPane4{
+    -fx-background-color:"#ecdfc7";
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+#tileText4{
+    -fx-fill: "#766e65";
+    -fx-font: 40pt Helvetica;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+#stackPane8{
+    -fx-background-color:"#f2b079";
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+#tileText8{
+    -fx-fill: "#ffffff";
+    -fx-font: 40pt Helvetica;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+#stackPane16{
+    -fx-background-color:"#ec8c54";
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+#tileText16{
+    -fx-fill: "#ffffff";
+    -fx-font: 40pt Helvetica;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+#stackPane32{
+    -fx-background-color:"#f67b5e";
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+#tileText32{
+    -fx-fill: "#ffffff";
+    -fx-font: 40pt Helvetica;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+#stackPane64{
+    -fx-background-color:"#ecdfc7";
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+#tileText64{
+    -fx-fill: "#ffffff";
+    -fx-font: 40pt Helvetica;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+#stackPane128{
+    -fx-background-color:"#f2d86b";
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+#tileText128{
+    -fx-fill: "#ffffff";
+    -fx-font: 40pt Helvetica;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+#stackPane265{
+    -fx-background-color:"#f0d04b";
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+#tileText265{
+    -fx-fill: "#ffffff";
+    -fx-font: 40pt Helvetica;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+#stackPane512{
+    -fx-background-color:"#e4c02a";
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+#tileText512{
+    -fx-fill: "#ffffff";
+    -fx-font: 40pt Helvetica;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+#stackPane1024{
+    -fx-background-color:"#e4c02a";
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+#tileText1024{
+     -fx-fill: "#ffffff";
+     -fx-font: 40pt Helvetica;
+     -fx-font-weight: bold;
+     -fx-text-alignment: center;
+}
