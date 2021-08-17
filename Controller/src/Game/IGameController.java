@@ -10,4 +10,6 @@ public interface IGameController
 
     void makeMove(Directions direction);
 
+     void setTileChangeListener(TileChangeListener tileChangeListener);
+
 }

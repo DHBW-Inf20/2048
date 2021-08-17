@@ -1,6 +1,7 @@
 package View.Game;
 
 
+import Factory.ComponentFactory;
 import Game.DataClasses.Directions;
 import Game.DataClasses.GameModes;
 import Game.DataClasses.Tile;
@@ -27,9 +28,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.u11til.Duration;
+import javafx.util.Duration;
+
+
 
 import java.io.IOException;
+
+
 
 public class GameView implements IGameView {
 
@@ -74,25 +79,18 @@ public class GameView implements IGameView {
     int variable = 0;
     Tile[][] testBoard;
 
-    private IGameController gameController;
 
 
+    private final IGameController gameController;
 
 
     /**
      * Kosntruktor
      */
+
     public GameView() {
 
-        this.gameController = new GameController(new TileChangeListener() {
-
-            @Override
-            public void change(Tile[][] tiles) {
-
-                nextGameBoard = tiles;
-                System.out.println("Set new GameBoard in GameView!");
-            }
-        });
+        this.gameController = ComponentFactory.getGameController();
 
     }
 
@@ -104,6 +102,12 @@ public class GameView implements IGameView {
      */
     @Override
     public void createGameScene(Event event, Scene scene) throws IOException {
+
+        this.gameController.setTileChangeListener(tiles ->
+        {
+            nextGameBoard = tiles;
+            System.out.println("Set new GameBoard in GameView!");
+        });
 
         //Variablen mit einstellbaren Konstanten
         gameBoardSize = 450; // Bei verstellen müssen noch die Stadart fxml werte geändert werden -> Schriftgröße/png größen/etc

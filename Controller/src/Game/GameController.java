@@ -15,12 +15,16 @@ public class GameController implements IGameController {
     private GameModes gameMode = GameModes.random;
     private boolean aiEnabled = false;
     private ITileCreator iTileCreator;
-    private final TileChangeListener tileChangeListener;
+    private TileChangeListener tileChangeListener;
     private Tile[][] field;
     private int dimensions;
 
 
-    public GameController(TileChangeListener tileChangeListener) {
+    public GameController() {
+    }
+
+    public void setTileChangeListener(TileChangeListener tileChangeListener)
+    {
         this.tileChangeListener = tileChangeListener;
     }
 

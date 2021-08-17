@@ -29,6 +29,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
+
 public class MenueView extends Application implements Initializable {
 
     //Binding variables

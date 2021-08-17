@@ -78,6 +78,8 @@ public class ModusMenueView implements IModusMenueView {
 
         //Erzeuge eine Szene aus GameView.fxml
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Game/GameView.fxml"));
+
+
         Parent root = loader.load();
         Scene scene = new Scene(root, windowWidth, windowHeight);
 
