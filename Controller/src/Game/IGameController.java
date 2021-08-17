@@ -2,7 +2,8 @@ package Game;
 
 import Game.DataClasses.Directions;
 import Game.DataClasses.GameModes;
-import Game.DataClasses.Tile;
+import Game.Listeners.ScoreChangeListener;
+import Game.Listeners.TileChangeListener;
 
 public interface IGameController
 {
@@ -11,5 +12,7 @@ public interface IGameController
     void makeMove(Directions direction);
 
      void setTileChangeListener(TileChangeListener tileChangeListener);
+
+     void setScoreChangeListener(ScoreChangeListener scoreChangeListener);
 
 }

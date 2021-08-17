@@ -1,4 +1,4 @@
-package Game;
+package Game.Listeners;
 
 import Game.DataClasses.Tile;
 

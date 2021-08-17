@@ -5,9 +5,8 @@ import Factory.ComponentFactory;
 import Game.DataClasses.Directions;
 import Game.DataClasses.GameModes;
 import Game.DataClasses.Tile;
-import Game.GameController;
 import Game.IGameController;
-import Game.TileChangeListener;
+import HighScore.IHighScoreController;
 import View.Menue.MenueView;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
@@ -82,6 +81,7 @@ public class GameView implements IGameView {
 
 
     private final IGameController gameController;
+    private final IHighScoreController highScoreController;
 
 
     /**
@@ -91,6 +91,7 @@ public class GameView implements IGameView {
     public GameView() {
 
         this.gameController = ComponentFactory.getGameController();
+        this.highScoreController = ComponentFactory.getHighScroeController();
 
     }
 
@@ -108,6 +109,12 @@ public class GameView implements IGameView {
             nextGameBoard = tiles;
             System.out.println("Set new GameBoard in GameView!");
         });
+
+        this.gameController.setScoreChangeListener(newScore -> {
+            setScoreLabel(newScore);
+            highScoreController.submitNewScore(newScore);
+        });
+
 
         //Variablen mit einstellbaren Konstanten
         gameBoardSize = 450; // Bei verstellen müssen noch die Stadart fxml werte geändert werden -> Schriftgröße/png größen/etc
@@ -239,6 +246,8 @@ public class GameView implements IGameView {
                 setScoreLabel(2 * var);
             }
         });
+
+        setHighscore(highScoreController.getCurrentHighScoreData().getScore());
     }
 
     /**

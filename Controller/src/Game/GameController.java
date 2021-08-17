@@ -3,13 +3,12 @@ package Game;
 import Game.DataClasses.Directions;
 import Game.DataClasses.GameModes;
 import Game.DataClasses.Tile;
+import Game.Listeners.ScoreChangeListener;
+import Game.Listeners.TileChangeListener;
 import Game.TileCreator.CooperativeTileCreator;
 import Game.TileCreator.ITileCreator;
 import Game.TileCreator.MinMaxTileCreator;
 import Game.TileCreator.RandomTileCreator;
-
-
-import java.util.Observable;
 
 public class GameController implements IGameController {
     private GameModes gameMode = GameModes.random;
@@ -18,6 +17,9 @@ public class GameController implements IGameController {
     private TileChangeListener tileChangeListener;
     private Tile[][] field;
     private int dimensions;
+    private ScoreChangeListener scoreChangeListener;
+
+    private int score = 0;
 
 
     public GameController() {
@@ -26,6 +28,12 @@ public class GameController implements IGameController {
     public void setTileChangeListener(TileChangeListener tileChangeListener)
     {
         this.tileChangeListener = tileChangeListener;
+    }
+
+    @Override
+    public void setScoreChangeListener(ScoreChangeListener scoreChangeListener)
+    {
+        this.scoreChangeListener = scoreChangeListener;
     }
 
 
@@ -62,7 +70,7 @@ public class GameController implements IGameController {
 
         //TODO: Kommentieren
         //TODO: SCORE
-        int score = 0;
+
 
         int tempFieldPosition;
 
@@ -89,6 +97,7 @@ public class GameController implements IGameController {
                                 //Verdopple letztes Element
                                 tempField[tempFieldPosition - 1][j] = new Tile(newNumber, tempField[tempFieldPosition - 1][j], field[k][j], tempFieldPosition - 1, j);
                                 score = score + tempField[tempFieldPosition - 1][j].getNumber();
+                                scoreChangeListener.change(score);
                                 sumUpLast = true;
 
                             } else {
@@ -132,8 +141,8 @@ public class GameController implements IGameController {
                                 //Verdopple letztes Element
                                 System.out.println("NEW TILE RIGHT");
                                 tempField[tempFieldPosition + 1][j] = new Tile(newNumber, tempField[tempFieldPosition + 1][j], field[k][j], tempFieldPosition + 1, j);
-
                                 score = score + tempField[tempFieldPosition + 1][j].getNumber();
+                                scoreChangeListener.change(score);
                                 sumUpLast = true;
                             } else {
                                 //Füge neues Element ein und counter++
@@ -169,6 +178,7 @@ public class GameController implements IGameController {
 
                                 tempField[j][tempFieldPosition - 1] = new Tile(newNumber, tempField[j][tempFieldPosition - 1], field[j][k], tempFieldPosition - 1, k);
                                 score = score + tempField[j][tempFieldPosition - 1].getNumber();
+                                scoreChangeListener.change(score);
                                 sumUpLast = true;
                             } else {
                                 //Füge neues Element ein und counter++
@@ -203,6 +213,7 @@ public class GameController implements IGameController {
 
                                 tempField[j][tempFieldPosition + 1] = new Tile(newNumber, tempField[j][tempFieldPosition + 1], field[j][k], tempFieldPosition + 1, k);
                                 score = score + tempField[j][tempFieldPosition + 1].getNumber();
+                                scoreChangeListener.change(score);
                                 sumUpLast = true;
                             } else {
                                 //Füge neues Element ein und counter++
