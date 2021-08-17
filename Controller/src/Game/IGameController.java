@@ -15,4 +15,5 @@ public interface IGameController
 
      void setScoreChangeListener(ScoreChangeListener scoreChangeListener);
 
+     void setTileSize(double tileSize, int tileCount);
 }

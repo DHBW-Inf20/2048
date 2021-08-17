@@ -2,6 +2,7 @@ package Game.DataClasses;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class Tile {
@@ -20,7 +21,7 @@ public class Tile {
     public StackPane stackPane;
 
 
-    public Tile(int number, Tile preFieldA, Tile preFieldB, int posX, int posY) {
+    public Tile(int number, Tile preFieldA, Tile preFieldB, int posX, int posY, double tileSize, int tileCount) {
         this.number = number;
         this.preFieldA = preFieldA;
         this.preFieldB = preFieldB;
@@ -30,13 +31,14 @@ public class Tile {
         if (preFieldA != null) preFieldA.clearPreTiles();
         if (preFieldB != null) preFieldB.clearPreTiles();
 
-        int tileCount = 4;
 
         //TODO: Diese Werte müssen irgendwie von GameView aus gesetzt werden ... ggf. erst an den Tilecreator übergeben werden und dann beim Instanzieren hier gesetzt werden
+        //Hoffe ist gefixed
+
         //Variablen mit einstellbaren Konstanten
-        double gameBoardSize = 450;
-        double gameBoardGap = gameBoardSize * 0.02;
-        double tileSize = (gameBoardSize - (gameBoardGap * (tileCount + 1))) / tileCount;
+        //double gameBoardSize = 450;
+        //double gameBoardGap = gameBoardSize * 0.02;
+        //double tileSize = (gameBoardSize - (gameBoardGap * (tileCount + 1))) / tileCount;
 
         this.stackPane = new StackPane();
         stackPane.setPrefWidth(tileSize);
@@ -45,10 +47,32 @@ public class Tile {
         stackPane.setId("stackPane" + number);
 
         Text text = new Text(String.valueOf(number));
+
+
+        //Mehr Tiles -> kleinerer Text
+        switch (tileCount) {
+            case 5:
+                text.setStyle("-fx-font: 25pt Helvetica;");
+                break;
+            case 6:
+            case 7:
+                text.setStyle("-fx-font: 20pt Helvetica;");
+                break;
+            case 8:
+                text.setStyle("-fx-font: 15pt Helvetica;");
+                break;
+            case 9:
+                text.setStyle("-fx-font: 13pt Helvetica;");
+                break;
+            case 10:
+                text.setStyle("-fx-font: 11pt Helvetica;");
+                break;
+            default:
+                break;
+        }
+
         text.setId("tileText" + number);
         stackPane.getChildren().add(text);
-
-        //TODO: Zahl einfügen und Farbe je nach Zahl anpassen
 
     }
 

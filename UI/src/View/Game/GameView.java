@@ -122,6 +122,8 @@ public class GameView implements IGameView {
         tileSize = (gameBoardSize - (gameBoardGap * (tileCount + 1))) / tileCount;
         scoreBoxSize = ((gameBoardSize / 3) * 0.7);
 
+        this.gameController.setTileSize(tileSize, tileCount);
+
         //Hole das Pane(/board) aus der .fxml anhand der ID
         pane = (Pane) scene.lookup("#board");
         this.scene = scene;
@@ -586,16 +588,20 @@ public class GameView implements IGameView {
         this.minWindowHeight = windowHeight;
     }
 
+
+
     //KANN später gelöscht werden nur zum Testen (oder in das Test Projekt verschben werden)
     //TESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTEST
     //Erzeugt manuel ein Spielfeld Array
+
+    /*
     public Tile[][] getArrayForTesting1() {
 
         if (variable == 0) {
 
             System.out.println("Get First Array");
-            testBoard[0][0] = new Tile(1, null, null, 0, 0);
-            testBoard[0][3] = new Tile(2, null, null, 0, 3);
+            testBoard[0][0] = new Tile(1, null, null, 0, 0, tileSize);
+            testBoard[0][3] = new Tile(2, null, null, 0, 3, tileSize);
         }
         if (variable == 1) {
             System.out.println("Get Second Array");
@@ -608,7 +614,7 @@ public class GameView implements IGameView {
             testBoard[0][0] = null;
             testBoard[0][3] = null;
 
-            testBoard[1][2] = new Tile(5, null, null, 1, 2);
+            testBoard[1][2] = new Tile(5, null, null, 1, 2, tileSize);
         }
 
         variable++;
@@ -655,4 +661,6 @@ public class GameView implements IGameView {
         variable++;
         return testBoard;
     }
+
+     */
 }
