@@ -330,6 +330,7 @@ public class GameView implements IGameView {
                         tilePane.setLayoutX(gameBoardGap * (posX + 1) + (tileSize * posX));
                         tilePane.setLayoutY(gameBoardGap * (posY + 1) + (tileSize * posY));
 
+
                         pane.getChildren().add(tilePane);
 
                         zoomInTile(nextGameBoard[posX][posY]);
