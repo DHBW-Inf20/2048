@@ -10,6 +10,9 @@ import Game.TileCreator.ITileCreator;
 import Game.TileCreator.MinMaxTileCreator;
 import Game.TileCreator.RandomTileCreator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameController implements IGameController {
     private GameModes gameMode = GameModes.random;
     private boolean aiEnabled = false;
@@ -23,10 +26,7 @@ public class GameController implements IGameController {
     private int tileCount;
     private double tileSize;
 
-
-
     private int score = 0;
-
 
     public GameController() {
     }
@@ -46,7 +46,6 @@ public class GameController implements IGameController {
     {
         this.tileSize = tileSize;
         this.tileCount = tileCount;
-        System.out.println("Set size" + tileSize);
     }
 
 
@@ -140,8 +139,6 @@ public class GameController implements IGameController {
                         //Wenn auf ein nicht leeres Feld gestoßen wird
                         if (field[k][j] != null) {
 
-                            System.out.println("j" + j + "k" + k);
-
                             //Prüfe ob Vorgänger gleich
                             if (tempFieldPosition != field.length - 1 && tempField[tempFieldPosition + 1][j].getNumber() == field[k][j].getNumber() && !sumUpLast) {
                                 //Verdopple letztes Element
@@ -149,7 +146,6 @@ public class GameController implements IGameController {
                                 int newNumber = (tempField[tempFieldPosition + 1][j].getNumber() * 2);
 
                                 //Verdopple letztes Element
-                                System.out.println("NEW TILE RIGHT");
                                 tempField[tempFieldPosition + 1][j] = new Tile(newNumber, tempField[tempFieldPosition + 1][j], field[k][j], tempFieldPosition + 1, j, tileSize, tileCount);
                                 score = score + tempField[tempFieldPosition + 1][j].getNumber();
                                 scoreChangeListener.change(score);
@@ -159,6 +155,7 @@ public class GameController implements IGameController {
                                 tempField[tempFieldPosition][j] = field[k][j];
                                 tempFieldPosition--;
                                 sumUpLast = false;
+
                                 if (!field[k][j].checkForPreTiles()) {
                                     field[k][j].clearPreTiles();
                                 }
@@ -195,6 +192,7 @@ public class GameController implements IGameController {
                                 tempField[j][tempFieldPosition] = field[j][k];
                                 tempFieldPosition++;
                                 sumUpLast = false;
+
                                 if (!field[j][k].checkForPreTiles()) {
                                     field[j][k].clearPreTiles();
                                 }
@@ -230,6 +228,7 @@ public class GameController implements IGameController {
                                 tempField[j][tempFieldPosition] = field[j][k];
                                 tempFieldPosition--;
                                 sumUpLast = false;
+
                                 if (!field[j][k].checkForPreTiles()) {
                                     field[j][k].clearPreTiles();
                                 }
