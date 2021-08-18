@@ -11,7 +11,7 @@ public class CooperativeTileCreator implements ITileCreator
     }
 
     @Override
-    public Tile[][] generateNewNumber(Tile[][] tiles) {
+    public Tile[][] generateNewNumber(Tile[][] field, double tileSize, int tileCount) {
         return new Tile[0][];
     }
 }

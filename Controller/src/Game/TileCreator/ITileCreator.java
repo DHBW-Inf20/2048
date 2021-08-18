@@ -6,6 +6,7 @@ public interface ITileCreator
 {
     Tile[][] generateField(int dimensions);
 
-    public Tile[][] generateNewNumber(Tile[][] tiles);
+    public Tile[][] generateNewNumber(Tile[][] tiles, double tileSize, int tileCount);
+
 
 }

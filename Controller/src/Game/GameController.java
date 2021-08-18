@@ -19,6 +19,12 @@ public class GameController implements IGameController {
     private int dimensions;
     private ScoreChangeListener scoreChangeListener;
 
+    //Für Variables Spielfeld
+    private int tileCount;
+    private double tileSize;
+
+
+
     private int score = 0;
 
 
@@ -34,6 +40,13 @@ public class GameController implements IGameController {
     public void setScoreChangeListener(ScoreChangeListener scoreChangeListener)
     {
         this.scoreChangeListener = scoreChangeListener;
+    }
+
+    public void setTileSize(double tileSize, int tileCount)
+    {
+        this.tileSize = tileSize;
+        this.tileCount = tileCount;
+        System.out.println("Set size" + tileSize);
     }
 
 
@@ -58,8 +71,8 @@ public class GameController implements IGameController {
 
         field = iTileCreator.generateField(dimension);
 
-        field = iTileCreator.generateNewNumber(field);
-        field = iTileCreator.generateNewNumber(field);
+        field = iTileCreator.generateNewNumber(field, tileSize, tileCount);
+        field = iTileCreator.generateNewNumber(field, tileSize, tileCount);
 
         tileChangeListener.change(field);
     }
@@ -67,10 +80,7 @@ public class GameController implements IGameController {
     @Override
     public void makeMove(Directions direction) {
 
-
         //TODO: Kommentieren
-        //TODO: SCORE
-
 
         int tempFieldPosition;
 
@@ -95,7 +105,7 @@ public class GameController implements IGameController {
                                 int newNumber = (tempField[tempFieldPosition - 1][j].getNumber() * 2);
 
                                 //Verdopple letztes Element
-                                tempField[tempFieldPosition - 1][j] = new Tile(newNumber, tempField[tempFieldPosition - 1][j], field[k][j], tempFieldPosition - 1, j);
+                                tempField[tempFieldPosition - 1][j] = new Tile(newNumber, tempField[tempFieldPosition - 1][j], field[k][j], tempFieldPosition - 1, j, tileSize, tileCount);
                                 score = score + tempField[tempFieldPosition - 1][j].getNumber();
                                 scoreChangeListener.change(score);
                                 sumUpLast = true;
@@ -140,7 +150,7 @@ public class GameController implements IGameController {
 
                                 //Verdopple letztes Element
                                 System.out.println("NEW TILE RIGHT");
-                                tempField[tempFieldPosition + 1][j] = new Tile(newNumber, tempField[tempFieldPosition + 1][j], field[k][j], tempFieldPosition + 1, j);
+                                tempField[tempFieldPosition + 1][j] = new Tile(newNumber, tempField[tempFieldPosition + 1][j], field[k][j], tempFieldPosition + 1, j, tileSize, tileCount);
                                 score = score + tempField[tempFieldPosition + 1][j].getNumber();
                                 scoreChangeListener.change(score);
                                 sumUpLast = true;
@@ -176,7 +186,7 @@ public class GameController implements IGameController {
                                 //Verdopple letztes Element
                                 int newNumber = (tempField[j][tempFieldPosition - 1].getNumber() * 2);
 
-                                tempField[j][tempFieldPosition - 1] = new Tile(newNumber, tempField[j][tempFieldPosition - 1], field[j][k], tempFieldPosition - 1, k);
+                                tempField[j][tempFieldPosition - 1] = new Tile(newNumber, tempField[j][tempFieldPosition - 1], field[j][k], tempFieldPosition - 1, k, tileSize, tileCount);
                                 score = score + tempField[j][tempFieldPosition - 1].getNumber();
                                 scoreChangeListener.change(score);
                                 sumUpLast = true;
@@ -211,7 +221,7 @@ public class GameController implements IGameController {
                                 //Verdopple letztes Element
                                 int newNumber = (tempField[j][tempFieldPosition + 1].getNumber() * 2);
 
-                                tempField[j][tempFieldPosition + 1] = new Tile(newNumber, tempField[j][tempFieldPosition + 1], field[j][k], tempFieldPosition + 1, k);
+                                tempField[j][tempFieldPosition + 1] = new Tile(newNumber, tempField[j][tempFieldPosition + 1], field[j][k], tempFieldPosition + 1, k, tileSize, tileCount);
                                 score = score + tempField[j][tempFieldPosition + 1].getNumber();
                                 scoreChangeListener.change(score);
                                 sumUpLast = true;
@@ -243,7 +253,7 @@ public class GameController implements IGameController {
             }
         }
 
-        field = iTileCreator.generateNewNumber(field);
+        field = iTileCreator.generateNewNumber(field, tileSize, tileCount);
         tileChangeListener.change(field);
     }
 }

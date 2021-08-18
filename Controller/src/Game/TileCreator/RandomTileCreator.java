@@ -14,7 +14,7 @@ public class RandomTileCreator implements ITileCreator
     }
 
     @Override
-    public Tile[][] generateNewNumber(Tile[][] field) {
+    public Tile[][] generateNewNumber(Tile[][] field, double tileSize, int tileCount) {
 
         //Generiert eine zufällige Zahl zum bestimmen des nächsten Tiles
         int nextRandomNumber;
@@ -50,7 +50,7 @@ public class RandomTileCreator implements ITileCreator
                 if (field[j][k] == null) {
                     //Ist das Feld frei und die laufvariable erreicht wird das Feld gesetzt
                     if (randomNumber == fieldCount) {
-                        field[j][k] = new Tile(nextRandomNumber, null, null, j, k);
+                        field[j][k] = new Tile(nextRandomNumber, null, null, j, k, tileSize, tileCount);
                     }
                     fieldCount++;
                 }
