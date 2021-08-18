@@ -112,7 +112,8 @@ public class GameView implements IGameView {
 
         this.gameController.setScoreChangeListener(newScore -> {
             setScoreLabel(newScore);
-            highScoreController.submitNewScore(newScore);
+            highScoreController.submitNewScore(newScore,tileCount);
+            setHighscore(highScoreController.getCurrentHighScoreData(tileCount).getScore());
         });
 
 
@@ -247,7 +248,7 @@ public class GameView implements IGameView {
             }
         });
 
-        setHighscore(highScoreController.getCurrentHighScoreData().getScore());
+        setHighscore(highScoreController.getCurrentHighScoreData(tileCount).getScore());
     }
 
     /**

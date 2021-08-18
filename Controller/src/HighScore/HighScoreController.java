@@ -1,54 +1,55 @@
 package HighScore;
 
 import java.io.*;
-import java.security.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
 
 public class HighScoreController implements IHighScoreController
 {
-    private HighScoreData currentHighScoreData;
+    private HashMap<Integer,HighScoreData> currentHighScoreData;
 
-    public HighScoreData getCurrentHighScoreData()
+    public HighScoreData getCurrentHighScoreData(int dimension)
     {
-        return currentHighScoreData;
+        if(!currentHighScoreData.containsKey(dimension)) return new HighScoreData(new Date(),0);
+        return currentHighScoreData.get(dimension);
     }
 
-    private final String highscoreDataLocation = "./highscore.txt";
+    private final String highscoreDataLocation = "./highscore.dat";
 
     public HighScoreController()
     {
         try
         {
-            this.currentHighScoreData = readHighScoreData();
+           readHighScoreDataFromFile();
         } catch (IOException | ClassNotFoundException e)
         {
-            this.currentHighScoreData = new HighScoreData(new Date(),0);
+            this.currentHighScoreData = new HashMap<>();
         }
     }
 
-    private HighScoreData readHighScoreData() throws IOException, ClassNotFoundException
+    private void readHighScoreDataFromFile() throws IOException, ClassNotFoundException
     {
         File f = new File(highscoreDataLocation);
+        if(!f.exists()) throw new FileNotFoundException();
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(highscoreDataLocation));
-        return (HighScoreData) in.readObject();
-
+        currentHighScoreData = (HashMap<Integer,HighScoreData>) in.readObject();
     }
 
-    private void writeHighScoreData(HighScoreData highScoreData) throws IOException
+    private void writeHighScoreDataToFile() throws IOException
     {
         ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(highscoreDataLocation));
-        os.writeObject(highScoreData);
+        os.writeObject(currentHighScoreData);
     }
 
     @Override
-    public void submitNewScore(int newScore)
+    public void submitNewScore(int newScore, int dimension)
     {
-            if(currentHighScoreData.getScore()<newScore)
+            if(!currentHighScoreData.containsKey(dimension) || currentHighScoreData.get(dimension).getScore()<newScore)
             {
-                currentHighScoreData = new HighScoreData(new Date(), newScore);
+                currentHighScoreData.put(dimension,new HighScoreData(new Date(), newScore));
                 try
                 {
-                    writeHighScoreData(currentHighScoreData);
+                    writeHighScoreDataToFile();
                 } catch (IOException e)
                 {
                     e.printStackTrace();
