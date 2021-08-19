@@ -6,19 +6,20 @@ import java.util.Random;
 
 public class RandomTileCreator implements ITileCreator
 {
-
+    private Random random = new Random();
     @Override
     public Tile[][] generateField(int dimensions)
     {
         return new Tile[dimensions][dimensions];
     }
 
+
     @Override
     public Tile[][] generateNewNumber(Tile[][] field, double tileSize, int tileCount) {
 
         //Generiert eine zufällige Zahl zum bestimmen des nächsten Tiles
         int nextRandomNumber;
-        Random random = new Random();
+
         int randomNumber = random.nextInt(10);
 
         //Wähle die nächste Zahl (10% -> 4 | 90% -> 2)
@@ -27,7 +28,14 @@ public class RandomTileCreator implements ITileCreator
         } else {
             nextRandomNumber = 2;
         }
+        return insertNumberInField(field, tileSize, tileCount, nextRandomNumber);
+    }
 
+
+    //Erzeugt Tile mit Nummer und fügt dieses an eine zufällige Stelle im Spielfeld ein
+    public Tile[][] insertNumberInField(Tile[][] field, double tileSize, int tileCount, int number)
+    {
+        int randomNumber;
         //Schauen wie viele freie Felder es gibt
         int freeFields = 0;
         for (int j = 0; j < field.length; j++) {
@@ -50,7 +58,7 @@ public class RandomTileCreator implements ITileCreator
                 if (field[j][k] == null) {
                     //Ist das Feld frei und die laufvariable erreicht wird das Feld gesetzt
                     if (randomNumber == fieldCount) {
-                        field[j][k] = new Tile(nextRandomNumber, null, null, j, k, tileSize, tileCount);
+                        field[j][k] = new Tile(number, null, null, j, k, tileSize, tileCount);
                     }
                     fieldCount++;
                 }
