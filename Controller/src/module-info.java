@@ -4,6 +4,5 @@ module Controller {
     exports Game;
     exports Game.DataClasses;
     exports HighScore;
-    exports Menu;
     exports Game.Listeners;
 }
