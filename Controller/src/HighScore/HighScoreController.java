@@ -10,13 +10,14 @@ public class HighScoreController implements IHighScoreController
 {
     private HashMap<Integer, HighScoreData> currentHighScoreData;
 
+    private final String highscoreDataLocation = "./highscore.dat";
+
     public HighScoreData getCurrentHighScoreData(int dimension)
     {
         if(!currentHighScoreData.containsKey(dimension)) return new HighScoreData(new Date(),0);
         return currentHighScoreData.get(dimension);
     }
 
-    private final String highscoreDataLocation = "./highscore.dat";
 
     public HighScoreController()
     {

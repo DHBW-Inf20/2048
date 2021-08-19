@@ -5,6 +5,7 @@ import Game.DataClasses.Directions;
 import Game.DataClasses.GameModes;
 import Game.DataClasses.Tile;
 import Game.IGameController;
+import Game.Listeners.ScoreChangeListener;
 import HighScore.IHighScoreController;
 import View.Menue.MenueView;
 import javafx.animation.ScaleTransition;
@@ -90,6 +91,7 @@ public class GameView implements IGameView {
     @Override
     public void createGameScene(Event event, Scene scene) throws IOException {
 
+     
         this.gameController.setTileChangeListener(tiles ->
         {
             nextGameBoard = tiles;

@@ -23,7 +23,7 @@ public class CooperativeTileCreator implements ITileCreator
 
 
     @Override
-    public Tile[][] generateNewNumber(Tile[][] field, double tileSize, int tileCount)
+    public Tile[][] generateNewNumber(Tile[][] inputField, double tileSize, int tileCount)
     {
 
         if(random.nextInt(difficultyLevel)==0)
@@ -31,6 +31,10 @@ public class CooperativeTileCreator implements ITileCreator
             System.out.println("random tile");
        //     return randomTileCreator.generateNewNumber(field, tileSize, tileCount);
         }
+
+
+        Tile[][] field = inputField.clone();
+
 
         int number = 4;
 

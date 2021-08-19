@@ -15,7 +15,7 @@ public class RandomTileCreator implements ITileCreator
 
 
     @Override
-    public Tile[][] generateNewNumber(Tile[][] field, double tileSize, int tileCount) {
+    public Tile[][] generateNewNumber(Tile[][] inputField, double tileSize, int tileCount) {
 
         //Generiert eine zufällige Zahl zum bestimmen des nächsten Tiles
         int nextRandomNumber;
@@ -28,7 +28,8 @@ public class RandomTileCreator implements ITileCreator
         } else {
             nextRandomNumber = 2;
         }
-        return insertNumberInField(field, tileSize, tileCount, nextRandomNumber);
+        //Parameter nicht ändern
+        return insertNumberInField(inputField.clone(), tileSize, tileCount, nextRandomNumber);
     }
 
 
