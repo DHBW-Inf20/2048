@@ -1,6 +1,6 @@
 package HighScore;
 
-import Game.DataClasses.Tile;
+import Game.DataClasses.HighScoreData;
 
 public interface IHighScoreController
 {

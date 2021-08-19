@@ -1,12 +1,14 @@
 package HighScore;
 
+import Game.DataClasses.HighScoreData;
+
 import java.io.*;
 import java.util.Date;
 import java.util.HashMap;
 
 public class HighScoreController implements IHighScoreController
 {
-    private HashMap<Integer,HighScoreData> currentHighScoreData;
+    private HashMap<Integer, HighScoreData> currentHighScoreData;
 
     public HighScoreData getCurrentHighScoreData(int dimension)
     {

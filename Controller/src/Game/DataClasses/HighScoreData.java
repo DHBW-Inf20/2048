@@ -1,4 +1,4 @@
-package HighScore;
+package Game.DataClasses;
 
 import java.io.Serializable;
 import java.util.Date;
