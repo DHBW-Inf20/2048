@@ -12,7 +12,7 @@ public interface IGameView {
 
     void createGameScene(Event event, Scene scene) throws IOException;
 
-    void setKiMode(boolean kiMode);
+    void setAiMode(boolean kiMode);
 
     void setTileCount(int tileCount);
 

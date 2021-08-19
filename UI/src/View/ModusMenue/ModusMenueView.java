@@ -1,7 +1,6 @@
 package View.ModusMenue;
 
 import Game.DataClasses.GameModes;
-import View.Game.GameView;
 import View.Game.IGameView;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -86,7 +85,7 @@ public class ModusMenueView implements IModusMenueView {
         //WICHTIG: Bei databinding geht es nur so -> Es kann nicht alles (4 Zeilen oben drüber) ausgelagert werden loader.getControler ist notwendig.
         gameView = loader.getController();
         gameView.setLabel();
-        gameView.setKiMode(kiMode);
+        gameView.setAiMode(kiMode);
         gameView.setTileCount(tileCount);
         gameView.setGameMode(gameMode);
         gameView.setWindowDimensions(windowWidth, windowHeight, minWindowWidth, minWindowHeight);

@@ -5,4 +5,5 @@ module Controller {
     exports Game.DataClasses;
     exports HighScore;
     exports Game.Listeners;
+    exports AI;
 }

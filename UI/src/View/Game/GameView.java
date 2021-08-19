@@ -1,15 +1,16 @@
 package View.Game;
 
+import AI.IAIPlayer;
 import Factory.ComponentFactory;
 import Game.DataClasses.Directions;
 import Game.DataClasses.GameModes;
 import Game.DataClasses.Tile;
 import Game.IGameController;
-import Game.Listeners.ScoreChangeListener;
 import HighScore.IHighScoreController;
 import View.Menue.MenueView;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -54,7 +55,7 @@ public class GameView implements IGameView {
     private double tileSize;
     private double scoreBoxSize;
 
-    private boolean kiMode;
+    private boolean aiMode;
     private int tileCount;
     private GameModes gameMode;
 
@@ -71,6 +72,7 @@ public class GameView implements IGameView {
 
     private final IGameController gameController;
     private final IHighScoreController highScoreController;
+    private final IAIPlayer aiPlayer;
 
     /**
      * Kosntruktor
@@ -79,6 +81,7 @@ public class GameView implements IGameView {
 
         this.gameController = ComponentFactory.getGameController();
         this.highScoreController = ComponentFactory.getHighScroeController();
+        this.aiPlayer = ComponentFactory.getAIPlayer();
 
     }
 
@@ -91,7 +94,7 @@ public class GameView implements IGameView {
     @Override
     public void createGameScene(Event event, Scene scene) throws IOException {
 
-     
+
         this.gameController.setTileChangeListener(tiles ->
         {
             nextGameBoard = tiles;
@@ -202,37 +205,69 @@ public class GameView implements IGameView {
         setLabel();
 
         //Keylistener auf der Scene
-        scene.setOnKeyPressed(e -> {
 
-            if (e.getCode() == KeyCode.W) {
-                gameController.makeMove(Directions.UP);
-                move();
-            }
-            if (e.getCode() == KeyCode.S) {
-                gameController.makeMove(Directions.DOWN);
-                move();
-            }
-            if (e.getCode() == KeyCode.A) {
-                gameController.makeMove(Directions.LEFT);
-                move();
-            }
-            if (e.getCode() == KeyCode.D) {
-                gameController.makeMove(Directions.RIGHT);
-                move();
-            }
-            //Score Test
-            if (e.getCode() == KeyCode.PLUS) {
-                System.out.println("+ key was pressed");
+        if(!aiMode)
+        {
+            scene.setOnKeyPressed(e -> {
 
-                int var = Integer.parseInt(scoreLabel.getText());
-                if (var == 0) {
-                    var = 1;
+                if (e.getCode() == KeyCode.W) {
+                    gameController.makeMove(Directions.UP);
+                    move();
                 }
-                setScoreLabel(2 * var);
-            }
-        });
+                if (e.getCode() == KeyCode.S) {
+                    gameController.makeMove(Directions.DOWN);
+                    move();
+                }
+                if (e.getCode() == KeyCode.A) {
+                    gameController.makeMove(Directions.LEFT);
+                    move();
+                }
+                if (e.getCode() == KeyCode.D) {
+                    gameController.makeMove(Directions.RIGHT);
+                    move();
+                }
+                //Score Test
+                if (e.getCode() == KeyCode.PLUS) {
+                    System.out.println("+ key was pressed");
+
+                    int var = Integer.parseInt(scoreLabel.getText());
+                    if (var == 0) {
+                        var = 1;
+                    }
+                    setScoreLabel(2 * var);
+                }
+            });
+        }
+        else
+        {
+            createAiPlayLoop();
+        }
 
         setHighscore(highScoreController.getCurrentHighScoreData(tileCount).getScore());
+    }
+
+    private void createAiPlayLoop()
+    {
+        final long timeInterval = 1200;
+        Thread thread = new Thread(() ->
+        {
+            while (true) {
+                //Zurück ins UI Thread
+                Platform.runLater(this::makeAIMove);
+                try {
+                    Thread.sleep(timeInterval);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+
+    private void makeAIMove()
+    {
+        gameController.makeMove(aiPlayer.calculateNextDirection(nextGameBoard));
+        move();
     }
 
     /**
@@ -499,11 +534,11 @@ public class GameView implements IGameView {
     /**
      * Setzt den KiMode, kommt vom Main menü
      *
-     * @param kiMode Der zu setzende Modus
+     * @param aiMode Der zu setzende Modus
      */
     @Override
-    public void setKiMode(boolean kiMode) {
-        this.kiMode = kiMode;
+    public void setAiMode(boolean aiMode) {
+        this.aiMode = aiMode;
     }
 
     /**
@@ -543,7 +578,7 @@ public class GameView implements IGameView {
     }
 
     public void setLabel() {
-        if (kiMode) {
+        if (aiMode) {
             myLabel.setText("KI -> ON!!!");
         } else {
             myLabel.setText("KI -> OFF!!!");
