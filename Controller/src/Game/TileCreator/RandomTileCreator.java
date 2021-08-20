@@ -48,20 +48,24 @@ public class RandomTileCreator implements ITileCreator
             }
         }
 
-        randomNumber = random.nextInt(freeFields);
-        int fieldCount = 0;
+        //Wenn keine freien Felder vorhanden, keine mehr erzeugen -> Verloren
+        if(freeFields != 0) {
 
-        //Die neue zahl in ein zufälliges freies Feld einsetzen
-        for (int j = 0; j < field.length; j++) {
-            for (int k = 0; k < field.length; k++) {
+            randomNumber = random.nextInt(freeFields);
+            int fieldCount = 0;
 
-                //Bei einem freien Feld wird die laufvariable hochgezählt
-                if (field[j][k] == null) {
-                    //Ist das Feld frei und die laufvariable erreicht wird das Feld gesetzt
-                    if (randomNumber == fieldCount) {
-                        field[j][k] = new Tile(number, null, null, j, k, tileSize, tileCount);
+            //Die neue zahl in ein zufälliges freies Feld einsetzen
+            for (int j = 0; j < field.length; j++) {
+                for (int k = 0; k < field.length; k++) {
+
+                    //Bei einem freien Feld wird die laufvariable hochgezählt
+                    if (field[j][k] == null) {
+                        //Ist das Feld frei und die laufvariable erreicht wird das Feld gesetzt
+                        if (randomNumber == fieldCount) {
+                            field[j][k] = new Tile(number, null, null, j, k, tileSize, tileCount);
+                        }
+                        fieldCount++;
                     }
-                    fieldCount++;
                 }
             }
         }

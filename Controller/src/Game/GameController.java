@@ -26,6 +26,9 @@ public class GameController implements IGameController {
 
     private int score = 0;
 
+    //gameStatus Im Spiel -> 0 | Wenn Gewonnen -> 1 | Nach gewinn weiterspielen -> 2 | Verloren -> 3
+    private int gameStatus = 0;
+
     public GameController() {
     }
 
@@ -251,8 +254,52 @@ public class GameController implements IGameController {
             }
         }
 
+        checkGameStatus();
+
         field = iTileCreator.generateNewNumber(field, tileSize, tileCount);
         tileChangeListener.change(field);
+    }
+
+
+    private void checkGameStatus(){
+
+        int tileCountForLose = 0;
+
+        if(gameStatus == 1){
+            gameStatus++;
+        }
+        if(gameStatus == 0){
+            //Check ob Gewonne
+            for (int j = 0; j < field.length; j++) {
+                for (int k = 0; k < field.length; k++) {
+                    if(field[j][k] != null && field[j][k].getNumber() == 1024){
+                        gameStatus = 1;
+                    }
+                }
+            }
+        }
+
+        if(gameStatus == 3){
+            gameStatus++;
+        }
+        if(gameStatus == 0 || gameStatus == 2){
+            //Check ob Verloren
+            for (int j = 0; j < field.length; j++) {
+                for (int k = 0; k < field.length; k++) {
+                    if(field[j][k] != null){
+                        tileCountForLose++;
+                    }
+                }
+            }
+            if(tileCountForLose == (tileCount*tileCount) - 1){
+                System.out.println("LOOOOSE");
+                gameStatus = 3;
+            }
+        }
+    }
+
+    public int getGameStatus(){
+        return gameStatus;
     }
 }
 

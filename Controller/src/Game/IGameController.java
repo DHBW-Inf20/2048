@@ -18,4 +18,5 @@ public interface IGameController
 
      void setTileSize(double tileSize, int tileCount);
 
+     int getGameStatus();
 }
