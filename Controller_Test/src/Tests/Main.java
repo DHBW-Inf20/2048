@@ -1,3 +1,5 @@
+package Tests;
+
 import Game.GameController;
 
 public class Main
@@ -7,3 +9,4 @@ public class Main
        // GameController controller = new GameController();
     }
 }
+
