@@ -147,12 +147,12 @@
     -fx-text-alignment: center;
 }
 
-#stackPane265{
+#stackPane256{
     -fx-background-color:"#f0d04b";
     -fx-background-radius: 10 10 10 10;
     -fx-border-radius: 10 10 10 10;
 }
-#tileText265{
+#tileText256{
     -fx-fill: "#ffffff";
     -fx-font: 40pt Helvetica;
     -fx-font-weight: bold;

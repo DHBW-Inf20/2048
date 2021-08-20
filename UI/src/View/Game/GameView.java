@@ -333,8 +333,8 @@ public class GameView implements IGameView {
                 }
             }
         }
-        if (testForDuplicateCounter == 16) {
-            return;
+        if (testForDuplicateCounter <= (tileCount * 2) - 1) {
+            inMoveFlage = false;
         }
 
         //Itteriert über das Spielfeld
@@ -480,7 +480,12 @@ public class GameView implements IGameView {
      * @param tile Zu entfernendes Tile
      */
     private void removeTile1(Tile tile) {
-        pane.getChildren().remove(tile.getPreFieldA().getPane());
+        //TODO:Warum tritt hier eine Exception auf :D?? 1/2
+        try {
+            pane.getChildren().remove(tile.getPreFieldA().getPane());
+        }catch(Exception e){
+            System.out.println("Cant remove Tile");
+        }
         removeTile2(tile);
     }
     /**
@@ -489,7 +494,12 @@ public class GameView implements IGameView {
      * @param tile Zu entfernendes Tile
      */
     private void removeTile2(Tile tile) {
-        pane.getChildren().remove(tile.getPreFieldB().getPane());
+        //TODO:Warum tritt hier eine Exception auf :D?? 2/2
+        try {
+            pane.getChildren().remove(tile.getPreFieldB().getPane());
+        }catch(Exception e){
+            System.out.println("Cant remove Tile");
+        }
         inMoveFlage = false;
     }
 

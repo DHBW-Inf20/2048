@@ -99,8 +99,6 @@ public class GameController implements IGameController {
     @Override
     public void makeMove(Directions direction) {
 
-        //TODO: Nicht ausführbare moves müssen erkannt und unterbunden werden (Moves bei denne keine Tile verschoben wird z.B. alle am Rand) -> kontrolle des Spielfeld??
-
         int tempFieldPosition;
 
         Tile[][] tempField = new Tile[dimensions][dimensions];
@@ -285,7 +283,7 @@ public class GameController implements IGameController {
 
         //Wenn schon gewonnen dan setzte auf "Gewonnen aber weiterspielen"
         if(gameStatus == 1){
-            gameStatus++;
+            gameStatus = 2;
         }
         //Wenn im Spiel prüfe auf gewinn
         if(gameStatus == 0){
@@ -313,10 +311,47 @@ public class GameController implements IGameController {
                     }
                 }
             }
-            if(tileCountForLose == (tileCount*tileCount) - 1){
+            if(tileCountForLose >= (tileCount*tileCount) - 1 && !checkForNeighbours()){
                 gameStatus = 3;
             }
         }
+    }
+
+    private boolean checkForNeighbours(){
+
+        int prevField = 0;
+        int actualField = 0;
+
+        //horizontaler durchgang
+        for (int j = 0; j < field.length; j++) {
+            for (int k = 0; k < field.length; k++) {
+                if(field[j][k] != null)
+                    actualField = field[j][k].getNumber();
+
+                if(actualField == prevField){
+                    return true;
+                }
+                prevField = actualField;
+            }
+            prevField = 0;
+            actualField = 0;
+        }
+
+        //Vertikaler durchgang
+        for (int j = 0; j < field.length; j++) {
+            for (int k = 0; k < field.length; k++) {
+                if(field[k][j] != null)
+                    actualField = field[k][j].getNumber();
+
+                if(actualField == prevField){
+                    return true;
+                }
+                prevField = actualField;
+            }
+            prevField = 0;
+            actualField = 0;
+        }
+        return false;
     }
 
     /**
