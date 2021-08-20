@@ -6,4 +6,5 @@ module Controller {
     exports HighScore;
     exports Game.Listeners;
     exports AI;
+    exports Game.TileCreator;
 }
