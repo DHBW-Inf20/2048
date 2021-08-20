@@ -87,10 +87,5 @@
          </children>
       </HBox>
       <Pane id="board" fx:id="board" maxHeight="300.0" maxWidth="300.0" minHeight="300.0" minWidth="300.0" prefHeight="300.0" prefWidth="300.0" stylesheets="@../../Styles/boardStyle.css" />
-      <Label fx:id="myLabel" text="Label">
-         <font>
-            <Font size="42.0" />
-         </font>
-      </Label>
    </children>
 </VBox>

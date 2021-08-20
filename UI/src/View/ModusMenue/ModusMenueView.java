@@ -71,10 +71,6 @@ public class ModusMenueView implements IModusMenueView {
      */
     public void onButtonPressPlay(ActionEvent event) throws IOException {
 
-
-        //TODO: Wenn ich diese Funktion wie die anderen auslager in den eigentlichen Gamecontroler, dann funktioniert databinding nichtmehr ... wieso? Wegen loader.getControler()?
-
-
         //Erzeuge eine Szene aus GameView.fxml
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Game/GameView.fxml"));
 
@@ -84,7 +80,6 @@ public class ModusMenueView implements IModusMenueView {
 
         //WICHTIG: Bei databinding geht es nur so -> Es kann nicht alles (4 Zeilen oben drüber) ausgelagert werden loader.getControler ist notwendig.
         gameView = loader.getController();
-        gameView.setLabel();
         gameView.setAiMode(kiMode);
         gameView.setTileCount(tileCount);
         gameView.setGameMode(gameMode);

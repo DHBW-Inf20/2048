@@ -43,6 +43,12 @@ public class GameController implements IGameController {
         this.scoreChangeListener = scoreChangeListener;
     }
 
+    /**
+     *
+     *
+     * @param tileSize größe der einzelnen Tiles
+     * @param tileCount Spielfeldgröße (4,5,6,7,8,9,10)
+     */
     public void setTileSize(double tileSize, int tileCount)
     {
         this.tileSize = tileSize;
@@ -50,6 +56,11 @@ public class GameController implements IGameController {
     }
 
 
+    /**
+     * Initalisiert den GameControler mit dem ausgewählten TileCreator
+     *
+     * @param gameOptions
+     */
     @Override
     public void startGame(GameOptions gameOptions) {
         this.gameMode = gameOptions.getGameMode();
@@ -78,10 +89,17 @@ public class GameController implements IGameController {
 
     }
 
+
+    /**
+     *
+     *  Führt den Zug in die gegebene Richtung aus in dem Lokalen Array das vom UI später abgefragt wird
+     *
+     * @param direction Richtung des Spielzuges
+     */
     @Override
     public void makeMove(Directions direction) {
 
-        //TODO: Kommentieren
+        //TODO: Nicht ausführbare moves müssen erkannt und unterbunden werden (Moves bei denne keine Tile verschoben wird z.B. alle am Rand) -> kontrolle des Spielfeld??
 
         int tempFieldPosition;
 
@@ -89,7 +107,6 @@ public class GameController implements IGameController {
         boolean sumUpLast = false;
 
         switch (direction) {
-
             case LEFT:
                 //Verschieben nach links
                 tempFieldPosition = 0;
@@ -125,9 +142,7 @@ public class GameController implements IGameController {
                     }
                     tempFieldPosition = 0;
                 }
-
                 break;
-
 
             case RIGHT:
                 //Verschieben nach rechts
@@ -161,7 +176,6 @@ public class GameController implements IGameController {
                                 if (!field[k][j].checkForPreTiles()) {
                                     field[k][j].clearPreTiles();
                                 }
-
                             }
                         }
                     }
@@ -245,7 +259,6 @@ public class GameController implements IGameController {
                 break;
         }
 
-        //Setze das board
         //setzt die einzelnen Werte von nextGameBoard in prevGameBoard
         for (int j = 0; j < field.length; j++) {
             for (int k = 0; k < field.length; k++) {
@@ -254,6 +267,7 @@ public class GameController implements IGameController {
             }
         }
 
+        //Checkt das Spielfeld auf gewonne/verloren
         checkGameStatus();
 
         field = iTileCreator.generateNewNumber(field, tileSize, tileCount);
@@ -261,13 +275,19 @@ public class GameController implements IGameController {
     }
 
 
+    /**
+     * Überprüft das Spielfeld auf gewonnen oder Verloren
+     *
+     */
     private void checkGameStatus(){
 
         int tileCountForLose = 0;
 
+        //Wenn schon gewonnen dan setzte auf "Gewonnen aber weiterspielen"
         if(gameStatus == 1){
             gameStatus++;
         }
+        //Wenn im Spiel prüfe auf gewinn
         if(gameStatus == 0){
             //Check ob Gewonne
             for (int j = 0; j < field.length; j++) {
@@ -279,9 +299,11 @@ public class GameController implements IGameController {
             }
         }
 
+        // Wenn schon verloren setzte status auf 4 -> undefieniert, mache nichts mehr
         if(gameStatus == 3){
             gameStatus++;
         }
+        // Wenn im Spiel oder "gewonnen aber weiterspielen" prüfe auf verloren
         if(gameStatus == 0 || gameStatus == 2){
             //Check ob Verloren
             for (int j = 0; j < field.length; j++) {
@@ -292,12 +314,16 @@ public class GameController implements IGameController {
                 }
             }
             if(tileCountForLose == (tileCount*tileCount) - 1){
-                System.out.println("LOOOOSE");
                 gameStatus = 3;
             }
         }
     }
 
+    /**
+     * Gibt den Status des Spiels zurück
+     *
+     * @return Status des Spiels
+     */
     public int getGameStatus(){
         return gameStatus;
     }

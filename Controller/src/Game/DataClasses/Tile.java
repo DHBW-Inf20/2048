@@ -31,15 +31,6 @@ public class Tile {
         if (preFieldA != null) preFieldA.clearPreTiles();
         if (preFieldB != null) preFieldB.clearPreTiles();
 
-
-        //TODO: Diese Werte müssen irgendwie von GameView aus gesetzt werden ... ggf. erst an den Tilecreator übergeben werden und dann beim Instanzieren hier gesetzt werden
-        //Hoffe ist gefixed
-
-        //Variablen mit einstellbaren Konstanten
-        //double gameBoardSize = 450;
-        //double gameBoardGap = gameBoardSize * 0.02;
-        //double tileSize = (gameBoardSize - (gameBoardGap * (tileCount + 1))) / tileCount;
-
         this.stackPane = new StackPane();
         stackPane.setPrefWidth(tileSize);
         stackPane.setPrefHeight(tileSize);
@@ -47,7 +38,6 @@ public class Tile {
         stackPane.setId("stackPane" + number);
 
         Text text = new Text(String.valueOf(number));
-
 
         //Mehr Tiles -> kleinerer Text
         switch (tileCount) {

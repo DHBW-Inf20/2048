@@ -59,6 +59,8 @@ public class GameView implements IGameView {
     private boolean aiMode;
     private int tileCount;
     private GameModes gameMode;
+    private boolean inMoveFlage = false;
+    private int gameStatus = 0;
 
     //Spielfelder die übergeben werden
     private Tile[][] nextGameBoard;
@@ -74,8 +76,6 @@ public class GameView implements IGameView {
 
     private GameOptions gameOptions;
 
-    private boolean inMoveFlage = false;
-    private int gameStatus = 0;
 
 
     /**
@@ -101,7 +101,6 @@ public class GameView implements IGameView {
         this.gameController.setTileChangeListener(tiles ->
         {
             nextGameBoard = tiles;
-            System.out.println("Set new GameBoard in GameView!");
         });
 
         this.gameController.setScoreChangeListener(newScore -> {
@@ -206,11 +205,7 @@ public class GameView implements IGameView {
         //Initialisierungs Move
         move();
 
-        //Hilfslabe zum debuggen
-        setLabel();
-
         //Keylistener auf der Scene
-
         if(!aiMode)
         {
             scene.setOnKeyPressed(e -> {
@@ -251,7 +246,6 @@ public class GameView implements IGameView {
                         }
                         case PLUS -> {
                             //Score Test (EASTER EGG)
-                            System.out.println("+ key was pressed");
                             int var = Integer.parseInt(scoreLabel.getText());
                             if (var == 0) {
                                 var = 1;
@@ -405,8 +399,6 @@ public class GameView implements IGameView {
         //Gewinnabfrage
         gameStatus = this.gameController.getGameStatus();
         winLoseScreen();
-
-
     }
 
     /**
@@ -427,7 +419,6 @@ public class GameView implements IGameView {
         translateTransition.setNode(tilePane);
         translateTransition.setDuration(new Duration(50));
         translateTransition.play();
-
     }
 
     /**
@@ -474,8 +465,6 @@ public class GameView implements IGameView {
      */
     private void createTile(Tile tile, int posX, int posY) {
 
-        System.out.println("Create Tile");
-
         tile.getPane().setLayoutX(gameBoardGap * (posX + 1) + (tileSize * posX));
         tile.getPane().setLayoutY(gameBoardGap * (posY + 1) + (tileSize * posY));
 
@@ -484,7 +473,6 @@ public class GameView implements IGameView {
         zoomInTile(tile);
     }
 
-
     /**
      * Entfernt das Tile bzw die Pane vom grafischen Spielfeld (Erstes Kind)
      * Ruft danach das Löschen des Zweiten Kindes auf
@@ -492,8 +480,6 @@ public class GameView implements IGameView {
      * @param tile Zu entfernendes Tile
      */
     private void removeTile1(Tile tile) {
-        System.out.println("\nRemove Tile 1");
-        System.out.println("X:" + tile.getPosX() + "  Y:" + tile.getPosY());
         pane.getChildren().remove(tile.getPreFieldA().getPane());
         removeTile2(tile);
     }
@@ -503,12 +489,9 @@ public class GameView implements IGameView {
      * @param tile Zu entfernendes Tile
      */
     private void removeTile2(Tile tile) {
-        System.out.println("\nRemove Tile 2");
-        System.out.println("X:" + tile.getPosX() + "  Y:" + tile.getPosY());
         pane.getChildren().remove(tile.getPreFieldB().getPane());
         inMoveFlage = false;
     }
-
 
     /**
      * Tiles für einen Zoomefeckt um 10% vergrößern
@@ -549,8 +532,6 @@ public class GameView implements IGameView {
 
         //gameStatus Im Spiel -> 0 | Wenn Gewonnen -> 1 | Nach gewinn weiterspielen -> 2 | Verloren -> 3
 
-        System.out.println(gameStatus);
-
         //Wenn das erste Mal gewonnen wurde wird der Gewinnerscreen angezeigt
         if (gameStatus == 1) {
 
@@ -584,7 +565,7 @@ public class GameView implements IGameView {
             winText.setId("winText");
             loserPane.getChildren().add(winText);
 
-            //Das man keinen weiteren move machen kann wird einfach inMovoe gesagt
+            //Das man keinen weiteren move machen kann wird einfach inMovoe gesetzt
             inMoveFlage = true;
         }
     }
@@ -633,14 +614,6 @@ public class GameView implements IGameView {
     @Override
     public void setGameMode(GameModes gameMode) {
         this.gameMode = gameMode;
-    }
-
-    public void setLabel() {
-        if (aiMode) {
-            myLabel.setText("KI -> ON!!!");
-        } else {
-            myLabel.setText("KI -> OFF!!!");
-        }
     }
 
     /**
