@@ -68,14 +68,14 @@ public class GameView implements IGameView {
     //Ist das "Spielfeld" worauf alles hinzugefügt und bewegt wird.
     private Pane pane;
 
-    //Im Spiel -> 0 | Wenn Gewonnen -> 1 | Nach gewinn weiterspielen -> 2
-    private int winScreen = 0;
-
     private final IGameController gameController;
     private final IHighScoreController highScoreController;
     private final IAIPlayer aiPlayer;
 
     private GameOptions gameOptions;
+
+    private boolean inMoveFlage = false;
+    private int gameStatus = 0;
 
 
     /**
@@ -201,12 +201,10 @@ public class GameView implements IGameView {
         gameController.startGame(gameOptions);
         highScoreController.setGameOptions(gameOptions);
 
-
         prevGameBoard = new Tile[tileCount][tileCount];
 
         //Initialisierungs Move
         move();
-
 
         //Hilfslabe zum debuggen
         setLabel();
@@ -217,31 +215,50 @@ public class GameView implements IGameView {
         {
             scene.setOnKeyPressed(e -> {
 
-                if (e.getCode() == KeyCode.W) {
-                    gameController.makeMove(Directions.UP);
-                    move();
-                }
-                if (e.getCode() == KeyCode.S) {
-                    gameController.makeMove(Directions.DOWN);
-                    move();
-                }
-                if (e.getCode() == KeyCode.A) {
-                    gameController.makeMove(Directions.LEFT);
-                    move();
-                }
-                if (e.getCode() == KeyCode.D) {
-                    gameController.makeMove(Directions.RIGHT);
-                    move();
-                }
-                //Score Test
-                if (e.getCode() == KeyCode.PLUS) {
-                    System.out.println("+ key was pressed");
-
-                    int var = Integer.parseInt(scoreLabel.getText());
-                    if (var == 0) {
-                        var = 1;
+                if(!inMoveFlage) {
+                    switch (e.getCode()) {
+                        case W -> {
+                            //Falg das gerade ein Zug ausgeführt wird
+                            inMoveFlage = true;
+                            //Lässt den Controler ein neues Spielfeld erzeugen
+                            gameController.makeMove(Directions.UP);
+                            //Führt den Zug im UI aus
+                            move();
+                        }
+                        case S -> {
+                            //Falg das gerade ein Zug ausgeführt wird
+                            inMoveFlage = true;
+                            //Lässt den Controler ein neues Spielfeld erzeugen
+                            gameController.makeMove(Directions.DOWN);
+                            //Führt den Zug im UI aus
+                            move();
+                        }
+                        case A -> {
+                            //Falg das gerade ein Zug ausgeführt wird
+                            inMoveFlage = true;
+                            //Lässt den Controler ein neues Spielfeld erzeugen
+                            gameController.makeMove(Directions.LEFT);
+                            //Führt den Zug im UI aus
+                            move();
+                        }
+                        case D -> {
+                            //Falg das gerade ein Zug ausgeführt wird
+                            inMoveFlage = true;
+                            //Lässt den Controler ein neues Spielfeld erzeugen
+                            gameController.makeMove(Directions.RIGHT);
+                            //Führt den Zug im UI aus
+                            move();
+                        }
+                        case PLUS -> {
+                            //Score Test (EASTER EGG)
+                            System.out.println("+ key was pressed");
+                            int var = Integer.parseInt(scoreLabel.getText());
+                            if (var == 0) {
+                                var = 1;
+                            }
+                            setScoreLabel(2 * var);
+                        }
                     }
-                    setScoreLabel(2 * var);
                 }
             });
         }
@@ -298,10 +315,18 @@ public class GameView implements IGameView {
         stage.show();
     }
 
-
+    /**
+     * Generiert aus dem gegegbenen Array das Spielfeld im UI
+     * Das Array wird vom gameControler erzeugt, welcher vor dieser Funktion aufgerufen wird
+     *
+     */
     private void move() {
 
+        //Flag ob ein neues Tile erzeugt wurde
         boolean newTileFlag = true;
+
+        //Für die Freigabe des nächsten zuges wenn keine lange transition stattfand (-> mergeCount = 0)
+        int mergeCount = 0;
 
         //Falls aus einem grund kein Update mehr kommt darf auch nichtsmehr passieren -> sonst gibts einen Exception
         int testForDuplicateCounter = 0;
@@ -317,8 +342,6 @@ public class GameView implements IGameView {
         if (testForDuplicateCounter == 16) {
             return;
         }
-
-        //System.out.println("Break");
 
         //Itteriert über das Spielfeld
         for (int posX = 0; posX < tileCount; posX++) {
@@ -361,6 +384,7 @@ public class GameView implements IGameView {
                 else if (nextGameBoard[posX][posY] != null) {
 
                     transitionChildren(nextGameBoard[posX][posY], posX, posY);
+                    mergeCount++;
                 }
             }
         }
@@ -373,8 +397,16 @@ public class GameView implements IGameView {
             }
         }
 
+        if(mergeCount == 0){
+            //Wenn keine lange transition stattfand und man nicht warten muss kann der nächste Zug freigegeben werden
+            inMoveFlage = false;
+        }
+
         //Gewinnabfrage
-        checkForWin();
+        gameStatus = this.gameController.getGameStatus();
+        winLoseScreen();
+
+
     }
 
     /**
@@ -474,6 +506,7 @@ public class GameView implements IGameView {
         System.out.println("\nRemove Tile 2");
         System.out.println("X:" + tile.getPosX() + "  Y:" + tile.getPosY());
         pane.getChildren().remove(tile.getPreFieldB().getPane());
+        inMoveFlage = false;
     }
 
 
@@ -512,11 +545,14 @@ public class GameView implements IGameView {
     /**
      * Gewinnabrgrage -> Wenn gewonnen zeige Siegerbildschirm
      */
-    private void checkForWin() {
+    private void winLoseScreen() {
 
-        //TODO: GEWINNABFRAGE
+        //gameStatus Im Spiel -> 0 | Wenn Gewonnen -> 1 | Nach gewinn weiterspielen -> 2 | Verloren -> 3
+
+        System.out.println(gameStatus);
+
         //Wenn das erste Mal gewonnen wurde wird der Gewinnerscreen angezeigt
-        if (false&& winScreen == 0) { //TODO
+        if (gameStatus == 1) {
 
             StackPane winnerPane = new StackPane();
             winnerPane.setPrefHeight(gameBoardSize);
@@ -529,12 +565,27 @@ public class GameView implements IGameView {
             winText.setId("winText");
             winnerPane.getChildren().add(winText);
 
-            winScreen++;
+            gameStatus++;
         }
         //Wenn gewonnen wurde aber man noch weiterspielt wird der Gewinnerscreen wieder entfernt
-        else if (winScreen == 1) {
+        else if (gameStatus == 2) {
             pane.getChildren().remove(scene.lookup("#winPane"));
             pane.getChildren().remove(scene.lookup("#winText"));
+        }
+        else if (gameStatus == 3) {
+            StackPane loserPane = new StackPane();
+            loserPane.setPrefHeight(gameBoardSize);
+            loserPane.setPrefWidth(gameBoardSize);
+            loserPane.setId("winPane");
+            loserPane.toFront();
+            pane.getChildren().add(loserPane);
+
+            Text winText = new Text("Verloren!");
+            winText.setId("winText");
+            loserPane.getChildren().add(winText);
+
+            //Das man keinen weiteren move machen kann wird einfach inMovoe gesagt
+            inMoveFlage = true;
         }
     }
 
