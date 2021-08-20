@@ -2,6 +2,7 @@ package Game;
 
 import Game.DataClasses.Directions;
 import Game.DataClasses.GameModes;
+import Game.DataClasses.GameOptions;
 import Game.DataClasses.Tile;
 import Game.Listeners.ScoreChangeListener;
 import Game.Listeners.TileChangeListener;
@@ -9,9 +10,6 @@ import Game.TileCreator.CooperativeTileCreator;
 import Game.TileCreator.ITileCreator;
 import Game.TileCreator.MinMaxTileCreator;
 import Game.TileCreator.RandomTileCreator;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameController implements IGameController {
     private GameModes gameMode = GameModes.random;
@@ -50,10 +48,10 @@ public class GameController implements IGameController {
 
 
     @Override
-    public void startGame(GameModes mode, boolean aiEnabled, int dimension) {
-        this.gameMode = mode;
-        this.aiEnabled = aiEnabled;
-        this.dimensions = dimension;
+    public void startGame(GameOptions gameOptions) {
+        this.gameMode = gameOptions.getGameMode();
+        this.aiEnabled = gameOptions.isAiEnabled();
+        this.dimensions = gameOptions.getFieldDimensions();
 
         switch (gameMode) {
 
@@ -68,12 +66,13 @@ public class GameController implements IGameController {
             }
         }
 
-        field = iTileCreator.generateField(dimension);
+        field = iTileCreator.generateField(dimensions);
 
         field = iTileCreator.generateNewNumber(field, tileSize, tileCount);
         field = iTileCreator.generateNewNumber(field, tileSize, tileCount);
 
         tileChangeListener.change(field);
+
     }
 
     @Override

@@ -2,12 +2,13 @@ package Game;
 
 import Game.DataClasses.Directions;
 import Game.DataClasses.GameModes;
+import Game.DataClasses.GameOptions;
 import Game.Listeners.ScoreChangeListener;
 import Game.Listeners.TileChangeListener;
 
 public interface IGameController
 {
-    void startGame(GameModes mode, boolean aiEnabled, int dimension);
+    void startGame(GameOptions gameOptions);
 
     void makeMove(Directions direction);
 

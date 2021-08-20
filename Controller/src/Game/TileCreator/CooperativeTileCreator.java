@@ -13,7 +13,6 @@ public class CooperativeTileCreator implements ITileCreator
     private final RandomTileCreator randomTileCreator = new RandomTileCreator();
     private final Random random = new Random();
 
-    private final int difficultyLevel  = 2; //Gibt an, wie häufig ein CooperativeTile generiert wird
 
     @Override
     public Tile[][] generateField(int dimensions)
@@ -26,29 +25,17 @@ public class CooperativeTileCreator implements ITileCreator
     public Tile[][] generateNewNumber(Tile[][] inputField, double tileSize, int tileCount)
     {
 
-        if(random.nextInt(difficultyLevel)==0)
-        {
-            System.out.println("random tile");
-       //     return randomTileCreator.generateNewNumber(field, tileSize, tileCount);
-        }
-
 
         Tile[][] field = inputField.clone();
 
+        int number = random.nextInt(10)==1?4:2;
 
-        int number = 4;
-
-        Pair<Integer, Integer> optimalPosition = findOptimalPositionForTileInsertion(field,number); //Versuche eine optimale Position für das Tile mit der Nummer 4 zu finden
-        if(optimalPosition==null){
-            number = 2;
-            optimalPosition = findOptimalPositionForTileInsertion(field,number); //Versuche eine optimale Position für das Tile mit der Nummer 2 zu finden
-        }
-        if(optimalPosition==null) //Es kann kein Cooperative-Tile generiert/gefunden werden
+        Pair<Integer, Integer> optimalPosition = findOptimalPositionForTileInsertion(field,number); //Versuche eine optimale Position für ein Spielstein mit dem Wert von 'number' zu finden
+        if(optimalPosition==null) // Es kann keine optimale Position ermittelt werden (alle Positionen belegt)
         {
-            return randomTileCreator.insertNumberInField(field,tileSize,tileCount,4); //Tile mit Zahl 4 random plazieren (4 ist besser als 2)
+            return randomTileCreator.insertNumberInField(field,tileSize,tileCount,number); //Spielstein wird an zufälliger Stelle im Feld plaziert
         }
 
-        System.out.println("cooperate tile: "+number);
         field[optimalPosition.getKey()][optimalPosition.getValue()] = new Tile(number,null,null,optimalPosition.getKey(),optimalPosition.getValue(),tileSize,tileCount);
         return field;
     }
@@ -56,10 +43,9 @@ public class CooperativeTileCreator implements ITileCreator
 
     /**
      * @param field Das Spielfeld aus Tiles
-     * @param insertTile Das Tile zudem ein passendes neues Tile eingefügt werden soll, dass es im nächsten Vorgang verschmolzen werden kann
+     * @param number Die Nummer des Spielsteins, für den eine optimale Plazierung gefunden werden soll
      * @return Ein Pair -> Erstes Element: X-Position, Zweites Element: Y-Position
      */
-
 
 
     private Pair<Integer,Integer> findOptimalPositionForTileInsertion(Tile[][] field, int number)
@@ -68,21 +54,20 @@ public class CooperativeTileCreator implements ITileCreator
         {
             for (int j = 0; j < field[i].length; j++)
             {
-                if (field[i][j] ==null||field[i][j].getNumber() != number)
+                if (field[i][j] ==null||field[i][j].getNumber() != number) //Einen Spielstein mit der nummer 'number suchen
                     continue;
 
-
-                if (field.length > i + 1 && field[i + 1][j] == null)
+                if (field.length > i + 1 && field[i + 1][j] == null)  //Schauen, ob oberhalb vom gefundenen Spielstein ein Spielstein mit der gleichen Nummer plaziert werden kann
                     return new Pair<>(i + 1, j);
-                if (i - 1 > 0 && field[i - 1][j] == null)
+                if (i - 1 > 0 && field[i - 1][j] == null) //Schauen, ob unterhalb gefundenen Spielstein ein Spielstein mit der gleichen Nummer plaziert werden kann
                     return new Pair<>(i - 1, j);
-                if (field[i].length > j + 1 && field[i][j + 1] == null)
+                if (field[i].length > j + 1 && field[i][j + 1] == null) // Schauen, ob rechts vom gefundenen Spielstein ein Spielstein mit der gleichen Nummer plaziert werden kann
                     return new Pair<>(i, j + 1);
-                if (j - 1 > 0 && field[i][j - 1] == null)
+                if (j - 1 > 0 && field[i][j - 1] == null) //Schauen, ob links vom gefundenen Spielstein ein Spielstein mit der gleichen Nummer plaziert werden kann
                     return new Pair<>(i, j - 1);
             }
         }
-        return null;
+        return null; //Es konnte keine optimale Position zur Plazierung eines Spielsteins mit der Nummer 'number' gefunden werden
     }
 
 }

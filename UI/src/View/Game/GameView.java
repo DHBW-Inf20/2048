@@ -4,6 +4,7 @@ import AI.IAIPlayer;
 import Factory.ComponentFactory;
 import Game.DataClasses.Directions;
 import Game.DataClasses.GameModes;
+import Game.DataClasses.GameOptions;
 import Game.DataClasses.Tile;
 import Game.IGameController;
 import HighScore.IHighScoreController;
@@ -74,6 +75,9 @@ public class GameView implements IGameView {
     private final IHighScoreController highScoreController;
     private final IAIPlayer aiPlayer;
 
+    private GameOptions gameOptions;
+
+
     /**
      * Kosntruktor
      */
@@ -82,7 +86,6 @@ public class GameView implements IGameView {
         this.gameController = ComponentFactory.getGameController();
         this.highScoreController = ComponentFactory.getHighScroeController();
         this.aiPlayer = ComponentFactory.getAIPlayer();
-
     }
 
     /**
@@ -103,8 +106,8 @@ public class GameView implements IGameView {
 
         this.gameController.setScoreChangeListener(newScore -> {
             setScoreLabel(newScore);
-            highScoreController.submitNewScore(newScore,tileCount);
-            setHighscore(highScoreController.getCurrentHighScoreData(tileCount).getScore());
+            highScoreController.submitNewScore(newScore);
+            setHighscore(highScoreController.getCurrentHighScoreData().getScore());
         });
 
 
@@ -193,7 +196,11 @@ public class GameView implements IGameView {
         stage.setScene(scene);
         stage.show();
 
-        gameController.startGame(gameMode, true, tileCount);
+        gameOptions = new GameOptions( aiMode, tileCount, gameMode);
+
+        gameController.startGame(gameOptions);
+        highScoreController.setGameOptions(gameOptions);
+
 
         prevGameBoard = new Tile[tileCount][tileCount];
 
@@ -243,7 +250,7 @@ public class GameView implements IGameView {
             createAiPlayLoop();
         }
 
-        setHighscore(highScoreController.getCurrentHighScoreData(tileCount).getScore());
+        setHighscore(highScoreController.getCurrentHighScoreData().getScore());
     }
 
     private void createAiPlayLoop()
