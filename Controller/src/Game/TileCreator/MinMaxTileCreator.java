@@ -5,9 +5,15 @@ import javafx.geometry.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Die MinMaxTileCreator-Klasse implementiert den MINMAX-Algoorithmus um neu erscheinende Zahlen
+ * auf dem Spielfeld möglichst ungünstig für den Spieler zu generieren.
+ */
 public class MinMaxTileCreator implements ITileCreator
 {
-    //variablen für Design
+    /**
+     * Variablen für Design
+     */
     private int tileCount = 1;
     private double tileSize = 1;
 
@@ -18,6 +24,11 @@ public class MinMaxTileCreator implements ITileCreator
     private Point2D gespeicherterZug;
     private  int dimensions;
 
+    /**
+     * generiert ein leeres Spielfeld
+     * @param dimensions Dimensionen des Spielfeld
+     * @return leeres Spielfeld
+     */
     @Override
     public Tile[][] generateField(int dimensions)
     {
@@ -25,6 +36,14 @@ public class MinMaxTileCreator implements ITileCreator
         return new Tile[dimensions][dimensions];
     }
 
+    /**
+     * generiert eine neue Nummer auf einem Spielfeld, möglichst
+     * ungünstig für den Spieler
+     * @param field das Spielfeld
+     * @param tileSize Größe der Spielsteine
+     * @param tileCount Anzahl der Spielsteine
+     * @return spielfeld mit neuer Nummer / neuem Stein darauf
+     */
     @Override
     public Tile[][] generateNewNumber(Tile[][] field, double tileSize, int tileCount) { //Hauptmethode
         this.tileCount = tileCount;
@@ -39,6 +58,13 @@ public class MinMaxTileCreator implements ITileCreator
         return calculateTile(originalField, gespeicherterZug); // führt gespeicherten Zug aus
     }
 
+    /**
+     * Methode, die den für den Spieler ungünstigsten Stein platziert.
+     * Teil des MINMAX-Algorithmus
+     * @param tiefe Suchtiefe
+     * @param field Spielfeld
+     * @return "Score" nach dem gefundenen zug
+     */
     private int max(int tiefe, Tile[][] field) {
         if (tiefe == 0 || !checkTilePlaceable(field)){
 
@@ -61,6 +87,14 @@ public class MinMaxTileCreator implements ITileCreator
         }
         return maxWert;
     }
+
+    /**
+     * Methode, die den günstigsten Move für den Spieler findet.
+     * Gegenstück von max, auch teil des MINMAX-Algorithmus
+     * @param tiefe Suchtiefe
+     * @param field Spielfeld
+     * @return "Score" nach dem gefundenen zug
+     */
     private int min(int tiefe, Tile[][] field) {
         if (tiefe == 0 || !checkMovePossible(field))
         return countFreeTiles(field);
@@ -82,22 +116,36 @@ public class MinMaxTileCreator implements ITileCreator
     }
 
 
-
-    private boolean checkMovePossible(Tile[][] field){ //checks if MIN-Player has a possible move
+    /**
+     *  checks if MIN-Player has a possible move
+     * @param field Spielfeld
+     * @return true, if MIN-Player has a possible move, otherwise false
+     */
+    private boolean checkMovePossible(Tile[][] field){
         if(generatePossibleMoves(field) != null){
             return true;
         }
         return false;
     }
 
-    private boolean checkTilePlaceable(Tile[][] field){ //checks if MAX-Player has a possible move
+    /**
+     * checks if MAX-Player has a possible move
+     * @param field Spielfeld
+     * @return true, if MAX-Player has a possible move, otherwise false
+     */
+    private boolean checkTilePlaceable(Tile[][] field){
         if(countFreeTiles(field) != 0){
             return true;
         }
         return false;
     }
 
-    private List<Point2D> generatePossibleTiles(Tile[][] field){ //generiert die möglichen Felder, auf denen platziert werden kann.
+    /**
+     *  generiert die möglichen Felder, auf denen platziert werden kann.
+     * @param field Spielfeld
+     * @return Liste mit möglichen Feldern, auf denen platziert werden kann
+     */
+    private List<Point2D> generatePossibleTiles(Tile[][] field){ //
         List<Point2D> freeTiles = new ArrayList<Point2D>();
         for(int i=0; i<dimensions; i++){
             for(int j=0; j< dimensions; j++){
@@ -111,7 +159,12 @@ public class MinMaxTileCreator implements ITileCreator
         return freeTiles;
     }
 
-    private List<String> generatePossibleMoves(Tile[][] field){ //generiert die möglichen Richtungen, in die der Spieler wischen kann.
+    /**
+     *  generiert die möglichen Richtungen, in die der Spieler wischen kann.
+     * @param field Spielfeld
+     * @return Liste mit möglichen Richtungen
+     */
+    private List<String> generatePossibleMoves(Tile[][] field){ //
 
         List<String> possibleMovesList = new ArrayList<String>(); //Mögliche Richtungen: UP, DOWN, LEFT, RIGHT
         possibleMovesList.add("UP");
@@ -122,11 +175,23 @@ public class MinMaxTileCreator implements ITileCreator
         return possibleMovesList;
     }
 
-    private  Tile[][] calculateTile(Tile[][] field, Point2D newTile){//Calculates the Filed with a new Tile placed.
+    /**
+     *  Calculates the Filed with a new Tile placed.
+     * @param field Spielfeld
+     * @param newTile neues Tile
+     * @return neues Spielfeld
+     */
+    private  Tile[][] calculateTile(Tile[][] field, Point2D newTile){//
         field[(int)newTile.getX()] [(int)newTile.getY()] = new Tile(2, null, null, (int)newTile.getX(), (int)newTile.getY(), tileSize, tileCount);
         return field;
     }
 
+    /**
+     *  calculates the Field after a Move
+     * @param field Spielfeld
+     * @param move Richtung, in die gespielt wird
+     * @return neues Spielfeld
+     */
     private Tile[][] calculateMove(Tile[][] field, String move){ //calculates the Field after a Move // Nicht ausführbare moves müssen erkannt und unterbunden werden (Moves bei denne keine Tile verschoben wird z.B. alle am Rand) -> kontrolle des Spielfeld??
 
         int tempFieldPosition;
@@ -292,11 +357,22 @@ public class MinMaxTileCreator implements ITileCreator
         return field;
     }
 
+    /**
+     * Zählt die freien Felder auf dem Spielfeld.
+     * Score des MAX-Spielers
+     * @param field Spielfeld
+     * @return Anzahl freie Felder auf dem Spielfeld
+     */
     private int countFreeTiles(Tile[][] field){ //Score des MAX-Spielers
         List<Point2D> freeTiles = generatePossibleTiles(field);
         return freeTiles.size();
     }
 
+    /**
+     * Dupliziert das Spielfeld.
+     * @param field Spielfeld
+     * @return Klon des Spielfelds
+     */
     private Tile[][] duplicateField(Tile[][]field){
         Tile[][] newField = new Tile[dimensions][dimensions];
         for(int i=0; i<dimensions; i++){
@@ -309,18 +385,16 @@ public class MinMaxTileCreator implements ITileCreator
         return  newField;
     }
 
+    /**
+     * Methode für alternative Implementation des MINMAX-Algorithmus. Hier nicht benötigt.
+     * Score des MIN-Spielers
+     * @param field
+     * @return
+     */
     private int calculateScore(Tile[][] field){ //Score des MIN-Spielers
 
         return 0;
     }
-    private Tile[][] calculateBestPosition(Tile[][] field){ //Bester zug des MAX-Spielers
-        new Point2D(0, 0);
 
-        return  field;
-    }
-    private Tile[][] calculateBestDirection(Tile[][] field){ //Bester zug des MIN-Spielers
-
-        return field;
-    }
 
 }

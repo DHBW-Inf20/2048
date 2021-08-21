@@ -18,6 +18,9 @@ public class MinMaxTileCreatorTest
 {
     private int dimensions = 4;
 
+    /**
+     * Testet das Platzieren von neuen Tiles mit dem MINMAXTILEGENERATOR
+     */
     @Test
     public void TestPlaceTile()
     {
