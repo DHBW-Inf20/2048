@@ -1,6 +1,6 @@
 package Tests;
 
-import Game.DataClasses.Tile;
+import DataClasses.Tile;
 import Game.TileCreator.MinMaxTileCreator;
 import org.junit.Test;
 
@@ -9,7 +9,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import Game.DataClasses.Tile;
+
 import javafx.geometry.Point2D;
 
 
