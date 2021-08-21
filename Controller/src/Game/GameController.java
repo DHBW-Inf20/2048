@@ -1,9 +1,9 @@
 package Game;
 
-import Game.DataClasses.Directions;
-import Game.DataClasses.GameModes;
-import Game.DataClasses.GameOptions;
-import Game.DataClasses.Tile;
+import DataClasses.Directions;
+import DataClasses.GameModes;
+import DataClasses.GameOptions;
+import DataClasses.Tile;
 import Game.Listeners.ScoreChangeListener;
 import Game.Listeners.TileChangeListener;
 import Game.TileCreator.CooperativeTileCreator;

@@ -6,4 +6,5 @@ module FXTest {
     opens View.Menue;
     opens View.ModusMenue;
     opens View.Credits;
+    opens View.Highscore;
 }

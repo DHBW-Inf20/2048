@@ -1,8 +1,6 @@
 package View.Game;
 
-import Game.DataClasses.GameModes;
-import Game.DataClasses.Tile;
-import javafx.event.ActionEvent;
+import DataClasses.GameModes;
 import javafx.event.Event;
 import javafx.scene.Scene;
 

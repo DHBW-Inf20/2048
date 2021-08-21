@@ -1,27 +1,24 @@
 package View.Menue;
 
-import Game.DataClasses.GameModes;
-import Game.GameController;
-import Game.IGameController;
-import View.Credits.CreditsView;
+import Factory.ComponentFactory;
+import PlayerData.IPlayerDataManager;
 import View.Credits.ICreditsView;
+import View.Highscore.IHighscoreView;
 import View.ModusMenue.IModusMenueView;
-import View.ModusMenue.ModusMenueView;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -40,6 +37,9 @@ public class MenueView extends Application implements Initializable {
     @FXML
     private ToggleButton toggleButton;
 
+    @FXML
+    private TextField playerName;
+
     //Globale Variablen
     private int tileCount;
     private boolean kiMode = false;
@@ -52,6 +52,10 @@ public class MenueView extends Application implements Initializable {
 
     private IModusMenueView modusMenue;
     private ICreditsView creditsView;
+    private IHighscoreView highscoreView;
+
+
+    private IPlayerDataManager iPlayerDataManager;
 
 
     /**
@@ -59,7 +63,7 @@ public class MenueView extends Application implements Initializable {
      *
      */
     public MenueView() {
-
+        iPlayerDataManager = ComponentFactory.getPlayerDataManager();
     }
 
     /**
@@ -88,6 +92,7 @@ public class MenueView extends Application implements Initializable {
 
 
         primaryStage.show();
+
     }
 
     /**
@@ -118,6 +123,8 @@ public class MenueView extends Application implements Initializable {
             tileCount = (int) sliderSize.getValue();
             buttonNewGame.setText("New " + tileCount + "x" + tileCount);
         });
+
+        playerName.setText(iPlayerDataManager.getPlayerName());
 
     }
 
@@ -173,5 +180,21 @@ public class MenueView extends Application implements Initializable {
         } else {
             toggleButton.setText("KI: Off");
         }
+    }
+
+    public void onButtonPressHighscore(ActionEvent event) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Highscore/HighscoreView.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root, windowWidth, windowHeight);
+
+        highscoreView = loader.getController();
+        highscoreView.createSceneHighscore(event, scene);
+    }
+
+
+    public void playerNameChanged(KeyEvent keyEvent)
+    {
+     iPlayerDataManager.setPlayerName(playerName.getText());
     }
 }

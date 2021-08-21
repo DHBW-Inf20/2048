@@ -1,9 +1,9 @@
 package HighScore;
 
-import Game.DataClasses.GameOptions;
-import Game.DataClasses.HighScoreData;
+import DataClasses.GameOptions;
+import DataClasses.HighScoreData;
 
-public interface IHighScoreController
+public interface ILocalHighScoreController
 {
     /**
      * @param newScore Neue Punktzahl (wird intern geprüft ob es Highscore wird)

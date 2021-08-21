@@ -33,6 +33,16 @@
     -fx-background-radius: 10 10 10 10;
     -fx-border-radius: 10 10 10 10;
 }
+
+#buttonHighscore{
+    -fx-background-color:"#baac9f";
+    -fx-text-fill:"white";
+
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+
+
 #buttonCredits:hover{
     -fx-background-color:"#c4b6aa";
 }

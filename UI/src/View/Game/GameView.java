@@ -2,12 +2,12 @@ package View.Game;
 
 import AI.IAIPlayer;
 import Factory.ComponentFactory;
-import Game.DataClasses.Directions;
-import Game.DataClasses.GameModes;
-import Game.DataClasses.GameOptions;
-import Game.DataClasses.Tile;
+import DataClasses.Directions;
+import DataClasses.GameModes;
+import DataClasses.GameOptions;
+import DataClasses.Tile;
 import Game.IGameController;
-import HighScore.IHighScoreController;
+import HighScore.ILocalHighScoreController;
 import View.Menue.MenueView;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
@@ -20,7 +20,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -71,7 +70,7 @@ public class GameView implements IGameView {
     private Pane pane;
 
     private final IGameController gameController;
-    private final IHighScoreController highScoreController;
+    private final ILocalHighScoreController highScoreController;
     private final IAIPlayer aiPlayer;
 
     private GameOptions gameOptions;

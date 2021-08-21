@@ -1,10 +1,8 @@
 package Tests;
 
-import Game.DataClasses.Tile;
+import DataClasses.Tile;
 import Game.TileCreator.CooperativeTileCreator;
 import org.junit.Test;
-
-import java.lang.reflect.Field;
 
 import static org.junit.Assert.assertTrue;
 
@@ -32,7 +30,7 @@ public class CooperateTileCreatorTest
             *  4  2  4
             *  [] 2  2  <-  Eine 2 bei [2][1]
 
-       b) Er die zufällige Spielsteinnummer ist eine 2
+       b) Er die zufäll ige Spielsteinnummer ist eine 2
           Feld müsste so aussehen:
             *  2  2  2
             *  4  2  4

@@ -1,6 +1,6 @@
 package View.ModusMenue;
 
-import Game.DataClasses.GameModes;
+import DataClasses.GameModes;
 import View.Game.IGameView;
 import javafx.event.ActionEvent;
 import javafx.event.Event;

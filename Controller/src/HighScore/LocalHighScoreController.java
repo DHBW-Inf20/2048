@@ -1,13 +1,13 @@
 package HighScore;
 
-import Game.DataClasses.GameOptions;
-import Game.DataClasses.HighScoreData;
+import DataClasses.GameOptions;
+import DataClasses.HighScoreData;
 
 import java.io.*;
 import java.util.Date;
 import java.util.HashMap;
 
-public class HighScoreController implements IHighScoreController
+public class LocalHighScoreController implements ILocalHighScoreController
 {
     private HashMap<GameOptions, HighScoreData> currentHighScoreData;
 
@@ -21,7 +21,7 @@ public class HighScoreController implements IHighScoreController
     }
 
 
-    public HighScoreController()
+    public LocalHighScoreController()
     {
         try
         {

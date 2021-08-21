@@ -1,12 +1,9 @@
 package Game.TileCreator;
 
-import Game.DataClasses.Tile;
-import javafx.scene.effect.Light;
+import DataClasses.Tile;
 import javafx.util.Pair;
 
-import java.util.Comparator;
 import java.util.Random;
-import java.util.stream.Stream;
 
 public class CooperativeTileCreator implements ITileCreator
 {

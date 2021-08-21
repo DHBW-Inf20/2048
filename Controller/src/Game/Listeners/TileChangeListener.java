@@ -1,6 +1,6 @@
 package Game.Listeners;
 
-import Game.DataClasses.Tile;
+import DataClasses.Tile;
 
 public interface TileChangeListener
 {
