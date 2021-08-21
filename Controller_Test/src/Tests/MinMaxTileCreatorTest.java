@@ -4,8 +4,6 @@ import DataClasses.Tile;
 import Game.TileCreator.MinMaxTileCreator;
 import org.junit.Test;
 
-
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,9 +11,6 @@ import java.util.List;
 import javafx.geometry.Point2D;
 
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
@@ -27,17 +22,6 @@ public class MinMaxTileCreatorTest
     public void TestPlaceTile()
     {
         boolean check = false;
-
-        /*Tile[][] field = {
-                {create3x3Tile(2,0,0), null, create3x3Tile(2,0,2), null},
-                {null,create3x3Tile(4,1,1),  null},
-                {null,null,  create3x3Tile(2,2,2)},
-                {null, null, null, null}
-        };*/
-
-
-
-
 
         MinMaxTileCreator minMaxTileCreator = new MinMaxTileCreator();
         Tile[][] field = minMaxTileCreator.generateField(4);

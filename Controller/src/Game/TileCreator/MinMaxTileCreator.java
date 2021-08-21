@@ -1,10 +1,7 @@
 package Game.TileCreator;
-
 import DataClasses.Tile;
+
 import javafx.geometry.Point2D;
-
-
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
