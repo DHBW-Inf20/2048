@@ -1,6 +1,6 @@
 package Game.TileCreator;
 
-import Game.DataClasses.Tile;
+import DataClasses.Tile;
 import javafx.geometry.Point2D;
 
 

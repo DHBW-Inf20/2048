@@ -1,8 +1,7 @@
 package Game;
 
-import Game.DataClasses.Directions;
-import Game.DataClasses.GameModes;
-import Game.DataClasses.GameOptions;
+import DataClasses.Directions;
+import DataClasses.GameOptions;
 import Game.Listeners.ScoreChangeListener;
 import Game.Listeners.TileChangeListener;
 

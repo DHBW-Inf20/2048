@@ -11,6 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.TextField?>
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="710.0" prefWidth="400.0" spacing="25.0" stylesheets="@../../Styles/menueStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Menue.MenueView">
    <children>
       <StackPane prefHeight="150.0" prefWidth="200.0">
@@ -28,6 +29,7 @@
          </children>
       </StackPane>
       <HBox prefHeight="0.0" />
+      <TextField focusTraversable="false" text="Unnamed" onKeyReleased="#playerNameChanged"  fx:id="playerName" alignment="CENTER" prefHeight="60.0" prefWidth="100.0" stylesheets="@../../Styles/menueStyle.css" ></TextField>
       <Button id="buttonNewGame" fx:id="buttonNewGame" alignment="CENTER" mnemonicParsing="false" onAction="#onButtonPressNewGame" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/menueStyle.css" text="New Game">
          <font>
             <Font name="Helvetica‭ ‬עבה" size="38.0" />
@@ -43,6 +45,11 @@
       <Button id="buttonCredits" fx:id="buttonCredits" alignment="CENTER" mnemonicParsing="false" onAction="#onButtonPressCredits" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/menueStyle.css" text="Credits">
          <font>
             <Font name="Helvetica‭ ‬עבה" size="38.0" />
+         </font>
+      </Button>
+      <Button id="buttonHighscore" fx:id="buttonHighscore" alignment="CENTER" mnemonicParsing="false" onAction="#onButtonPressHighscore" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/menueStyle.css" text="Global Highscores">
+         <font>
+            <Font name="Helvetica‭ ‬עבה" size="18.0" />
          </font>
       </Button>
    </children>

@@ -1,7 +1,7 @@
 package AI;
 
-import Game.DataClasses.Directions;
-import Game.DataClasses.Tile;
+import DataClasses.Directions;
+import DataClasses.Tile;
 
 public class AIPlayer implements IAIPlayer
 {

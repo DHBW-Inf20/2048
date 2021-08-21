@@ -1,4 +1,4 @@
-package Game.DataClasses;
+package DataClasses;
 
 public enum Directions
 {
