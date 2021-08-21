@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 
 public class MinMaxTileCreatorTest
 {
-    private int dimensions = 3;
+    private int dimensions = 4;
 
     @Test
     public void TestPlaceTile()
@@ -35,19 +35,16 @@ public class MinMaxTileCreatorTest
                 {null, null, null, null}
         };*/
 
-        Tile[][] field = {
-                {null, null, null, null},
-                {null,null, null,  null},
-                {null,null,  null, null},
-                {null, null, null, null}
-        };
+
+
 
 
         MinMaxTileCreator minMaxTileCreator = new MinMaxTileCreator();
+        Tile[][] field = minMaxTileCreator.generateField(4);
         int tilesBefore = countFreeTiles(field);
         var newField = minMaxTileCreator.generateNewNumber(field,2,9);
-        int tilesAfter = countFreeTiles(field);
-        if(tilesBefore == tilesAfter-1){
+        int tilesAfter = countFreeTiles(newField);
+        if(tilesBefore == tilesAfter+1){
             check=true;
         }
         assertTrue(check);
@@ -64,8 +61,8 @@ public class MinMaxTileCreatorTest
 
     private List<Point2D> generatePossibleTiles(Tile[][] field){ //generiert die möglichen Felder, auf denen platziert werden kann.
         List<Point2D> freeTiles = new ArrayList<Point2D>();
-        for(int i=0; i<=dimensions; i++){
-            for(int j=0; j<= dimensions; j++){
+        for(int i=0; i<dimensions; i++){
+            for(int j=0; j< dimensions; j++){
                 if(field[i][j] == null){
                     freeTiles.add(new Point2D(i,j));
                 }

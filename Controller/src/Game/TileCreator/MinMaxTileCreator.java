@@ -30,14 +30,14 @@ public class MinMaxTileCreator implements ITileCreator
 
     @Override
     public Tile[][] generateNewNumber(Tile[][] field, double tileSize, int tileCount) { //Hauptmethode
-
+        Tile[][] originalField = duplicateField(field);
         int bewertung = max(gewuenschteTiefe, field);
         if (gespeicherterZug == null){
             System.out.println("es gab keine weiteren Zuege mehr");
-            return field;
+            return originalField;
         }
         System.out.println("Platziere Tile bei position " + gespeicherterZug.getX() +", " +gespeicherterZug.getY());
-        return calculateTile(field, gespeicherterZug); // führt gespeicherten Zug aus
+        return calculateTile(originalField, gespeicherterZug); // führt gespeicherten Zug aus
     }
 
     private int max(int tiefe, Tile[][] field) {
@@ -52,7 +52,7 @@ public class MinMaxTileCreator implements ITileCreator
             Point2D newTile =possibleTiles.get(possibleMovesCount-1); //eine position auswählen
             Tile[][] newField = calculateTile(field, newTile); //an ausgewählte position platzieren
             int wert = min(tiefe-1, newField); //anderen Spieler spielen lassen
-            newField = field;//macheZugRueckgaengig();
+            newField = duplicateField(field);//macheZugRueckgaengig();
             if (wert > maxWert) {
                 maxWert = wert;
                 if (tiefe == gewuenschteTiefe)
@@ -73,7 +73,7 @@ public class MinMaxTileCreator implements ITileCreator
             String move = possibleMoves.get(possibleMovesCount-1);
             Tile[][] newField = calculateMove(field, move); //ausgewählten move durchführen
             int wert = max(tiefe-1, newField); //anderen spieler spielen lassen
-            newField = field;//macheZugRueckgaengig(); //zug rückgängig machen
+            newField = duplicateField(field);//macheZugRueckgaengig(); //zug rückgängig machen
             if (wert < minWert) {
                 minWert = wert;
             }
@@ -100,8 +100,8 @@ public class MinMaxTileCreator implements ITileCreator
 
     private List<Point2D> generatePossibleTiles(Tile[][] field){ //generiert die möglichen Felder, auf denen platziert werden kann.
         List<Point2D> freeTiles = new ArrayList<Point2D>();
-        for(int i=0; i<=dimensions; i++){
-            for(int j=0; j<= dimensions; j++){
+        for(int i=0; i<dimensions; i++){
+            for(int j=0; j< dimensions; j++){
                 if(field[i][j] == null){
                     freeTiles.add(new Point2D(i,j));
                 }
@@ -287,7 +287,6 @@ public class MinMaxTileCreator implements ITileCreator
         //setzt die einzelnen Werte von nextGameBoard in prevGameBoard
         for (int j = 0; j < field.length; j++) {
             for (int k = 0; k < field.length; k++) {
-
                 field[j][k] = tempField[j][k];
             }
         }
@@ -297,6 +296,18 @@ public class MinMaxTileCreator implements ITileCreator
     private int countFreeTiles(Tile[][] field){ //Score des MAX-Spielers
         List<Point2D> freeTiles = generatePossibleTiles(field);
         return freeTiles.size();
+    }
+
+    private Tile[][] duplicateField(Tile[][]field){
+        Tile[][] newField = new Tile[dimensions][dimensions];
+        for(int i=0; i<dimensions; i++){
+            for(int j=0; j<dimensions; j++){
+                if(field[i][j] != null){
+                    newField[i][j] = new Tile(field[i][j].getNumber(), field[i][j].getPreFieldA(), field[i][j].getPreFieldB(), field[i][j].getPosX(), field[i][j].getPosY(), tileSize, tileCount);
+                }
+            }
+        }
+        return  newField;
     }
 
     private int calculateScore(Tile[][] field){ //Score des MIN-Spielers
