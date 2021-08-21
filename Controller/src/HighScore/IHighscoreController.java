@@ -1,16 +1,21 @@
 package HighScore;
 
 import DataClasses.GameOptions;
+import DataClasses.GlobalHighScoreData;
 import DataClasses.LocalHighScoreData;
 
-public interface ILocalHighScoreController
-{
-    /**
-     * @param newScore Neue Punktzahl (wird intern geprüft ob es Highscore wird)
-     * @return ist der neue Score ein Highscore wird true zurückgegeben, anderenfalls false
-     */
-    boolean submitNewScore(int newScore);
+import java.util.List;
 
+public interface IHighscoreController
+{
+
+    /**
+     * @param newScore Neuer Score (wird intern auf Highscore überprüft
+     */
+    void submitNewScore(int newScore);
+
+
+    List<GlobalHighScoreData> getGlobalHighscore();
 
     /**
      * Da für die verschiedenen Spielmodi und Feldgrößen die Highscores getrennt gespeichert werden, müssen die Gameoptions dem HighscoreController bekannt sein
@@ -23,5 +28,3 @@ public interface ILocalHighScoreController
      */
     LocalHighScoreData getCurrentHighScoreData();
 }
-
-

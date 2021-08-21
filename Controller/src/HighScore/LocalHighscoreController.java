@@ -1,27 +1,28 @@
 package HighScore;
 
 import DataClasses.GameOptions;
-import DataClasses.HighScoreData;
+import DataClasses.LocalHighScoreData;
 
 import java.io.*;
 import java.util.Date;
 import java.util.HashMap;
 
-public class LocalHighScoreController implements ILocalHighScoreController
+
+public class LocalHighscoreController implements ILocalHighScoreController
 {
-    private HashMap<GameOptions, HighScoreData> currentHighScoreData;
+    private HashMap<GameOptions, LocalHighScoreData> currentHighScoreData;
 
     private final String highscoreDataLocation = "./highscore.dat";
     private GameOptions gameOptions;
 
-    public HighScoreData getCurrentHighScoreData()
+    public LocalHighScoreData getCurrentHighScoreData()
     {
-        if(!currentHighScoreData.containsKey(gameOptions)) return new HighScoreData(new Date(),0);
+        if(!currentHighScoreData.containsKey(gameOptions)) return new LocalHighScoreData(new Date(),0);
         return currentHighScoreData.get(gameOptions);
     }
 
 
-    public LocalHighScoreController()
+    public LocalHighscoreController()
     {
         try
         {
@@ -37,7 +38,7 @@ public class LocalHighScoreController implements ILocalHighScoreController
         File f = new File(highscoreDataLocation);
         if(!f.exists()) throw new FileNotFoundException();
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(highscoreDataLocation));
-        currentHighScoreData = (HashMap<GameOptions,HighScoreData>) in.readObject();
+        currentHighScoreData = (HashMap<GameOptions, LocalHighScoreData>) in.readObject();
     }
 
     private void writeHighScoreDataToFile() throws IOException
@@ -47,19 +48,21 @@ public class LocalHighScoreController implements ILocalHighScoreController
     }
 
     @Override
-    public void submitNewScore(int newScore)
+    public boolean submitNewScore(int newScore)
     {
             if(!currentHighScoreData.containsKey(gameOptions) || currentHighScoreData.get(gameOptions).getScore()<newScore)
             {
-                currentHighScoreData.put(gameOptions,new HighScoreData(new Date(), newScore));
+                currentHighScoreData.put(gameOptions,new LocalHighScoreData(new Date(), newScore));
                 try
                 {
                     writeHighScoreDataToFile();
+                    return true;
                 } catch (IOException e)
                 {
                     e.printStackTrace();
                 }
             }
+            return false;
     }
 
     @Override

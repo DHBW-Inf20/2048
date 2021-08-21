@@ -3,7 +3,7 @@ package DataClasses;
 import java.io.Serializable;
 import java.util.Date;
 
-public class HighScoreData implements Serializable
+public class LocalHighScoreData implements Serializable
 {
     public Date getDate()
     {
@@ -17,7 +17,7 @@ public class HighScoreData implements Serializable
 
     private Date date;
 
-    public HighScoreData(Date date, int score)
+    public LocalHighScoreData(Date date, int score)
     {
         this.date = date;
         this.score = score;
@@ -25,3 +25,4 @@ public class HighScoreData implements Serializable
 
     private int score;
 }
+

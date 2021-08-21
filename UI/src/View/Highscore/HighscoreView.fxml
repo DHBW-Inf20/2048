@@ -10,5 +10,7 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="View.Highscore.HighscoreView"
             prefHeight="400.0" prefWidth="600.0">
+<TextArea  editable="false" fx:id="highscoreList">
 
+</TextArea>
 </AnchorPane>

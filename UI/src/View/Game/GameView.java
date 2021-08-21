@@ -7,6 +7,7 @@ import DataClasses.GameModes;
 import DataClasses.GameOptions;
 import DataClasses.Tile;
 import Game.IGameController;
+import HighScore.IHighscoreController;
 import HighScore.ILocalHighScoreController;
 import View.Menue.MenueView;
 import javafx.animation.ScaleTransition;
@@ -70,7 +71,7 @@ public class GameView implements IGameView {
     private Pane pane;
 
     private final IGameController gameController;
-    private final ILocalHighScoreController highScoreController;
+    private final IHighscoreController highScoreController;
     private final IAIPlayer aiPlayer;
 
     private GameOptions gameOptions;

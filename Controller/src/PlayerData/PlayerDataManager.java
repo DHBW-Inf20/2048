@@ -1,11 +1,8 @@
 package PlayerData;
 
-import DataClasses.GameOptions;
-import DataClasses.HighScoreData;
 import DataClasses.PlayerData;
 
 import java.io.*;
-import java.util.HashMap;
 
 public class PlayerDataManager implements IPlayerDataManager
 {

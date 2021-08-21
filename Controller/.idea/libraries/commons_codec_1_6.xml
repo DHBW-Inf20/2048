@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="commons-codec-1.6">
+    <CLASSES>
+      <root url="jar://D:/Users/Jona/Desktop/Killme/Auto788592501/commons-codec-1.6.jar!/" />
+      <root url="jar://D:/Users/Jona/Desktop/Killme/Auto788592501/commons-logging-1.1.3.jar!/" />
+      <root url="jar://D:/Users/Jona/Desktop/Killme/Auto788592501/httpasyncclient-4.0.2.jar!/" />
+      <root url="jar://D:/Users/Jona/Desktop/Killme/Auto788592501/httpclient-4.3.6.jar!/" />
+      <root url="jar://D:/Users/Jona/Desktop/Killme/Auto788592501/httpcore-4.3.3.jar!/" />
+      <root url="jar://D:/Users/Jona/Desktop/Killme/Auto788592501/httpcore-nio-4.3.2.jar!/" />
+      <root url="jar://D:/Users/Jona/Desktop/Killme/Auto788592501/httpmime-4.3.6.jar!/" />
+      <root url="jar://D:/Users/Jona/Desktop/Killme/Auto788592501/json-20140107.jar!/" />
+      <root url="jar://D:/Users/Jona/Desktop/Killme/Auto788592501/unirest-java-1.4.7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

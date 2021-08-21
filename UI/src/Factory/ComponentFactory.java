@@ -2,10 +2,11 @@ package Factory;
 
 import AI.AIPlayer;
 import AI.IAIPlayer;
-import DataClasses.PlayerData;
 import Game.GameController;
 import Game.IGameController;
-import HighScore.LocalHighScoreController;
+import HighScore.HighscoreController;
+import HighScore.IHighscoreController;
+import HighScore.LocalHighscoreController;
 import HighScore.ILocalHighScoreController;
 import PlayerData.PlayerDataManager;
 import PlayerData.IPlayerDataManager;
@@ -20,9 +21,9 @@ public class ComponentFactory
     {
         return new GameController();
     }
-    public static ILocalHighScoreController getHighScroeController()
+    public static IHighscoreController getHighScroeController()
     {
-        return new LocalHighScoreController();
+        return new HighscoreController(getPlayerDataManager());
     }
     public static IAIPlayer getAIPlayer()
     {
