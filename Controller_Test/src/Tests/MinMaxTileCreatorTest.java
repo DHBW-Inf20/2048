@@ -47,6 +47,19 @@ public class MinMaxTileCreatorTest
         if(tilesBefore == tilesAfter+1){
             check=true;
         }
+        while (countFreeTiles(newField)>0){
+            tilesBefore = countFreeTiles(newField);
+            newField = minMaxTileCreator.generateNewNumber(newField, 2, 9);
+            tilesAfter = countFreeTiles(newField);
+            if(tilesBefore == tilesAfter+1){
+                check=true;
+            } else {
+                check=false;
+            }
+        }
+
+
+
         assertTrue(check);
     }
 
