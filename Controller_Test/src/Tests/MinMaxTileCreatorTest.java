@@ -52,15 +52,24 @@ public class MinMaxTileCreatorTest
     }
 
 
-
-
-
+    /**
+     * generiert ein Tile
+     * @param number Zahl des Tile
+     * @param x x-Koordinate des Tile
+     * @param y y-Koordinate des Tile
+     * @return Tile
+     */
     private Tile create3x3Tile(int number, int x, int y)
     {
         return new Tile(number,null,null,x,y,2,9);
     }
 
-    private List<Point2D> generatePossibleTiles(Tile[][] field){ //generiert die möglichen Felder, auf denen platziert werden kann.
+    /**
+     * generiert die möglichen Felder, auf denen platziert werden kann.
+     * @param field Spielfeld
+     * @return liste der möglichen Felder
+     */
+    private List<Point2D> generatePossibleTiles(Tile[][] field){ //
         List<Point2D> freeTiles = new ArrayList<Point2D>();
         for(int i=0; i<dimensions; i++){
             for(int j=0; j< dimensions; j++){
@@ -74,6 +83,11 @@ public class MinMaxTileCreatorTest
         return freeTiles;
     }
 
+    /**
+     * Zählt freie Felder auf dem Spielfeld
+     * @param field Spielfeld
+     * @return Anzahl freie Felder
+     */
     private int countFreeTiles(Tile[][] field){ //Score des MAX-Spielers
         List<Point2D> freeTiles = generatePossibleTiles(field);
         return freeTiles.size();
