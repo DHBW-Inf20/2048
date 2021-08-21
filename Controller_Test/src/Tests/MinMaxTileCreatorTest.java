@@ -36,7 +36,7 @@ public class MinMaxTileCreatorTest
         };*/
 
         Tile[][] field = {
-                {create3x3Tile(2,0,0), null, null, null},
+                {null, null, null, null},
                 {null,null, null,  null},
                 {null,null,  null, null},
                 {null, null, null, null}
@@ -64,8 +64,8 @@ public class MinMaxTileCreatorTest
 
     private List<Point2D> generatePossibleTiles(Tile[][] field){ //generiert die möglichen Felder, auf denen platziert werden kann.
         List<Point2D> freeTiles = new ArrayList<Point2D>();
-        for(int i=0; i<dimensions; i++){
-            for(int j=0; j< dimensions; j++){
+        for(int i=0; i<=dimensions; i++){
+            for(int j=0; j<= dimensions; j++){
                 if(field[i][j] == null){
                     freeTiles.add(new Point2D(i,j));
                 }
