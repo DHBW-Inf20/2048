@@ -55,6 +55,7 @@ public class MinMaxTileCreatorTest
                 check=true;
             } else {
                 check=false;
+                assertTrue(check);
             }
         }
 

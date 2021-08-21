@@ -15,7 +15,7 @@ public class MinMaxTileCreator implements ITileCreator
     private double tileSize = 1;
 
     //Hier die gewünschte Suchtiefe setzen
-    private int gewuenschteTiefe = 2;
+    private int gewuenschteTiefe = 4;
 
     //klassenvariablen
     private Point2D gespeicherterZug;
@@ -30,6 +30,8 @@ public class MinMaxTileCreator implements ITileCreator
 
     @Override
     public Tile[][] generateNewNumber(Tile[][] field, double tileSize, int tileCount) { //Hauptmethode
+        this.tileCount = tileCount;
+        this.tileSize = tileSize;
         Tile[][] originalField = duplicateField(field);
         int bewertung = max(gewuenschteTiefe, field);
         if (gespeicherterZug == null){
@@ -49,14 +51,14 @@ public class MinMaxTileCreator implements ITileCreator
         List<Point2D> possibleTiles = generatePossibleTiles(field);
         int possibleMovesCount = countFreeTiles(field);
         while (possibleMovesCount > 0) { //für jedes possibleTile durchlaufen
-            Point2D newTile =possibleTiles.get(possibleMovesCount-1); //eine position auswählen
-            Tile[][] newField = calculateTile(field, newTile); //an ausgewählte position platzieren
+            Point2D newTilePosition =possibleTiles.get(possibleMovesCount-1); //eine position auswählen
+            Tile[][] newField = calculateTile(field, newTilePosition); //an ausgewählte position platzieren
             int wert = min(tiefe-1, newField); //anderen Spieler spielen lassen
             newField = duplicateField(field);//macheZugRueckgaengig();
             if (wert > maxWert) {
                 maxWert = wert;
                 if (tiefe == gewuenschteTiefe)
-                    gespeicherterZug = newTile;
+                    gespeicherterZug = newTilePosition;
             }
             possibleMovesCount = possibleMovesCount-1;
         }
