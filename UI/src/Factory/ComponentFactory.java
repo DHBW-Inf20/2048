@@ -6,10 +6,8 @@ import Game.GameController;
 import Game.IGameController;
 import HighScore.HighscoreController;
 import HighScore.IHighscoreController;
-import HighScore.LocalHighscoreController;
-import HighScore.ILocalHighScoreController;
-import PlayerData.PlayerDataManager;
-import PlayerData.IPlayerDataManager;
+import PlayerData.PlayerDataController;
+import PlayerData.IPlayerDataController;
 
 /*
 Hier werden alle Abhängigkeiten zu Implementierungen aus dem Controller-Module durch das Factory-Pattern und Interfaces entkoppelt
@@ -30,8 +28,8 @@ public class ComponentFactory
         return new AIPlayer();
     }
 
-    public static IPlayerDataManager getPlayerDataManager()
+    public static IPlayerDataController getPlayerDataManager()
     {
-        return new PlayerDataManager();
+        return new PlayerDataController();
     }
 }

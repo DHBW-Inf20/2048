@@ -47,9 +47,9 @@
             <Font name="Helvetica‭ ‬עבה" size="38.0" />
          </font>
       </Button>
-      <Button id="buttonHighscore" fx:id="buttonHighscore" alignment="CENTER" mnemonicParsing="false" onAction="#onButtonPressHighscore" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/menueStyle.css" text="Global Highscores">
+      <Button id="buttonHighscore" fx:id="buttonHighscore" alignment="CENTER" mnemonicParsing="false" onAction="#onButtonPressHighscore" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/menueStyle.css" text="Highscores">
          <font>
-            <Font name="Helvetica‭ ‬עבה" size="18.0" />
+            <Font name="Helvetica‭ ‬עבה" size="38.0" />
          </font>
       </Button>
    </children>

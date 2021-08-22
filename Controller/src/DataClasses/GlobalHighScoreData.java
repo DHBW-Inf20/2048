@@ -4,10 +4,18 @@ public class GlobalHighScoreData
 {
     private String name;
 
-    public GlobalHighScoreData(String name, int score)
+    public int getDimensions()
+    {
+        return dimensions;
+    }
+
+    private int dimensions;
+
+    public GlobalHighScoreData(String name, int score, int dimensions)
     {
         this.name = name;
         this.score = score;
+        this.dimensions = dimensions;
     }
 
     public String getName()

@@ -1,6 +1,6 @@
 package PlayerData;
 
-public interface IPlayerDataManager
+public interface IPlayerDataController
 {
     public String getPlayerName();
     public void setPlayerName(String name);

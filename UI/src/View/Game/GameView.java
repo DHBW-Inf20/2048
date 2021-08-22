@@ -9,10 +9,12 @@ import DataClasses.Tile;
 import Game.IGameController;
 import HighScore.IHighscoreController;
 import HighScore.ILocalHighScoreController;
+import View.Highscore.IHighscoreView;
 import View.Menue.MenueView;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -75,7 +77,7 @@ public class GameView implements IGameView {
     private final IAIPlayer aiPlayer;
 
     private GameOptions gameOptions;
-
+    private IHighscoreView highscoreView;
 
 
     /**
@@ -639,5 +641,16 @@ public class GameView implements IGameView {
         this.windowHeight = windowHeight;
         this.minWindowWidth = minWindowWidth;
         this.minWindowHeight = windowHeight;
+    }
+
+    public void onButtonPressHighscore(ActionEvent event) throws IOException
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Highscore/HighscoreView.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root, windowWidth, windowHeight);
+
+        highscoreView = loader.getController();
+        highscoreView.createSceneHighscore(event, scene);
+        highscoreView.setWindowDimensions(windowWidth, windowHeight, minWindowWidth, minWindowHeight);
     }
 }

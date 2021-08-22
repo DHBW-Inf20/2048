@@ -4,7 +4,7 @@ import DataClasses.PlayerData;
 
 import java.io.*;
 
-public class PlayerDataManager implements IPlayerDataManager
+public class PlayerDataController implements IPlayerDataController
 {
     private final String playerDataLocation = "./playerData.dat";
 
@@ -25,7 +25,7 @@ public class PlayerDataManager implements IPlayerDataManager
         os.writeObject(playerData);
     }
 
-    public PlayerDataManager()
+    public PlayerDataController()
     {
         try
         {

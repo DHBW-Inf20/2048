@@ -6,11 +6,29 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="View.Highscore.HighscoreView"
-            prefHeight="400.0" prefWidth="600.0">
-<TextArea  editable="false" fx:id="highscoreList">
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.Font?>
+<VBox alignment="CENTER" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="View.Highscore.HighscoreView"
+      maxHeight="-Infinity" maxWidth="-Infinity"
+      minHeight="-Infinity" minWidth="-Infinity" spacing="30.0"
+      prefHeight="400.0" prefWidth="600.0">
+<children>
+    <Text fill="#766e65" strokeType="OUTSIDE" strokeWidth="0.0" text="Global Highscore-List:">
+        <font>
+            <Font name="Helvetica‭ ‬עבה" size="38.0" />
+        </font>
+    </Text>
 
-</TextArea>
-</AnchorPane>
+    <TextArea editable="false"  fx:id="highscoreList"/>
+
+    <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#onButtonPressBack" prefHeight="50.0" prefWidth="250.0" stylesheets="@../../Styles/creditsStyle.css" text="Back">
+        <font>
+            <Font name="Helvetica‭ ‬עבה" size="38.0" />
+        </font>
+    </Button>
+
+
+</children>
+</VBox>

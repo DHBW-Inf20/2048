@@ -10,4 +10,5 @@ public interface IHighscoreView
 {
     void createSceneHighscore(Event event, Scene scene) throws IOException;
 
+    void setWindowDimensions(int windowWidth, int windowHeight, int minWindowWidth, int minWindowHeight);
 }

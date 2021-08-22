@@ -1,7 +1,7 @@
 package View.Menue;
 
 import Factory.ComponentFactory;
-import PlayerData.IPlayerDataManager;
+import PlayerData.IPlayerDataController;
 import View.Credits.ICreditsView;
 import View.Highscore.IHighscoreView;
 import View.ModusMenue.IModusMenueView;
@@ -17,7 +17,6 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
@@ -55,7 +54,7 @@ public class MenueView extends Application implements Initializable {
     private IHighscoreView highscoreView;
 
 
-    private IPlayerDataManager iPlayerDataManager;
+    private IPlayerDataController iPlayerDataManager;
 
 
     /**
@@ -190,6 +189,7 @@ public class MenueView extends Application implements Initializable {
 
         highscoreView = loader.getController();
         highscoreView.createSceneHighscore(event, scene);
+        highscoreView.setWindowDimensions(windowWidth, windowHeight, minWindowWidth, minWindowHeight);
     }
 
 

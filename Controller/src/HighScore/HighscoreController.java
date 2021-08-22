@@ -4,7 +4,7 @@ import DataClasses.GameModes;
 import DataClasses.GameOptions;
 import DataClasses.GlobalHighScoreData;
 import DataClasses.LocalHighScoreData;
-import PlayerData.IPlayerDataManager;
+import PlayerData.IPlayerDataController;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class HighscoreController implements IHighscoreController
     private final ILocalHighScoreController localHighScoreController = new LocalHighscoreController();
     private final IGlobalHighscoreController globalHighscoreController;
 
-    public HighscoreController(IPlayerDataManager iPlayerDataManager)
+    public HighscoreController(IPlayerDataController iPlayerDataManager)
     {
          globalHighscoreController= new GlobalHighscoreController(iPlayerDataManager);
     }
@@ -28,7 +28,7 @@ public class HighscoreController implements IHighscoreController
             {
                 new Thread(() ->
                 {
-                    globalHighscoreController.submitHighscore(newScore);
+                    globalHighscoreController.submitHighscore(newScore, gameOptions);
                 }).start();
             }
         }
