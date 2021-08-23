@@ -99,6 +99,26 @@ public class GameController implements IGameController {
     @Override
     public void makeMove(Directions direction) {
 
+        Tile[][] tempField = updateField(direction); // ausgelagert, da ein Teil für die AI benötigt wird
+
+        //setzt die einzelnen Werte von nextGameBoard in prevGameBoard
+        for (int j = 0; j < field.length; j++) {
+            for (int k = 0; k < field.length; k++) {
+
+                field[j][k] = tempField[j][k];
+            }
+        }
+
+        //Checkt das Spielfeld auf gewonne/verloren
+        checkGameStatus();
+
+        field = iTileCreator.generateNewNumber(field, tileSize, tileCount);
+        tileChangeListener.change(field);
+    }
+
+
+    public Tile[][] updateField(Directions direction)
+    {
         int tempFieldPosition;
 
         Tile[][] tempField = new Tile[dimensions][dimensions];
@@ -256,20 +276,7 @@ public class GameController implements IGameController {
             default:
                 break;
         }
-
-        //setzt die einzelnen Werte von nextGameBoard in prevGameBoard
-        for (int j = 0; j < field.length; j++) {
-            for (int k = 0; k < field.length; k++) {
-
-                field[j][k] = tempField[j][k];
-            }
-        }
-
-        //Checkt das Spielfeld auf gewonne/verloren
-        checkGameStatus();
-
-        field = iTileCreator.generateNewNumber(field, tileSize, tileCount);
-        tileChangeListener.change(field);
+        return tempField;
     }
 
 
