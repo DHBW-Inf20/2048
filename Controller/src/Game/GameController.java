@@ -99,7 +99,7 @@ public class GameController implements IGameController {
     @Override
     public void makeMove(Directions direction) {
 
-        Tile[][] tempField = updateField(direction); // ausgelagert, da ein Teil für die AI benötigt wird
+        Tile[][] tempField = updateField(direction, field); // ausgelagert, da ein Teil für die AI benötigt wird
 
         //setzt die einzelnen Werte von nextGameBoard in prevGameBoard
         for (int j = 0; j < field.length; j++) {
@@ -117,7 +117,7 @@ public class GameController implements IGameController {
     }
 
 
-    public Tile[][] updateField(Directions direction)
+    public Tile[][] updateField(Directions direction, Tile[][] virtualField)
     {
         int tempFieldPosition;
 
@@ -133,27 +133,27 @@ public class GameController implements IGameController {
                     for (int k = 0; k < field.length; k++) {
 
                         //Wenn auf ein nicht leeres Feld gestoßen wird
-                        if (field[k][j] != null) {
+                        if (virtualField[k][j] != null) {
 
                             //Prüfe ob Vorgänger gleich
-                            if (tempFieldPosition != 0 && tempField[tempFieldPosition - 1][j].getNumber() == field[k][j].getNumber() && !sumUpLast) {
+                            if (tempFieldPosition != 0 && tempField[tempFieldPosition - 1][j].getNumber() == virtualField[k][j].getNumber() && !sumUpLast) {
 
                                 int newNumber = (tempField[tempFieldPosition - 1][j].getNumber() * 2);
 
                                 //Verdopple letztes Element
-                                tempField[tempFieldPosition - 1][j] = new Tile(newNumber, tempField[tempFieldPosition - 1][j], field[k][j], tempFieldPosition - 1, j, tileSize, tileCount);
+                                tempField[tempFieldPosition - 1][j] = new Tile(newNumber, tempField[tempFieldPosition - 1][j], virtualField[k][j], tempFieldPosition - 1, j, tileSize, tileCount);
                                 score = score + tempField[tempFieldPosition - 1][j].getNumber();
                                 scoreChangeListener.change(score);
                                 sumUpLast = true;
 
                             } else {
                                 //Füge neues Element ein und counter++
-                                tempField[tempFieldPosition][j] = field[k][j];
+                                tempField[tempFieldPosition][j] = virtualField[k][j];
                                 tempFieldPosition++;
                                 sumUpLast = false;
 
-                                if (!field[k][j].checkForPreTiles()) {
-                                    field[k][j].clearPreTiles();
+                                if (!virtualField[k][j].checkForPreTiles()) {
+                                    virtualField[k][j].clearPreTiles();
                                 }
                             }
                         }
@@ -165,34 +165,34 @@ public class GameController implements IGameController {
             case RIGHT:
                 //Verschieben nach rechts
 
-                tempFieldPosition = field.length - 1;
+                tempFieldPosition = virtualField.length - 1;
                 sumUpLast = false;
 
-                for (int j = 0; j < field.length; j++) {
-                    for (int k = field.length - 1; k >= 0; k--) {
+                for (int j = 0; j < virtualField.length; j++) {
+                    for (int k = virtualField.length - 1; k >= 0; k--) {
 
                         //Wenn auf ein nicht leeres Feld gestoßen wird
-                        if (field[k][j] != null) {
+                        if (virtualField[k][j] != null) {
 
                             //Prüfe ob Vorgänger gleich
-                            if (tempFieldPosition != field.length - 1 && tempField[tempFieldPosition + 1][j].getNumber() == field[k][j].getNumber() && !sumUpLast) {
+                            if (tempFieldPosition != virtualField.length - 1 && tempField[tempFieldPosition + 1][j].getNumber() == virtualField[k][j].getNumber() && !sumUpLast) {
                                 //Verdopple letztes Element
 
                                 int newNumber = (tempField[tempFieldPosition + 1][j].getNumber() * 2);
 
                                 //Verdopple letztes Element
-                                tempField[tempFieldPosition + 1][j] = new Tile(newNumber, tempField[tempFieldPosition + 1][j], field[k][j], tempFieldPosition + 1, j, tileSize, tileCount);
+                                tempField[tempFieldPosition + 1][j] = new Tile(newNumber, tempField[tempFieldPosition + 1][j], virtualField[k][j], tempFieldPosition + 1, j, tileSize, tileCount);
                                 score = score + tempField[tempFieldPosition + 1][j].getNumber();
                                 scoreChangeListener.change(score);
                                 sumUpLast = true;
                             } else {
                                 //Füge neues Element ein und counter++
-                                tempField[tempFieldPosition][j] = field[k][j];
+                                tempField[tempFieldPosition][j] = virtualField[k][j];
                                 tempFieldPosition--;
                                 sumUpLast = false;
 
-                                if (!field[k][j].checkForPreTiles()) {
-                                    field[k][j].clearPreTiles();
+                                if (!virtualField[k][j].checkForPreTiles()) {
+                                    virtualField[k][j].clearPreTiles();
                                 }
                             }
                         }
@@ -206,29 +206,29 @@ public class GameController implements IGameController {
                 tempFieldPosition = 0;
                 sumUpLast = false;
 
-                for (int j = 0; j < field.length; j++) {
-                    for (int k = 0; k < field.length; k++) {
+                for (int j = 0; j < virtualField.length; j++) {
+                    for (int k = 0; k < virtualField.length; k++) {
 
                         //Wenn auf ein nicht leeres Feld gestoßen wird
-                        if (field[j][k] != null) {
+                        if (virtualField[j][k] != null) {
 
                             //Prüfe ob Vorgänger gleich
-                            if (tempFieldPosition != 0 && tempField[j][tempFieldPosition - 1].getNumber() == field[j][k].getNumber() && !sumUpLast) {
+                            if (tempFieldPosition != 0 && tempField[j][tempFieldPosition - 1].getNumber() == virtualField[j][k].getNumber() && !sumUpLast) {
                                 //Verdopple letztes Element
                                 int newNumber = (tempField[j][tempFieldPosition - 1].getNumber() * 2);
 
-                                tempField[j][tempFieldPosition - 1] = new Tile(newNumber, tempField[j][tempFieldPosition - 1], field[j][k], tempFieldPosition - 1, k, tileSize, tileCount);
+                                tempField[j][tempFieldPosition - 1] = new Tile(newNumber, tempField[j][tempFieldPosition - 1], virtualField[j][k], tempFieldPosition - 1, k, tileSize, tileCount);
                                 score = score + tempField[j][tempFieldPosition - 1].getNumber();
                                 scoreChangeListener.change(score);
                                 sumUpLast = true;
                             } else {
                                 //Füge neues Element ein und counter++
-                                tempField[j][tempFieldPosition] = field[j][k];
+                                tempField[j][tempFieldPosition] = virtualField[j][k];
                                 tempFieldPosition++;
                                 sumUpLast = false;
 
-                                if (!field[j][k].checkForPreTiles()) {
-                                    field[j][k].clearPreTiles();
+                                if (!virtualField[j][k].checkForPreTiles()) {
+                                    virtualField[j][k].clearPreTiles();
                                 }
                             }
                         }
@@ -239,37 +239,37 @@ public class GameController implements IGameController {
 
             case DOWN:
                 //Verschieben nach rechts
-                tempFieldPosition = field.length - 1;
+                tempFieldPosition = virtualField.length - 1;
                 sumUpLast = false;
 
-                for (int j = 0; j < field.length; j++) {
-                    for (int k = field.length - 1; k >= 0; k--) {
+                for (int j = 0; j < virtualField.length; j++) {
+                    for (int k = virtualField.length - 1; k >= 0; k--) {
 
                         //Wenn auf ein nicht leeres Feld gestoßen wird
-                        if (field[j][k] != null) {
+                        if (virtualField[j][k] != null) {
 
                             //Prüfe ob Vorgänger gleich
-                            if (tempFieldPosition != field.length - 1 && tempField[j][tempFieldPosition + 1].getNumber() == field[j][k].getNumber() && !sumUpLast) {
+                            if (tempFieldPosition != field.length - 1 && tempField[j][tempFieldPosition + 1].getNumber() == virtualField[j][k].getNumber() && !sumUpLast) {
                                 //Verdopple letztes Element
                                 int newNumber = (tempField[j][tempFieldPosition + 1].getNumber() * 2);
 
-                                tempField[j][tempFieldPosition + 1] = new Tile(newNumber, tempField[j][tempFieldPosition + 1], field[j][k], tempFieldPosition + 1, k, tileSize, tileCount);
+                                tempField[j][tempFieldPosition + 1] = new Tile(newNumber, tempField[j][tempFieldPosition + 1], virtualField[j][k], tempFieldPosition + 1, k, tileSize, tileCount);
                                 score = score + tempField[j][tempFieldPosition + 1].getNumber();
                                 scoreChangeListener.change(score);
                                 sumUpLast = true;
                             } else {
                                 //Füge neues Element ein und counter++
-                                tempField[j][tempFieldPosition] = field[j][k];
+                                tempField[j][tempFieldPosition] = virtualField[j][k];
                                 tempFieldPosition--;
                                 sumUpLast = false;
 
-                                if (!field[j][k].checkForPreTiles()) {
-                                    field[j][k].clearPreTiles();
+                                if (!virtualField[j][k].checkForPreTiles()) {
+                                    virtualField[j][k].clearPreTiles();
                                 }
                             }
                         }
                     }
-                    tempFieldPosition = field.length - 1;
+                    tempFieldPosition = virtualField.length - 1;
                 }
                 break;
 

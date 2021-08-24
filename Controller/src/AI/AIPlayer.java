@@ -7,8 +7,13 @@ import Game.TileCreator.RandomTileCreator;
 
 import java.util.*;
 
+import static java.lang.Integer.valueOf;
+
 public class AIPlayer implements IAIPlayer
 {
+    private int rounds = 100;
+    private int standardDepth = 4;
+
     /**
      * @param field Aktuelles Spielfeld vor nächstem Zug
      * @return Richtung (Rechts, Links, Hoch, Runter)
@@ -21,21 +26,21 @@ public class AIPlayer implements IAIPlayer
         appearances.put(Directions.DOWN,0);
         appearances.put(Directions.LEFT,0);
         appearances.put(Directions.RIGHT,0);
-        int up, down, left, right;
-        int max;
+        int up, down, left, right, max;
 
-        for(int i = 0; i < 100; i++)
+        for(int i = 0; i < rounds; i++)
         {
-            up = getScore(field, Directions.UP, 4);
-            down = getScore(field, Directions.DOWN, 4);
-            left = getScore(field, Directions.LEFT, 4);
-            right = getScore(field, Directions.RIGHT, 4);
+            up = getScore(field, Directions.UP, standardDepth);
+            down = getScore(field, Directions.DOWN, standardDepth);
+            left = getScore(field, Directions.LEFT, standardDepth);
+            right = getScore(field, Directions.RIGHT, standardDepth);
             max = Math.max(Math.max(up, down), Math.max(left, right));
-            if(max == up) appearances.put(Directions.UP, appearances.get(Directions.UP)+1);
-            if(max == down) appearances.put(Directions.DOWN, appearances.get(Directions.DOWN)+1);
-            if(max == left) appearances.put(Directions.LEFT, appearances.get(Directions.LEFT)+1);
-            if(max == right) appearances.put(Directions.RIGHT, appearances.get(Directions.RIGHT)+1);
+            if(max == up) appearances.put(Directions.UP, appearances.get(Directions.UP)+up);
+            if(max == down) appearances.put(Directions.DOWN, appearances.get(Directions.DOWN)+down);
+            if(max == left) appearances.put(Directions.LEFT, appearances.get(Directions.LEFT)+left);
+            if(max == right) appearances.put(Directions.RIGHT, appearances.get(Directions.RIGHT)+right);
         }
+        // Findet die maximale Value und gibt zugehörigen Key (also eine Direction) zurück
         return Collections.max(appearances.entrySet(), Map.Entry.comparingByValue()).getKey();
     }
 
@@ -43,15 +48,16 @@ public class AIPlayer implements IAIPlayer
     /**
      * @param field Kopiertes Spielfeld vor nächstem Zug (damit nur Value und nicht Refernce übergeben wird)
      * @param direction Richtung des nächsten Zuges, der hier ausgeführt werden soll
-     * @param depth Tiefe der Rekursion
+     * @param aDepth Tiefe der Rekursion
      * @return (Maximale) Anzahl der freien Felder
      */
     @Override
-    public int getScore(Tile[][] field, Directions direction, int depth)
+    public int getScore(Tile[][] field, Directions direction, int aDepth)
     {
         Tile[][] newField = field.clone();
         GameController aiController = new GameController();
-        newField = aiController.updateField(direction);
+        newField = aiController.updateField(direction, newField);
+        int depth =  valueOf(aDepth);
 
         if(depth == 0)
         {
@@ -59,6 +65,7 @@ public class AIPlayer implements IAIPlayer
         }
         else
         {
+            // Kombination aus drei Math.max, da jeweils nur zwei Integer vergleichen werden können -> Verkettung
             return Math.max(Math.max(getScore(newField, Directions.UP, depth-1),
                                      getScore(newField, Directions.DOWN, depth-1)),
                             Math.max(getScore(newField, Directions.LEFT, depth-1),
