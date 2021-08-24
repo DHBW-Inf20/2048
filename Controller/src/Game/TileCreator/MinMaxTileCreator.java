@@ -49,13 +49,13 @@ public class MinMaxTileCreator implements ITileCreator
         this.tileCount = tileCount;
         this.tileSize = tileSize;
         Tile[][] originalField = duplicateField(field);
-        int bewertung = max(gewuenschteTiefe, field);
+        int bewertung = max(gewuenschteTiefe, originalField);
         if (gespeicherterZug == null){
             System.out.println("es gab keine weiteren Zuege mehr");
-            return originalField;
+            return field;
         }
         System.out.println("Platziere Tile bei position " + gespeicherterZug.getX() +", " +gespeicherterZug.getY());
-        return calculateTile(originalField, gespeicherterZug); // führt gespeicherten Zug aus
+        return calculateTile(field, gespeicherterZug); // führt gespeicherten Zug aus
     }
 
     /**
