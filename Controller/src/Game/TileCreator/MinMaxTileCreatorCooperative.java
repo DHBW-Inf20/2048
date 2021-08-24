@@ -1,7 +1,8 @@
 package Game.TileCreator;
-import DataClasses.Tile;
 
+import DataClasses.Tile;
 import javafx.geometry.Point2D;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  * Die MinMaxTileCreator-Klasse implementiert den MINMAX-Algoorithmus um neu erscheinende Zahlen
  * auf dem Spielfeld möglichst ungünstig für den Spieler zu generieren.
  */
-public class MinMaxTileCreator implements ITileCreator
+public class MinMaxTileCreatorCooperative implements ITileCreator
 {
     /**
      * Variablen für Design
@@ -68,7 +69,7 @@ public class MinMaxTileCreator implements ITileCreator
     private int max(int tiefe, Tile[][] field) {
         if (tiefe == 0 || !checkTilePlaceable(field)){
 
-            return ((dimensions*dimensions) -countFreeTiles(field));
+            return countFreeTiles(field);
         }
         int maxWert = -99999;
         List<Point2D> possibleTiles = generatePossibleTiles(field);
@@ -96,9 +97,10 @@ public class MinMaxTileCreator implements ITileCreator
      * @return "Score" nach dem gefundenen zug
      */
     private int min(int tiefe, Tile[][] field) {
-        if (tiefe == 0 || !checkMovePossible(field)) {
-            return ((dimensions*dimensions) -countFreeTiles(field));
+        if (tiefe == 0 || !checkMovePossible(field)){
+            return countFreeTiles(field);
         }
+
         int minWert = 99999;
         List<String> possibleMoves = generatePossibleMoves(field);
         int possibleMovesCount = possibleMoves.size();
