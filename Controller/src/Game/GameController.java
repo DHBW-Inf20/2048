@@ -6,10 +6,7 @@ import DataClasses.GameOptions;
 import DataClasses.Tile;
 import Game.Listeners.ScoreChangeListener;
 import Game.Listeners.TileChangeListener;
-import Game.TileCreator.CooperativeTileCreator;
-import Game.TileCreator.ITileCreator;
-import Game.TileCreator.MinMaxTileCreator;
-import Game.TileCreator.RandomTileCreator;
+import Game.TileCreator.*;
 
 public class GameController implements IGameController {
     private GameModes gameMode = GameModes.random;
@@ -77,6 +74,9 @@ public class GameController implements IGameController {
             }
             case minMax -> {
                 iTileCreator = new MinMaxTileCreator();
+            }
+            case minMaxCooperative -> {
+                iTileCreator = new MinMaxTileCreatorCooperative();
             }
         }
 
