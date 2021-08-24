@@ -8,7 +8,6 @@ import DataClasses.GameOptions;
 import DataClasses.Tile;
 import Game.IGameController;
 import HighScore.IHighscoreController;
-import HighScore.ILocalHighScoreController;
 import View.Highscore.IHighscoreView;
 import View.Menue.MenueView;
 import javafx.animation.ScaleTransition;
@@ -61,8 +60,10 @@ public class GameView implements IGameView {
     private boolean aiMode;
     private int tileCount;
     private GameModes gameMode;
-    private boolean inMoveFlage = false;
+    private boolean inMoveFlag = false;
+    private boolean inMoveFlagShortMove = false;
     private int gameStatus = 0;
+    private final int transitionTimeOfTiles = 50; //in millisekunden
 
     //Spielfelder die übergeben werden
     private Tile[][] nextGameBoard;
@@ -197,14 +198,15 @@ public class GameView implements IGameView {
         stage.setScene(scene);
         stage.show();
 
+        //Setzt die eingestellten Gamoptions im Controler
         gameOptions = new GameOptions( aiMode, tileCount, gameMode);
 
+        //Initalisiert im gameController ein Spielfeld
         gameController.startGame(gameOptions);
         highScoreController.setGameOptions(gameOptions);
 
+        //Setzt ein leeres altes Spielfeld und führt den ersten Move aus um das Spielfeld im UI zu erzeugen
         prevGameBoard = new Tile[tileCount][tileCount];
-
-        //Initialisierungs Move
         move();
 
         //Keylistener auf der Scene
@@ -212,11 +214,12 @@ public class GameView implements IGameView {
         {
             scene.setOnKeyPressed(e -> {
 
-                if(!inMoveFlage) {
+                //Wenn ein Zug im Gange ist kann kein neuer ausgeführt werden -> verhindert asynchronität vom Contoler und dem UI
+                if(!inMoveFlag) {
                     switch (e.getCode()) {
                         case W -> {
                             //Falg das gerade ein Zug ausgeführt wird
-                            inMoveFlage = true;
+                            inMoveFlag = true;
                             //Lässt den Controler ein neues Spielfeld erzeugen
                             gameController.makeMove(Directions.UP);
                             //Führt den Zug im UI aus
@@ -224,7 +227,7 @@ public class GameView implements IGameView {
                         }
                         case S -> {
                             //Falg das gerade ein Zug ausgeführt wird
-                            inMoveFlage = true;
+                            inMoveFlag = true;
                             //Lässt den Controler ein neues Spielfeld erzeugen
                             gameController.makeMove(Directions.DOWN);
                             //Führt den Zug im UI aus
@@ -232,7 +235,7 @@ public class GameView implements IGameView {
                         }
                         case A -> {
                             //Falg das gerade ein Zug ausgeführt wird
-                            inMoveFlage = true;
+                            inMoveFlag = true;
                             //Lässt den Controler ein neues Spielfeld erzeugen
                             gameController.makeMove(Directions.LEFT);
                             //Führt den Zug im UI aus
@@ -240,7 +243,7 @@ public class GameView implements IGameView {
                         }
                         case D -> {
                             //Falg das gerade ein Zug ausgeführt wird
-                            inMoveFlage = true;
+                            inMoveFlag = true;
                             //Lässt den Controler ein neues Spielfeld erzeugen
                             gameController.makeMove(Directions.RIGHT);
                             //Führt den Zug im UI aus
@@ -260,6 +263,7 @@ public class GameView implements IGameView {
         }
         else
         {
+            //Wenn AI Mode aktiv ist dann starte den AI Loop
             createAiPlayLoop();
         }
 
@@ -303,6 +307,7 @@ public class GameView implements IGameView {
         Parent root = loader.load();
         Scene scene = new Scene(root, windowWidth, windowHeight);
 
+        //Wird um den Controller zu laden benötigt ... obwohl die variable nicht benutzt wird
         MenueView menueView = loader.getController();
 
         //Erzeuge eine neue Stage für die GameView
@@ -336,7 +341,7 @@ public class GameView implements IGameView {
             }
         }
         if (testForDuplicateCounter <= (tileCount * 2) - 1) {
-            inMoveFlage = false;
+            inMoveFlagShortMove = true;
         }
 
         //Itteriert über das Spielfeld
@@ -385,17 +390,16 @@ public class GameView implements IGameView {
             }
         }
 
-        //setzt die einzelnen Werte von nextGameBoard in prevGameBoard
+        //setzt die einzelnen Werte von nextGameBoard in prevGameBoard (einfaches kopieren)
         for (int j = 0; j < tileCount; j++) {
             for (int k = 0; k < tileCount; k++) {
-
                 prevGameBoard[j][k] = nextGameBoard[j][k];
             }
         }
 
         if(mergeCount == 0){
-            //Wenn keine lange transition stattfand und man nicht warten muss kann der nächste Zug freigegeben werden
-            inMoveFlage = false;
+            //Wenn keine lange transition stattfand und man nicht warten muss kann der nächste Zug kann nach einer kurzen transition freigegeben werden
+            inMoveFlagShortMove = true;
         }
 
         //Gewinnabfrage
@@ -419,8 +423,20 @@ public class GameView implements IGameView {
         translateTransition.setToX((gameBoardGap * (posX + 1) + (tileSize * posX)) - tilePane.getLayoutX());
         translateTransition.setToY((gameBoardGap * (posY + 1) + (tileSize * posY)) - tilePane.getLayoutY());
         translateTransition.setNode(tilePane);
-        translateTransition.setDuration(new Duration(50));
+        translateTransition.setDuration(new Duration(transitionTimeOfTiles));
         translateTransition.play();
+
+        translateTransition.setOnFinished(g -> afterShortMove());
+    }
+
+    /**
+     * Wenn es keine zusammenführung mehrerer Tiles gibt kann der
+     * zug nach Ende einer kurzen Transition freigegeben werden, was mit dem Aufruf dieser Mehtode passiert
+     */
+    private void afterShortMove(){
+        if(inMoveFlagShortMove){
+            inMoveFlag = false;
+        }
     }
 
     /**
@@ -442,12 +458,12 @@ public class GameView implements IGameView {
         translateTransitionA.setToX((gameBoardGap * (posX + 1) + (tileSize * posX)) - tilePaneA.getLayoutX());
         translateTransitionA.setToY((gameBoardGap * (posY + 1) + (tileSize * posY)) - tilePaneA.getLayoutY());
         translateTransitionA.setNode(tilePaneA);
-        translateTransitionA.setDuration(new Duration(50));
+        translateTransitionA.setDuration(new Duration(transitionTimeOfTiles));
 
         translateTransitionB.setToX((gameBoardGap * (posX + 1) + (tileSize * posX)) - tilePaneB.getLayoutX());
         translateTransitionB.setToY((gameBoardGap * (posY + 1) + (tileSize * posY)) - tilePaneB.getLayoutY());
         translateTransitionB.setNode(tilePaneB);
-        translateTransitionB.setDuration(new Duration(50));
+        translateTransitionB.setDuration(new Duration(transitionTimeOfTiles));
 
         //Führt die Animation aus
         translateTransitionA.play();
@@ -482,7 +498,7 @@ public class GameView implements IGameView {
      * @param tile Zu entfernendes Tile
      */
     private void removeTile1(Tile tile) {
-        //TODO:Warum tritt hier eine Exception auf :D?? 1/2
+        //Try/Catch zur sicherheit, falls Controler/Logik fehler
         try {
             pane.getChildren().remove(tile.getPreFieldA().getPane());
         }catch(Exception e){
@@ -496,13 +512,13 @@ public class GameView implements IGameView {
      * @param tile Zu entfernendes Tile
      */
     private void removeTile2(Tile tile) {
-        //TODO:Warum tritt hier eine Exception auf :D?? 2/2
+        //Try/Catch zur sicherheit, falls Controler/Logik fehler
         try {
             pane.getChildren().remove(tile.getPreFieldB().getPane());
         }catch(Exception e){
             System.out.println("Cant remove Tile");
         }
-        inMoveFlage = false;
+        inMoveFlag = false;
     }
 
     /**
@@ -578,7 +594,7 @@ public class GameView implements IGameView {
             loserPane.getChildren().add(winText);
 
             //Das man keinen weiteren move machen kann wird einfach inMovoe gesetzt
-            inMoveFlage = true;
+            inMoveFlag = true;
         }
     }
 
@@ -643,6 +659,12 @@ public class GameView implements IGameView {
         this.minWindowHeight = windowHeight;
     }
 
+    /**
+     * Wenn der Highscore Button gedrückt wird, wird diese Methode ausgeführt
+     *
+     * @param event Event
+     * @throws IOException Exception
+     */
     public void onButtonPressHighscore(ActionEvent event) throws IOException
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Highscore/HighscoreView.fxml"));
