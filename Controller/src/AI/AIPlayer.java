@@ -11,15 +11,15 @@ import static java.lang.Integer.valueOf;
 
 public class AIPlayer implements IAIPlayer
 {
-    private int rounds = 100;
-    private int standardDepth = 4;
+    private int aRounds = 100;
+    private int aStandardDepth = 4;
 
     /**
-     * @param field Aktuelles Spielfeld vor nächstem Zug
+     * @param pField Aktuelles Spielfeld vor nächstem Zug
      * @return Richtung (Rechts, Links, Hoch, Runter)
      */
     @Override
-    public Directions calculateNextDirection(Tile[][] field)
+    public Directions calculateNextDirection(Tile[][] pField)
     {
         Map<Directions,Integer> appearances = new HashMap<>();
         appearances.put(Directions.UP,0);
@@ -28,12 +28,12 @@ public class AIPlayer implements IAIPlayer
         appearances.put(Directions.RIGHT,0);
         int up, down, left, right, max;
 
-        for(int i = 0; i < rounds; i++)
+        for(int i = 0; i < aRounds; i++)
         {
-            up = getScore(field, Directions.UP, standardDepth);
-            down = getScore(field, Directions.DOWN, standardDepth);
-            left = getScore(field, Directions.LEFT, standardDepth);
-            right = getScore(field, Directions.RIGHT, standardDepth);
+            up = getScore(pField, Directions.UP, aStandardDepth);
+            down = getScore(pField, Directions.DOWN, aStandardDepth);
+            left = getScore(pField, Directions.LEFT, aStandardDepth);
+            right = getScore(pField, Directions.RIGHT, aStandardDepth);
             max = Math.max(Math.max(up, down), Math.max(left, right));
             if(max == up) appearances.put(Directions.UP, appearances.get(Directions.UP)+up);
             if(max == down) appearances.put(Directions.DOWN, appearances.get(Directions.DOWN)+down);
@@ -46,18 +46,18 @@ public class AIPlayer implements IAIPlayer
 
 
     /**
-     * @param field Kopiertes Spielfeld vor nächstem Zug (damit nur Value und nicht Refernce übergeben wird)
-     * @param direction Richtung des nächsten Zuges, der hier ausgeführt werden soll
-     * @param aDepth Tiefe der Rekursion
+     * @param pField Kopiertes Spielfeld vor nächstem Zug (damit nur Value und nicht Refernce übergeben wird)
+     * @param pDirection Richtung des nächsten Zuges, der hier ausgeführt werden soll
+     * @param pDepth Tiefe der Rekursion
      * @return (Maximale) Anzahl der freien Felder
      */
     @Override
-    public int getScore(Tile[][] field, Directions direction, int aDepth)
+    public int getScore(Tile[][] pField, Directions pDirection, int pDepth)
     {
-        Tile[][] newField = field.clone();
+        Tile[][] newField = pField.clone();
         GameController aiController = new GameController();
-        newField = aiController.updateField(direction, newField);
-        int depth =  valueOf(aDepth);
+        newField = aiController.updateField(pDirection, newField);
+        int depth =  valueOf(pDepth);
 
         if(depth == 0)
         {
@@ -74,18 +74,18 @@ public class AIPlayer implements IAIPlayer
     }
 
     /**
-     * @param field Derzeitig getestete Feldkombination, welche in der GUI noch nicht angezeigt wird
+     * @param pField Derzeitig getestete Feldkombination, welche in der GUI noch nicht angezeigt wird
      * @return Anzahl der freien Felder
      */
     @Override
-    public int getFreeTiles(Tile[][] field)
+    public int getFreeTiles(Tile[][] pField)
     {
         int freeTiles = 0;
-        for(int i = 0; i < field[0].length; i++)
+        for(int i = 0; i < pField[0].length; i++)
         {
-            for(int j = 0; j < field[0].length; j++)
+            for(int j = 0; j < pField[0].length; j++)
             {
-                if(field[i][j] == null) freeTiles++;
+                if(pField[i][j] == null) freeTiles++;
             }
         }
         return freeTiles;
