@@ -8,7 +8,7 @@
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="400.0" spacing="30.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ModusMenue.ModusMenueView">
    <children>
-      <ToggleButton id="buttonCorporate" fx:id="buttonCorporate" mnemonicParsing="false" onAction="#setGamemodeCooperative" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/modusMenueStyle.css" text="Corperate">
+      <ToggleButton id="buttonCorporate" fx:id="buttonCorporate" mnemonicParsing="false" onAction="#setGamemodeCooperative" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/modusMenueStyle.css" text="Cooperate">
          <font>
             <Font name="Helvetica‭ ‬עבה" size="38.0" />
          </font>
