@@ -1,9 +1,10 @@
 package AI;
 
 import DataClasses.Directions;
+import DataClasses.GameOptions;
 import DataClasses.Tile;
 import Game.GameController;
-import Game.TileCreator.RandomTileCreator;
+import Game.IGameController;
 
 import java.util.*;
 
@@ -11,8 +12,15 @@ import static java.lang.Integer.valueOf;
 
 public class AIPlayer implements IAIPlayer
 {
-    private int aRounds = 100;
+    private IGameController aGameController;
+    private int aRounds = 10;
     private int aStandardDepth = 4;
+
+    public AIPlayer(GameOptions pGameOptions)
+    {
+        this.aGameController = new GameController();
+        this.aGameController.startGame(pGameOptions);
+    }
 
     /**
      * @param pField Aktuelles Spielfeld vor nächstem Zug
@@ -55,8 +63,7 @@ public class AIPlayer implements IAIPlayer
     public int getScore(Tile[][] pField, Directions pDirection, int pDepth)
     {
         Tile[][] newField = pField.clone();
-        GameController aiController = new GameController();
-        newField = aiController.updateField(pDirection, newField);
+        newField = aGameController.calculateNewField(pDirection, newField);
         int depth =  valueOf(pDepth);
 
         if(depth == 0)

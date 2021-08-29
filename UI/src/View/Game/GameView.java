@@ -75,7 +75,7 @@ public class GameView implements IGameView {
 
     private final IGameController gameController;
     private final IHighscoreController highScoreController;
-    private final IAIPlayer aiPlayer;
+    private IAIPlayer aiPlayer;
 
     private GameOptions gameOptions;
     private IHighscoreView highscoreView;
@@ -87,8 +87,7 @@ public class GameView implements IGameView {
     public GameView() {
 
         this.gameController = ComponentFactory.getGameController();
-        this.highScoreController = ComponentFactory.getHighScroeController();
-        this.aiPlayer = ComponentFactory.getAIPlayer();
+        this.highScoreController = ComponentFactory.getHighScoreController();
     }
 
     /**
@@ -200,7 +199,7 @@ public class GameView implements IGameView {
 
         //Setzt die eingestellten Gamoptions im Controler
         gameOptions = new GameOptions( aiMode, tileCount, gameMode);
-
+        this.aiPlayer = ComponentFactory.getAIPlayer(this.gameOptions);
         //Initalisiert im gameController ein Spielfeld
         gameController.startGame(gameOptions);
         highScoreController.setGameOptions(gameOptions);
@@ -272,12 +271,12 @@ public class GameView implements IGameView {
 
     private void createAiPlayLoop()
     {
-        final long timeInterval = 1200;
+        final long timeInterval = 1500;
         Thread thread = new Thread(() ->
         {
-            while (true) {
+            while (this.gameStatus!=3) {
                 //Zurück ins UI Thread
-                Platform.runLater(this::makeAIMove);
+                makeAIMove();
                 try {
                     Thread.sleep(timeInterval);
                 } catch (InterruptedException e) {
@@ -290,8 +289,9 @@ public class GameView implements IGameView {
 
     private void makeAIMove()
     {
-        gameController.makeMove(aiPlayer.calculateNextDirection(nextGameBoard));
-        move();
+        var aiDirection = aiPlayer.calculateNextDirection(nextGameBoard);
+        System.out.println("Hallo, ai move hier");
+        Platform.runLater(() -> {gameController.makeMove(aiDirection);move();});
     }
 
     /**
@@ -301,7 +301,7 @@ public class GameView implements IGameView {
      * @throws IOException
      */
     public void onButtonPressMenue(Event event) throws IOException {
-
+        this.gameStatus = 3;
         //Erzeuge eine Szene aus ModusMenueView.fxml
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Menue/MenueView.fxml"));
         Parent root = loader.load();
