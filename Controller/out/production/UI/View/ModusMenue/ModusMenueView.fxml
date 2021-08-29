@@ -18,6 +18,11 @@
             <Font name="Helvetica‭ ‬עבה" size="38.0" />
          </font>
       </ToggleButton>
+      <ToggleButton id="buttonMinMaxCooperative" fx:id="buttonMinMaxCooperative" mnemonicParsing="false" onAction="#setGamemodeMinMaxCooperative" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/modusMenueStyle.css" text="MinMaxCooperative">
+         <font>
+            <Font name="Helvetica‭ ‬עבה" size="38.0" />
+         </font>
+      </ToggleButton>
       <ToggleButton id="buttonRandom" fx:id="buttonRandom" mnemonicParsing="false" onAction="#setGamemodeRandom" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/modusMenueStyle.css" text="Random">
          <font>
             <Font name="Helvetica‭ ‬עבה" size="38.0" />

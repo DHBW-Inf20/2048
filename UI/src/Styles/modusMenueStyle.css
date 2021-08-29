@@ -26,6 +26,18 @@
     -fx-background-color:"#8baddc";
 }
 
+#buttonMinMaxCooperative{
+    -fx-background-color:"#83d0f5";
+    -fx-text-fill: "white";
+
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+
+#buttonMinMaxCooperative:selected{
+    -fx-background-color:"#8baddc";
+}
+
 #buttonRandom{
     -fx-background-color:"#83d0f5";
     -fx-text-fill: "white";
