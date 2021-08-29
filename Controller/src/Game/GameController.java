@@ -111,9 +111,11 @@ public class GameController implements IGameController {
 
         //Checkt das Spielfeld auf gewonne/verloren
         checkGameStatus();
+        if(gameStatus != 3 && gameStatus != 4){
+            field = iTileCreator.generateNewNumber(field, tileSize, tileCount);
+            tileChangeListener.change(field);
+        }
 
-        field = iTileCreator.generateNewNumber(field, tileSize, tileCount);
-        tileChangeListener.change(field);
     }
 
 
