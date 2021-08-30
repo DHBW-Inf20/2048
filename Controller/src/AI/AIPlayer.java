@@ -54,8 +54,6 @@ public class AIPlayer implements IAIPlayer
     public Directions calculateNextDirection(Tile[][] pField)
     {
 
-        System.out.println("ccc");
-
         Map<Directions,Integer> appearances = new HashMap<>();
         appearances.put(Directions.UP,0);
         appearances.put(Directions.DOWN,0);
@@ -70,8 +68,6 @@ public class AIPlayer implements IAIPlayer
             left = getScore(pField, Directions.LEFT);
             right = getScore(pField, Directions.RIGHT);
 
-
-
             appearances.put(Directions.UP, appearances.get(Directions.UP)+up);
             appearances.put(Directions.DOWN, appearances.get(Directions.DOWN)+down);
             appearances.put(Directions.LEFT, appearances.get(Directions.LEFT)+left);
@@ -81,7 +77,6 @@ public class AIPlayer implements IAIPlayer
         var direction =  Collections.max(appearances.entrySet(), Map.Entry.comparingByValue()).getKey();
         System.out.println(direction);
         return direction;
-
     }
 
 
