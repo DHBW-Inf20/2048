@@ -23,7 +23,7 @@
 | Spielmodi | Beschreibung |
 | ------ | ----------- |
 | Kooperativ   | Die Kacheln werden bestmöglich gesetztpassed into templates. |
-| MinMax - Kooperativ | Die Kacheln werden bestmöglich nach dem MinMax-Algorithmus |
+| MinMax - Kooperativ | Die Kacheln werden bestmöglich nach dem MinMax-Algorithmus gesetzt |
 | MinMax - Unkooperativ | Die Kacheln werden schlechtmöglichst nach dem MinMax-Algorithmus gesetzt |
 | Random | Die Kacheln werden zufällig gesetzt |
 
