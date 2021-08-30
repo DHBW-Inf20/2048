@@ -260,7 +260,8 @@ public class GameController implements IGameController
                             } else
                             {
                                 //Füge neues Element ein und counter++
-                                tempField[j][tempFieldPosition] = new Tile(virtualField[j][k].getNumber(), null, null, j, tempFieldPosition, tileSize, tileCount);
+                               // tempField[j][tempFieldPosition] = new Tile(virtualField[j][k].getNumber(), null, null, j, tempFieldPosition, tileSize, tileCount);
+                                tempField[j][tempFieldPosition] = virtualField[j][k];
                                 tempFieldPosition++;
                                 sumUpLast = false;
 
@@ -457,7 +458,7 @@ public class GameController implements IGameController
             }
         }
         if(checkForNeighbours(virtualField)) return false;
-        System.out.println("Game OVER");
+     //   System.out.println("Game OVER");
         return true;
     }
 

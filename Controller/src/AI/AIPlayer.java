@@ -7,10 +7,12 @@ import DataClasses.Tile;
 import Game.GameController;
 import Game.IGameController;
 import Game.TileCreator.*;
+import Utilities.Utilities;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+import static java.lang.Integer.remainderUnsigned;
 import static java.lang.Integer.valueOf;
 
 public class AIPlayer implements IAIPlayer
@@ -42,6 +44,8 @@ public class AIPlayer implements IAIPlayer
          }
     }
 
+
+
     /**
      * @param pField Aktuelles Spielfeld vor nächstem Zug
      * @return Richtung (Rechts, Links, Hoch, Runter)
@@ -49,6 +53,9 @@ public class AIPlayer implements IAIPlayer
     @Override
     public Directions calculateNextDirection(Tile[][] pField)
     {
+
+        System.out.println("ccc");
+
         Map<Directions,Integer> appearances = new HashMap<>();
         appearances.put(Directions.UP,0);
         appearances.put(Directions.DOWN,0);
@@ -58,16 +65,12 @@ public class AIPlayer implements IAIPlayer
 
         for(int i = 0; i < aRounds; i++)
         {
-            System.out.println("For-Loop erreicht");
             up = getScore(pField, Directions.UP);
             down = getScore(pField, Directions.DOWN);
             left = getScore(pField, Directions.LEFT);
             right = getScore(pField, Directions.RIGHT);
 
-            System.out.println("Oben: " + up);
-            System.out.println("Unten: " + down);
-            System.out.println("Links: " + left);
-            System.out.println("Rechts: " + right);
+
 
             appearances.put(Directions.UP, appearances.get(Directions.UP)+up);
             appearances.put(Directions.DOWN, appearances.get(Directions.DOWN)+down);
@@ -75,7 +78,10 @@ public class AIPlayer implements IAIPlayer
             appearances.put(Directions.RIGHT, appearances.get(Directions.RIGHT)+right);
         }
         // Findet die maximale Value und gibt zugehörigen Key (also eine Direction) zurück
-        return Collections.max(appearances.entrySet(), Map.Entry.comparingByValue()).getKey();
+        var direction =  Collections.max(appearances.entrySet(), Map.Entry.comparingByValue()).getKey();
+        System.out.println(direction);
+        return direction;
+
     }
 
 
@@ -87,17 +93,18 @@ public class AIPlayer implements IAIPlayer
     @Override
     public int getScore(Tile[][] pField, Directions pDirection)
     {
-        System.out.println("In der Methode getScore");
+      //  System.out.println("In der Methode getScore");
         Tile[][] newField;
-        newField = aGameController.calculateNewField(pDirection, pField.clone());
-        newField = aTileCreator.generateNewNumber(newField, 0, 0);
+        aTileCreator.generateField(pField.length);
+        newField = aGameController.calculateNewField(pDirection, Utilities.copyField(pField));
+        newField = aTileCreator.generateNewNumber(newField, 2, 4);
         while(!aGameController.isGameOver(newField))
         {
-            System.out.println("Im While");
+         //   System.out.println("Im While");
             newField = aGameController.calculateNewField(makeRandomMove(), newField);
-            newField = aTileCreator.generateNewNumber(newField, 0, 0);
+            newField = aTileCreator.generateNewNumber(newField, 2, 4);
         }
-        System.out.println("Ausm While");
+      //  System.out.println("Ausm While");
         return aGameController.getScore();
     }
 
