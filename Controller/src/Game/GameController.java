@@ -128,7 +128,13 @@ public class GameController implements IGameController
 
     }
 
-
+    /**
+     * Führt den Zug aus und berechnet den Score
+     *
+     * @param direction Richtung zum Zuges
+     * @param virtualField Feld das übergeben werden
+     * @return Feld wird mit ausgeführtem Zug zurückgegeben
+     */
     public Tile[][] updateField(Directions direction, Tile[][] virtualField)
     {
         Tile[][] tempField = calculateNewField(direction, virtualField);
@@ -139,6 +145,14 @@ public class GameController implements IGameController
         return tempField;
     }
 
+
+    /**
+     * Führt den eigentlichen Zug aus
+     *
+     * @param direction Richtung zum Zuges
+     * @param virtualField Feld das übergeben werden
+     * @return Feld wird mit ausgeführtem Zug zurückgegeben
+     */
     public Tile[][] calculateNewField(Directions direction, Tile[][] virtualField)
     {
         int tempFieldPosition;

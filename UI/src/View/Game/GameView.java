@@ -211,7 +211,7 @@ public class GameView implements IGameView {
         //Keylistener auf der Scene
         if(!aiMode)
         {
-            scene.setOnKeyPressed(e -> {
+            scene.setOnKeyReleased(e -> {
 
                 //Wenn ein Zug im Gange ist kann kein neuer ausgeführt werden -> verhindert asynchronität vom Contoler und dem UI
                 if(!inMoveFlag) {
