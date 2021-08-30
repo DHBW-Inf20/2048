@@ -1,10 +1,12 @@
 package AI;
 
 import DataClasses.Directions;
+import DataClasses.GameModes;
 import DataClasses.GameOptions;
 import DataClasses.Tile;
 import Game.GameController;
 import Game.IGameController;
+import Game.TileCreator.*;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -14,12 +16,30 @@ import static java.lang.Integer.valueOf;
 public class AIPlayer implements IAIPlayer
 {
     private IGameController aGameController;
-    private int aRounds = 5;
+    private int aRounds = 1;
+    private ITileCreator aTileCreator;
+    private GameModes aGameMode;
 
     public AIPlayer(GameOptions pGameOptions)
     {
         this.aGameController = new GameController();
         this.aGameController.startGame(pGameOptions);
+         aGameMode = pGameOptions.getGameMode();
+         switch(aGameMode)
+         {
+             case random -> {
+                 aTileCreator = new RandomTileCreator();
+             }
+             case cooperative -> {
+                 aTileCreator = new CooperativeTileCreator();
+             }
+             case minMax -> {
+                 aTileCreator = new MinMaxTileCreator();
+             }
+             case minMaxCooperative -> {
+                 aTileCreator = new MinMaxTileCreatorCooperative();
+             }
+         }
     }
 
     /**
@@ -70,10 +90,12 @@ public class AIPlayer implements IAIPlayer
         System.out.println("In der Methode getScore");
         Tile[][] newField;
         newField = aGameController.calculateNewField(pDirection, pField.clone());
+        newField = aTileCreator.generateNewNumber(newField, 0, 0);
         while(!aGameController.isGameOver(newField))
         {
             System.out.println("Im While");
             newField = aGameController.calculateNewField(makeRandomMove(), newField.clone());
+            newField = aTileCreator.generateNewNumber(newField, 0, 0);
         }
         System.out.println("Ausm While");
         return aGameController.getScore();
@@ -84,10 +106,10 @@ public class AIPlayer implements IAIPlayer
         int randomNum = ThreadLocalRandom.current().nextInt(1, 4 + 1);
         switch (randomNum)
         {
-            case 1: direction = Directions.UP; System.out.println("UP"); break;
-            case 2: direction = Directions.DOWN; System.out.println("DOWN"); break;
-            case 3: direction = Directions.LEFT; System.out.println("LEFT"); break;
-            case 4: direction = Directions.RIGHT; System.out.println("RIGHT"); break;
+            case 1: direction = Directions.UP; break;
+            case 2: direction = Directions.DOWN; break;
+            case 3: direction = Directions.LEFT; break;
+            case 4: direction = Directions.RIGHT; break;
             default: System.out.println("Fehler beim Random -> standardmäßig UP genommen"); direction = Directions.UP;
         }
         return direction;

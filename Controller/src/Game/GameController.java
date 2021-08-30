@@ -152,9 +152,9 @@ public class GameController implements IGameController
                 //Verschieben nach links
                 tempFieldPosition = 0;
 
-                for (int j = 0; j < field.length; j++)
+                for (int j = 0; j < virtualField.length; j++)
                 {
-                    for (int k = 0; k < field.length; k++)
+                    for (int k = 0; k < virtualField.length; k++)
                     {
 
                         //Wenn auf ein nicht leeres Feld gestoßen wird
@@ -260,7 +260,7 @@ public class GameController implements IGameController
                             } else
                             {
                                 //Füge neues Element ein und counter++
-                                tempField[j][tempFieldPosition] = virtualField[j][k];
+                                tempField[j][tempFieldPosition] = new Tile(virtualField[j][k].getNumber(), null, null, j, tempFieldPosition, tileSize, tileCount);
                                 tempFieldPosition++;
                                 sumUpLast = false;
 
@@ -444,9 +444,9 @@ public class GameController implements IGameController
      * @return true: gameOver; false: nicht gameOver
      */
     public boolean isGameOver(Tile[][] virtualField) {
-        for(int i = 0; i < dimensions; i++)
+        for(int i = 0; i < virtualField.length; i++)
         {
-            for(int j = 0; j < dimensions; j++)
+            for(int j = 0; j < virtualField.length; j++)
             {
                 if(virtualField[i][j] == null) return false;
             }
