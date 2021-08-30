@@ -46,11 +46,13 @@ public class ModusMenueView implements IModusMenueView {
         //erstelle eine Togglegruppe für die Radiobuttons
         ToggleButton toggleButtonRamdom = (ToggleButton) scene.lookup("#buttonRandom");
         ToggleButton toggleButtonMinMax = (ToggleButton) scene.lookup("#buttonMinMax");
+        ToggleButton toggleButtonMinMaxCooperative = (ToggleButton) scene.lookup("#buttonMinMaxCooperative");
         ToggleButton toggleButtonCorporate = (ToggleButton) scene.lookup("#buttonCorporate");
 
         ToggleGroup toggleGroup = new ToggleGroup();
         toggleButtonRamdom.setToggleGroup(toggleGroup);
         toggleButtonMinMax.setToggleGroup(toggleGroup);
+        toggleButtonMinMaxCooperative.setToggleGroup(toggleGroup);
         toggleButtonCorporate.setToggleGroup(toggleGroup);
 
         //Selectiert den Random button beim Aufruf der Scene
@@ -139,6 +141,11 @@ public class ModusMenueView implements IModusMenueView {
     @Override
     public void setGamemodeMinMax(){
         this.gameMode = GameModes.minMax;
+    }
+
+    @Override
+    public void setGamemodeMinMaxCooperative(){
+        this.gameMode = GameModes.minMaxCooperative;
     }
 
 }

@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -11,7 +12,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.control.TextField?>
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="710.0" prefWidth="400.0" spacing="25.0" stylesheets="@../../Styles/menueStyle.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.Menue.MenueView">
    <children>
       <StackPane prefHeight="150.0" prefWidth="200.0">
@@ -29,25 +29,36 @@
          </children>
       </StackPane>
       <HBox prefHeight="0.0" />
-      <TextField focusTraversable="false" text="Unnamed" onKeyReleased="#playerNameChanged"  fx:id="playerName" alignment="CENTER" prefHeight="60.0" prefWidth="100.0" stylesheets="@../../Styles/menueStyle.css" ></TextField>
+      <VBox alignment="CENTER">
+         <children>
+            <Text id="PlayerNameText" fill="#baac9f" strokeType="OUTSIDE" strokeWidth="0.0" text="Your name:">
+               <font>
+                  <Font name="Helvetica‭ ‬עבה" size="14.0" />
+               </font></Text>
+            <TextField id="PlayerName" fx:id="playerName" alignment="CENTER" focusTraversable="false" maxWidth="250.0" onKeyReleased="#playerNameChanged" prefHeight="20.0" prefWidth="250.0" stylesheets="@../../Styles/menueStyle.css" text="Player Name">
+               <font>
+                  <Font name="Helvetica‭ ‬עבה" size="12.0" />
+               </font>
+            </TextField>
+         </children>
+      </VBox>
       <Button id="buttonNewGame" fx:id="buttonNewGame" alignment="CENTER" mnemonicParsing="false" onAction="#onButtonPressNewGame" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/menueStyle.css" text="New Game">
          <font>
             <Font name="Helvetica‭ ‬עבה" size="38.0" />
          </font>
       </Button>
-      <Slider fx:id="sliderSize" max="10.0" maxWidth="250.0" min="4.0" prefWidth="250.0" value="7.0" />
+      <Slider fx:id="sliderSize" max="7.0" maxWidth="250.0" min="4.0" prefWidth="250.0" value="4.0" />
       <ToggleButton id="buttonKI" fx:id="toggleButton" mnemonicParsing="false" onAction="#switchKiMode" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/menueStyle.css" text="KI: Off">
          <font>
             <Font name="Helvetica‭ ‬עבה" size="38.0" />
          </font>
       </ToggleButton>
-      <HBox prefHeight="0.0" />
-      <Button id="buttonCredits" fx:id="buttonCredits" alignment="CENTER" mnemonicParsing="false" onAction="#onButtonPressCredits" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/menueStyle.css" text="Credits">
+      <Button id="buttonHighscore" fx:id="buttonHighscore" alignment="CENTER" mnemonicParsing="false" onAction="#onButtonPressHighscore" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/menueStyle.css" text="Scores">
          <font>
             <Font name="Helvetica‭ ‬עבה" size="38.0" />
          </font>
       </Button>
-      <Button id="buttonHighscore" fx:id="buttonHighscore" alignment="CENTER" mnemonicParsing="false" onAction="#onButtonPressHighscore" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/menueStyle.css" text="Highscores">
+      <Button id="buttonCredits" fx:id="buttonCredits" alignment="CENTER" mnemonicParsing="false" onAction="#onButtonPressCredits" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/menueStyle.css" text="Credits">
          <font>
             <Font name="Helvetica‭ ‬עבה" size="38.0" />
          </font>

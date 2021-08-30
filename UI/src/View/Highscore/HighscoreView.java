@@ -36,7 +36,7 @@ public class HighscoreView implements IHighscoreView
 
         
         StringBuilder sb = new StringBuilder();
-        List<GlobalHighScoreData> highscores = ComponentFactory.getHighScroeController().getGlobalHighscore();
+        List<GlobalHighScoreData> highscores = ComponentFactory.getHighScoreController().getGlobalHighscore();
         Collections.reverse(highscores);
         highscores.forEach(globalHighScoreData -> {
             sb.append(globalHighScoreData.getName()).append(": ").append(globalHighScoreData.getScore()).append(" (").append(globalHighScoreData.getDimensions()).append("x").append(globalHighScoreData.getDimensions()).append(")").append("\n");

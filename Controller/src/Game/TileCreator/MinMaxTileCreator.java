@@ -4,6 +4,7 @@ import DataClasses.Tile;
 import javafx.geometry.Point2D;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Die MinMaxTileCreator-Klasse implementiert den MINMAX-Algoorithmus um neu erscheinende Zahlen
@@ -22,6 +23,7 @@ public class MinMaxTileCreator implements ITileCreator
 
     //klassenvariablen
     private Point2D gespeicherterZug;
+    private int newTileNumber = 2; //gibt die Nummer des neuen Kärtchens an
     private  int dimensions;
 
     /**
@@ -49,13 +51,14 @@ public class MinMaxTileCreator implements ITileCreator
         this.tileCount = tileCount;
         this.tileSize = tileSize;
         Tile[][] originalField = duplicateField(field);
-        int bewertung = max(gewuenschteTiefe, field);
+        ramdomNewTileNumber();
+        int bewertung = max(gewuenschteTiefe, originalField);
         if (gespeicherterZug == null){
             System.out.println("es gab keine weiteren Zuege mehr");
-            return originalField;
+            return field;
         }
         System.out.println("Platziere Tile bei position " + gespeicherterZug.getX() +", " +gespeicherterZug.getY());
-        return calculateTile(originalField, gespeicherterZug); // führt gespeicherten Zug aus
+        return calculateTile(field, gespeicherterZug, newTileNumber); // führt gespeicherten Zug aus
     }
 
     /**
@@ -68,14 +71,18 @@ public class MinMaxTileCreator implements ITileCreator
     private int max(int tiefe, Tile[][] field) {
         if (tiefe == 0 || !checkTilePlaceable(field)){
 
-            return countFreeTiles(field);
+            return ((dimensions*dimensions) -countFreeTiles(field));
         }
         int maxWert = -99999;
         List<Point2D> possibleTiles = generatePossibleTiles(field);
         int possibleMovesCount = countFreeTiles(field);
         while (possibleMovesCount > 0) { //für jedes possibleTile durchlaufen
-            Point2D newTilePosition =possibleTiles.get(possibleMovesCount-1); //eine position auswählen
-            Tile[][] newField = calculateTile(field, newTilePosition); //an ausgewählte position platzieren
+            Point2D newTilePosition = possibleTiles.get(possibleMovesCount - 1); //eine position auswählen
+            int newTileNumberThisMove = 2;
+            if (tiefe == gewuenschteTiefe) {
+                newTileNumberThisMove = newTileNumber;
+            }
+            Tile[][] newField = calculateTile(field, newTilePosition, newTileNumberThisMove); //an ausgewählte position platzieren
             int wert = min(tiefe-1, newField); //anderen Spieler spielen lassen
             newField = duplicateField(field);//macheZugRueckgaengig();
             if (wert > maxWert) {
@@ -96,8 +103,9 @@ public class MinMaxTileCreator implements ITileCreator
      * @return "Score" nach dem gefundenen zug
      */
     private int min(int tiefe, Tile[][] field) {
-        if (tiefe == 0 || !checkMovePossible(field))
-        return countFreeTiles(field);
+        if (tiefe == 0 || !checkMovePossible(field)) {
+            return ((dimensions*dimensions) -countFreeTiles(field));
+        }
         int minWert = 99999;
         List<String> possibleMoves = generatePossibleMoves(field);
         int possibleMovesCount = possibleMoves.size();
@@ -181,8 +189,8 @@ public class MinMaxTileCreator implements ITileCreator
      * @param newTile neues Tile
      * @return neues Spielfeld
      */
-    private  Tile[][] calculateTile(Tile[][] field, Point2D newTile){//
-        field[(int)newTile.getX()] [(int)newTile.getY()] = new Tile(2, null, null, (int)newTile.getX(), (int)newTile.getY(), tileSize, tileCount);
+    private  Tile[][] calculateTile(Tile[][] field, Point2D newTile, int tileNumber){//
+        field[(int)newTile.getX()] [(int)newTile.getY()] = new Tile(tileNumber, null, null, (int)newTile.getX(), (int)newTile.getY(), tileSize, tileCount);
         return field;
     }
 
@@ -383,6 +391,18 @@ public class MinMaxTileCreator implements ITileCreator
             }
         }
         return  newField;
+    }
+
+    /**
+     * Setzt die Klassenvariable newTileNumber zu 10% auf eine 4 und zu 90% auf eine 2
+     */
+    private void ramdomNewTileNumber(){
+        Random r = new Random();
+        if( r.nextInt((10 - 1) + 1) + 1 == 5){
+            this.newTileNumber = 4;
+        } else {
+            this.newTileNumber = 2;
+        }
     }
 
     /**

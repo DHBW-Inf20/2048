@@ -3,7 +3,7 @@ module Controller {
     requires javafx.controls;
     requires unirest.java;
     requires httpclient;
-    requires json;
+    requires org.json;
     exports Game;
     exports DataClasses;
     exports HighScore;

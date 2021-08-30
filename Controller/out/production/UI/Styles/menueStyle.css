@@ -14,6 +14,15 @@
     -fx-background-color:"#c4b6aa";
 }
 
+#PlayerName{
+    -fx-background-color:"#f9f8ef";
+    -fx-background-radius: 20 20 20 20;
+    -fx-border-radius: 20 20 20 20;
+    -fx-border-style: none none bold none;
+    -fx-border-color: "#baac9f";
+    -fx-border-width: 3;
+}
+
 #buttonKI{
     -fx-background-color:"#83d0f5";
     -fx-text-fill: "white";

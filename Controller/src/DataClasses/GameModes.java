@@ -4,5 +4,6 @@ public enum GameModes
 {
     random,
     cooperative,
-    minMax
+    minMax,
+    minMaxCooperative
 }

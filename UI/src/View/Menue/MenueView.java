@@ -45,9 +45,9 @@ public class MenueView extends Application implements Initializable {
 
     //Einstellbare Konstanten für die Fenstergröße
     private final int minWindowWidth = 500;
-    private final int minWindowHeight = 700;
+    private final int minWindowHeight = 900;
     private final int windowWidth = 600;
-    private final int windowHeight = 800;
+    private final int windowHeight = 900;
 
     private IModusMenueView modusMenue;
     private ICreditsView creditsView;

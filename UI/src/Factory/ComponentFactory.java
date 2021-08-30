@@ -2,6 +2,7 @@ package Factory;
 
 import AI.AIPlayer;
 import AI.IAIPlayer;
+import DataClasses.GameOptions;
 import Game.GameController;
 import Game.IGameController;
 import HighScore.HighscoreController;
@@ -19,13 +20,13 @@ public class ComponentFactory
     {
         return new GameController();
     }
-    public static IHighscoreController getHighScroeController()
+    public static IHighscoreController getHighScoreController()
     {
         return new HighscoreController(getPlayerDataManager());
     }
-    public static IAIPlayer getAIPlayer()
+    public static IAIPlayer getAIPlayer(GameOptions gameOptions)
     {
-        return new AIPlayer();
+        return new AIPlayer(gameOptions);
     }
 
     public static IPlayerDataController getPlayerDataManager()
