@@ -271,7 +271,7 @@ public class GameView implements IGameView {
 
     private void createAiPlayLoop()
     {
-        final long timeInterval = 10000;
+        final long timeInterval = 1500;
         Thread thread = new Thread(() ->
         {
             while (this.gameStatus!=3 && this.gameStatus!=4) {

@@ -378,19 +378,19 @@ public class GameController implements IGameController
         }
     }
 
-    private boolean checkForNeighbours()
+    private boolean checkForNeighbours(Tile[][] virtualField)
     {
 
         int prevField = 0;
         int actualField = 0;
 
         //horizontaler durchgang
-        for (int j = 0; j < field.length; j++)
+        for (int j = 0; j < virtualField.length; j++)
         {
-            for (int k = 0; k < field.length; k++)
+            for (int k = 0; k < virtualField.length; k++)
             {
-                if (field[j][k] != null)
-                    actualField = field[j][k].getNumber();
+                if (virtualField[j][k] != null)
+                    actualField = virtualField[j][k].getNumber();
 
                 if (actualField == prevField)
                 {
@@ -403,12 +403,12 @@ public class GameController implements IGameController
         }
 
         //Vertikaler durchgang
-        for (int j = 0; j < field.length; j++)
+        for (int j = 0; j < virtualField.length; j++)
         {
-            for (int k = 0; k < field.length; k++)
+            for (int k = 0; k < virtualField.length; k++)
             {
-                if (field[k][j] != null)
-                    actualField = field[k][j].getNumber();
+                if (virtualField[k][j] != null)
+                    actualField = virtualField[k][j].getNumber();
 
                 if (actualField == prevField)
                 {
@@ -420,6 +420,11 @@ public class GameController implements IGameController
             actualField = 0;
         }
         return false;
+    }
+
+    private boolean checkForNeighbours()
+    {
+        return checkForNeighbours(field);
     }
 
     /**
@@ -444,14 +449,14 @@ public class GameController implements IGameController
      * @return true: gameOver; false: nicht gameOver
      */
     public boolean isGameOver(Tile[][] virtualField) {
-        for(int i = 0; i < virtualField.length; i++)
+        for(int i = 0; i < virtualField[0].length; i++)
         {
-            for(int j = 0; j < virtualField.length; j++)
+            for(int j = 0; j < virtualField[0].length; j++)
             {
                 if(virtualField[i][j] == null) return false;
             }
         }
-        if(checkForNeighbours()) return false;
+        if(checkForNeighbours(virtualField)) return false;
         System.out.println("Game OVER");
         return true;
     }

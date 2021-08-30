@@ -16,7 +16,7 @@ import static java.lang.Integer.valueOf;
 public class AIPlayer implements IAIPlayer
 {
     private IGameController aGameController;
-    private int aRounds = 1;
+    private int aRounds = 100;
     private ITileCreator aTileCreator;
     private GameModes aGameMode;
 
@@ -94,7 +94,7 @@ public class AIPlayer implements IAIPlayer
         while(!aGameController.isGameOver(newField))
         {
             System.out.println("Im While");
-            newField = aGameController.calculateNewField(makeRandomMove(), newField.clone());
+            newField = aGameController.calculateNewField(makeRandomMove(), newField);
             newField = aTileCreator.generateNewNumber(newField, 0, 0);
         }
         System.out.println("Ausm While");
