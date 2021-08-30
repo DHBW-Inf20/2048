@@ -13,6 +13,8 @@
 
 ```shell
 git clone https://github.com/FelixWochele/2048.git
+```
+```shell
 git add * 
 git commit -m "Commit-Message"
 git push origin main
