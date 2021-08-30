@@ -1,6 +1,7 @@
 package Game.TileCreator;
 
 import DataClasses.Tile;
+import Utilities.Utilities;
 import javafx.util.Pair;
 
 import java.util.Random;
@@ -23,7 +24,7 @@ public class CooperativeTileCreator implements ITileCreator
     {
 
 
-        Tile[][] field = inputField.clone();
+        Tile[][] field = Utilities.copyField(inputField);
 
         int number = random.nextInt(10)==1?4:2;
 

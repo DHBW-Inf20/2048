@@ -157,7 +157,7 @@ public class GameController implements IGameController
     {
         int tempFieldPosition;
 
-        Tile[][] tempField = new Tile[dimensions][dimensions];
+        Tile[][] tempField = new Tile[virtualField.length][virtualField.length];
         boolean sumUpLast = false;
 
         switch (direction)
@@ -166,9 +166,9 @@ public class GameController implements IGameController
                 //Verschieben nach links
                 tempFieldPosition = 0;
 
-                for (int j = 0; j < field.length; j++)
+                for (int j = 0; j < virtualField.length; j++)
                 {
-                    for (int k = 0; k < field.length; k++)
+                    for (int k = 0; k < virtualField.length; k++)
                     {
 
                         //Wenn auf ein nicht leeres Feld gestoßen wird
@@ -268,12 +268,13 @@ public class GameController implements IGameController
                                 //Verdopple letztes Element
                                 int newNumber = (tempField[j][tempFieldPosition - 1].getNumber() * 2);
 
-                                tempField[j][tempFieldPosition - 1] = new Tile(newNumber, tempField[j][tempFieldPosition - 1], virtualField[j][k], tempFieldPosition - 1, k, tileSize, tileCount);
+                                tempField[j][tempFieldPosition - 1] = new Tile(newNumber, tempField[j][tempFieldPosition - 1], virtualField[j][k], j, tempFieldPosition - 1, tileSize, tileCount);
                                 score = score + tempField[j][tempFieldPosition - 1].getNumber();
                                 sumUpLast = true;
                             } else
                             {
                                 //Füge neues Element ein und counter++
+                               // tempField[j][tempFieldPosition] = new Tile(virtualField[j][k].getNumber(), null, null, j, tempFieldPosition, tileSize, tileCount);
                                 tempField[j][tempFieldPosition] = virtualField[j][k];
                                 tempFieldPosition++;
                                 sumUpLast = false;
@@ -290,7 +291,7 @@ public class GameController implements IGameController
                 break;
 
             case DOWN:
-                //Verschieben nach rechts
+                //Verschieben nach unten
                 tempFieldPosition = virtualField.length - 1;
                 sumUpLast = false;
 
@@ -309,7 +310,7 @@ public class GameController implements IGameController
                                 //Verdopple letztes Element
                                 int newNumber = (tempField[j][tempFieldPosition + 1].getNumber() * 2);
 
-                                tempField[j][tempFieldPosition + 1] = new Tile(newNumber, tempField[j][tempFieldPosition + 1], virtualField[j][k], tempFieldPosition + 1, k, tileSize, tileCount);
+                                tempField[j][tempFieldPosition + 1] = new Tile(newNumber, tempField[j][tempFieldPosition + 1], virtualField[j][k], j, tempFieldPosition + 1, tileSize, tileCount);
                                 score = score + tempField[j][tempFieldPosition + 1].getNumber();
                                 sumUpLast = true;
                             } else
@@ -385,26 +386,26 @@ public class GameController implements IGameController
                     }
                 }
             }
-            if (tileCountForLose >= (tileCount * tileCount) - 1 && !checkForNeighbours())
+            if (isGameOver(field)) //tileCountForLose >= (tileCount * tileCount) - 1 && !checkForNeighbours()
             {
                 gameStatus = 3;
             }
         }
     }
 
-    private boolean checkForNeighbours()
+    private boolean checkForNeighbours(Tile[][] virtualField)
     {
 
         int prevField = 0;
         int actualField = 0;
 
         //horizontaler durchgang
-        for (int j = 0; j < field.length; j++)
+        for (int j = 0; j < virtualField.length; j++)
         {
-            for (int k = 0; k < field.length; k++)
+            for (int k = 0; k < virtualField.length; k++)
             {
-                if (field[j][k] != null)
-                    actualField = field[j][k].getNumber();
+                if (virtualField[j][k] != null)
+                    actualField = virtualField[j][k].getNumber();
 
                 if (actualField == prevField)
                 {
@@ -417,12 +418,12 @@ public class GameController implements IGameController
         }
 
         //Vertikaler durchgang
-        for (int j = 0; j < field.length; j++)
+        for (int j = 0; j < virtualField.length; j++)
         {
-            for (int k = 0; k < field.length; k++)
+            for (int k = 0; k < virtualField.length; k++)
             {
-                if (field[k][j] != null)
-                    actualField = field[k][j].getNumber();
+                if (virtualField[k][j] != null)
+                    actualField = virtualField[k][j].getNumber();
 
                 if (actualField == prevField)
                 {
@@ -436,6 +437,11 @@ public class GameController implements IGameController
         return false;
     }
 
+    private boolean checkForNeighbours()
+    {
+        return checkForNeighbours(field);
+    }
+
     /**
      * Gibt den Status des Spiels zurück
      *
@@ -444,6 +450,30 @@ public class GameController implements IGameController
     public int getGameStatus()
     {
         return gameStatus;
+    }
+
+    public int getScore() { // Achtung, setzt Score auf 0!
+        int tempScore = this.score;
+        this.score = 0;
+        return tempScore;
+    }
+
+
+    /**
+     * @param virtualField Übergebenes Spielfeld
+     * @return true: gameOver; false: nicht gameOver
+     */
+    public boolean isGameOver(Tile[][] virtualField) {
+        for(int i = 0; i < virtualField[0].length; i++)
+        {
+            for(int j = 0; j < virtualField[0].length; j++)
+            {
+                if(virtualField[i][j] == null) return false;
+            }
+        }
+        if(checkForNeighbours(virtualField)) return false;
+     //   System.out.println("Game OVER");
+        return true;
     }
 
     public int getDimensions()

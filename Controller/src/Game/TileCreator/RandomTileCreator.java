@@ -1,6 +1,7 @@
 package Game.TileCreator;
 
 import DataClasses.Tile;
+import Utilities.Utilities;
 
 import java.util.Random;
 
@@ -29,7 +30,7 @@ public class RandomTileCreator implements ITileCreator
             nextRandomNumber = 2;
         }
         //Parameter nicht ändern
-        return insertNumberInField(inputField.clone(), tileSize, tileCount, nextRandomNumber);
+        return insertNumberInField(Utilities.copyField(inputField), tileSize, tileCount, nextRandomNumber);
     }
 
 

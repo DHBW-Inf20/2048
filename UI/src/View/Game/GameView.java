@@ -32,6 +32,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class GameView implements IGameView {
 
@@ -63,7 +66,7 @@ public class GameView implements IGameView {
     private boolean inMoveFlag = false;
     private boolean inMoveFlagShortMove = false;
     private int gameStatus = 0;
-    private final int transitionTimeOfTiles = 50; //in millisekunden
+    private final int transitionTimeOfTiles = 48; //in millisekunden
 
     //Spielfelder die übergeben werden
     private Tile[][] nextGameBoard;
@@ -80,11 +83,16 @@ public class GameView implements IGameView {
     private GameOptions gameOptions;
     private IHighscoreView highscoreView;
 
+    private Thread aiThread;
+
 
     /**
      * Kosntruktor
      */
     public GameView() {
+
+
+
 
         this.gameController = ComponentFactory.getGameController();
         this.highScoreController = ComponentFactory.getHighScoreController();
@@ -100,16 +108,7 @@ public class GameView implements IGameView {
     public void createGameScene(Event event, Scene scene) throws IOException {
 
 
-        this.gameController.setTileChangeListener(tiles ->
-        {
-            nextGameBoard = tiles;
-        });
 
-        this.gameController.setScoreChangeListener(newScore -> {
-            setScoreLabel(newScore);
-            highScoreController.submitNewScore(newScore);
-            setHighscore(highScoreController.getCurrentHighScoreData().getScore());
-        });
 
 
         //Variablen mit einstellbaren Konstanten
@@ -201,12 +200,11 @@ public class GameView implements IGameView {
         gameOptions = new GameOptions( aiMode, tileCount, gameMode);
         this.aiPlayer = ComponentFactory.getAIPlayer(this.gameOptions);
         //Initalisiert im gameController ein Spielfeld
-        gameController.startGame(gameOptions);
+
         highScoreController.setGameOptions(gameOptions);
 
         //Setzt ein leeres altes Spielfeld und führt den ersten Move aus um das Spielfeld im UI zu erzeugen
         prevGameBoard = new Tile[tileCount][tileCount];
-        move();
 
         //Keylistener auf der Scene
         if(!aiMode)
@@ -222,7 +220,7 @@ public class GameView implements IGameView {
                             //Lässt den Controler ein neues Spielfeld erzeugen
                             gameController.makeMove(Directions.UP);
                             //Führt den Zug im UI aus
-                            move();
+                     //       move();
                         }
                         case S -> {
                             //Falg das gerade ein Zug ausgeführt wird
@@ -230,7 +228,7 @@ public class GameView implements IGameView {
                             //Lässt den Controler ein neues Spielfeld erzeugen
                             gameController.makeMove(Directions.DOWN);
                             //Führt den Zug im UI aus
-                            move();
+                         //   move();
                         }
                         case A -> {
                             //Falg das gerade ein Zug ausgeführt wird
@@ -238,7 +236,7 @@ public class GameView implements IGameView {
                             //Lässt den Controler ein neues Spielfeld erzeugen
                             gameController.makeMove(Directions.LEFT);
                             //Führt den Zug im UI aus
-                            move();
+                          //  move();
                         }
                         case D -> {
                             //Falg das gerade ein Zug ausgeführt wird
@@ -246,7 +244,7 @@ public class GameView implements IGameView {
                             //Lässt den Controler ein neues Spielfeld erzeugen
                             gameController.makeMove(Directions.RIGHT);
                             //Führt den Zug im UI aus
-                            move();
+                          //  move();
                         }
                         case PLUS -> {
                             //Score Test (EASTER EGG)
@@ -266,32 +264,66 @@ public class GameView implements IGameView {
             createAiPlayLoop();
         }
 
+
+        this.gameController.setTileChangeListener(tiles ->
+        {
+
+            nextGameBoard = tiles;
+            move();
+
+            try
+            {
+
+                    if (aiMode)
+                    {
+                        aiThread =  new Thread(() ->
+                        {
+                            try
+                            {
+                                Thread.sleep(100);
+                                if(!(gameStatus==3||gameStatus==4))
+                                {
+                                    makeAIMove();
+                                }
+
+                            } catch (InterruptedException e)
+                            {
+                                e.printStackTrace();
+                            }
+                        });
+                        aiThread.start();
+                    }
+            }
+            catch (Exception e)
+            {
+
+            }
+        });
+
+        this.gameController.setScoreChangeListener(newScore -> {
+            setScoreLabel(newScore);
+            highScoreController.submitNewScore(newScore);
+            setHighscore(highScoreController.getCurrentHighScoreData().getScore());
+        });
+        gameController.startGame(gameOptions);
         setHighscore(highScoreController.getCurrentHighScoreData().getScore());
     }
 
     private void createAiPlayLoop()
     {
-        final long timeInterval = 1500;
-        Thread thread = new Thread(() ->
-        {
-            while (this.gameStatus!=3) {
-                //Zurück ins UI Thread
-                makeAIMove();
-                try {
-                    Thread.sleep(timeInterval);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        thread.start();
+
+     //   ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+      //  executor.scheduleAtFixedRate(() -> {}, 1300, 1300, TimeUnit.MILLISECONDS);
+        //executor.shutdown();
+
     }
 
     private void makeAIMove()
     {
-        var aiDirection = aiPlayer.calculateNextDirection(nextGameBoard);
-        System.out.println("Hallo, ai move hier");
-        Platform.runLater(() -> {gameController.makeMove(aiDirection);move();});
+        var aiDirection = aiPlayer.calculateNextDirection(prevGameBoard);
+        Platform.runLater(() -> {
+            System.out.println("AI-Move");
+            gameController.makeMove(aiDirection);});
     }
 
     /**
@@ -301,6 +333,11 @@ public class GameView implements IGameView {
      * @throws IOException
      */
     public void onButtonPressMenue(Event event) throws IOException {
+
+
+
+        if(aiThread!=null)
+        aiThread.stop();
         this.gameStatus = 3;
         //Erzeuge eine Szene aus ModusMenueView.fxml
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Menue/MenueView.fxml"));
@@ -558,6 +595,7 @@ public class GameView implements IGameView {
      */
     private void winLoseScreen() {
 
+
         //gameStatus Im Spiel -> 0 | Wenn Gewonnen -> 1 | Nach gewinn weiterspielen -> 2 | Verloren -> 3
 
         //Wenn das erste Mal gewonnen wurde wird der Gewinnerscreen angezeigt
@@ -582,6 +620,8 @@ public class GameView implements IGameView {
             pane.getChildren().remove(scene.lookup("#winText"));
         }
         else if (gameStatus == 3) {
+            if(aiThread!=null)
+            aiThread.stop();
             StackPane loserPane = new StackPane();
             loserPane.setPrefHeight(gameBoardSize);
             loserPane.setPrefWidth(gameBoardSize);
@@ -667,6 +707,7 @@ public class GameView implements IGameView {
      */
     public void onButtonPressHighscore(ActionEvent event) throws IOException
     {
+        aiThread.stop();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Highscore/HighscoreView.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root, windowWidth, windowHeight);
