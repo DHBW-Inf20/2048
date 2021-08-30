@@ -20,6 +20,10 @@ public interface IGameController
 
     int getGameStatus();
 
+    int getScore();
+
+    boolean isGameOver(Tile[][] virtualField);
+
     Tile[][] updateField(Directions pDirection, Tile[][] newField);
 
     Tile[][] calculateNewField(Directions direction, Tile[][] virtualField);

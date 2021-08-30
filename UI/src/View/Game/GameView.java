@@ -271,10 +271,10 @@ public class GameView implements IGameView {
 
     private void createAiPlayLoop()
     {
-        final long timeInterval = 1500;
+        final long timeInterval = 10000;
         Thread thread = new Thread(() ->
         {
-            while (this.gameStatus!=3) {
+            while (this.gameStatus!=3 && this.gameStatus!=4) {
                 //Zurück ins UI Thread
                 makeAIMove();
                 try {
@@ -290,7 +290,7 @@ public class GameView implements IGameView {
     private void makeAIMove()
     {
         var aiDirection = aiPlayer.calculateNextDirection(nextGameBoard);
-        System.out.println("Hallo, ai move hier");
+        System.out.println("AI-Move");
         Platform.runLater(() -> {gameController.makeMove(aiDirection);move();});
     }
 

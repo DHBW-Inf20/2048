@@ -143,7 +143,7 @@ public class GameController implements IGameController
     {
         int tempFieldPosition;
 
-        Tile[][] tempField = new Tile[dimensions][dimensions];
+        Tile[][] tempField = new Tile[virtualField.length][virtualField.length];
         boolean sumUpLast = false;
 
         switch (direction)
@@ -254,7 +254,7 @@ public class GameController implements IGameController
                                 //Verdopple letztes Element
                                 int newNumber = (tempField[j][tempFieldPosition - 1].getNumber() * 2);
 
-                                tempField[j][tempFieldPosition - 1] = new Tile(newNumber, tempField[j][tempFieldPosition - 1], virtualField[j][k], tempFieldPosition - 1, k, tileSize, tileCount);
+                                tempField[j][tempFieldPosition - 1] = new Tile(newNumber, tempField[j][tempFieldPosition - 1], virtualField[j][k], j, tempFieldPosition - 1, tileSize, tileCount);
                                 score = score + tempField[j][tempFieldPosition - 1].getNumber();
                                 sumUpLast = true;
                             } else
@@ -276,7 +276,7 @@ public class GameController implements IGameController
                 break;
 
             case DOWN:
-                //Verschieben nach rechts
+                //Verschieben nach unten
                 tempFieldPosition = virtualField.length - 1;
                 sumUpLast = false;
 
@@ -295,7 +295,7 @@ public class GameController implements IGameController
                                 //Verdopple letztes Element
                                 int newNumber = (tempField[j][tempFieldPosition + 1].getNumber() * 2);
 
-                                tempField[j][tempFieldPosition + 1] = new Tile(newNumber, tempField[j][tempFieldPosition + 1], virtualField[j][k], tempFieldPosition + 1, k, tileSize, tileCount);
+                                tempField[j][tempFieldPosition + 1] = new Tile(newNumber, tempField[j][tempFieldPosition + 1], virtualField[j][k], j, tempFieldPosition + 1, tileSize, tileCount);
                                 score = score + tempField[j][tempFieldPosition + 1].getNumber();
                                 sumUpLast = true;
                             } else
@@ -371,7 +371,7 @@ public class GameController implements IGameController
                     }
                 }
             }
-            if (tileCountForLose >= (tileCount * tileCount) - 1 && !checkForNeighbours())
+            if (isGameOver(field)) //tileCountForLose >= (tileCount * tileCount) - 1 && !checkForNeighbours()
             {
                 gameStatus = 3;
             }
@@ -430,6 +430,30 @@ public class GameController implements IGameController
     public int getGameStatus()
     {
         return gameStatus;
+    }
+
+    public int getScore() { // Achtung, setzt Score auf 0!
+        int tempScore = this.score;
+        this.score = 0;
+        return tempScore;
+    }
+
+
+    /**
+     * @param virtualField Übergebenes Spielfeld
+     * @return true: gameOver; false: nicht gameOver
+     */
+    public boolean isGameOver(Tile[][] virtualField) {
+        for(int i = 0; i < dimensions; i++)
+        {
+            for(int j = 0; j < dimensions; j++)
+            {
+                if(virtualField[i][j] == null) return false;
+            }
+        }
+        if(checkForNeighbours()) return false;
+        System.out.println("Game OVER");
+        return true;
     }
 
     public int getDimensions()
