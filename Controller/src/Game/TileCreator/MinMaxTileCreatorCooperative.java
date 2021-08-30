@@ -54,7 +54,7 @@ public class MinMaxTileCreatorCooperative implements ITileCreator
         Tile[][] originalField = duplicateField(field);
         ramdomNewTileNumber();
         int bewertung = max(gewuenschteTiefe, originalField);
-        if (gespeicherterZug == null){
+        if (gespeicherterZug == null || countFreeTiles(originalField) == 0){
             System.out.println("es gab keine weiteren Zuege mehr");
             return field;
         }

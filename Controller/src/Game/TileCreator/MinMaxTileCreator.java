@@ -53,10 +53,12 @@ public class MinMaxTileCreator implements ITileCreator
         Tile[][] originalField = duplicateField(field);
         ramdomNewTileNumber();
         int bewertung = max(gewuenschteTiefe, originalField);
-        if (gespeicherterZug == null){
+        if (gespeicherterZug == null || countFreeTiles(originalField) == 0){
             System.out.println("es gab keine weiteren Zuege mehr");
             return field;
         }
+
+
         System.out.println("Platziere Tile bei position " + gespeicherterZug.getX() +", " +gespeicherterZug.getY());
         return calculateTile(field, gespeicherterZug, newTileNumber); // führt gespeicherten Zug aus
     }
