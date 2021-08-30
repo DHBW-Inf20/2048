@@ -47,7 +47,7 @@ public class GlobalHighscoreController implements IGlobalHighscoreController
     {
         try
         {
-            Unirest.setTimeouts(1000, 0);
+            Unirest.setTimeouts(5000, 0);
             var responseArray = Unirest.post(serverUrl+"/get").asJson().getBody().getArray();
             var length = responseArray.length();
             List<GlobalHighScoreData> globalHighScoreData = new ArrayList<>();

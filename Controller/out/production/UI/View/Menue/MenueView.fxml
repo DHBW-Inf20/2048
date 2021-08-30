@@ -47,7 +47,7 @@
             <Font name="Helvetica‭ ‬עבה" size="38.0" />
          </font>
       </Button>
-      <Slider fx:id="sliderSize" max="10.0" maxWidth="250.0" min="4.0" prefWidth="250.0" value="7.0" />
+      <Slider fx:id="sliderSize" max="7.0" maxWidth="250.0" min="4.0" prefWidth="250.0" value="4.0" />
       <ToggleButton id="buttonKI" fx:id="toggleButton" mnemonicParsing="false" onAction="#switchKiMode" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/menueStyle.css" text="KI: Off">
          <font>
             <Font name="Helvetica‭ ‬עבה" size="38.0" />

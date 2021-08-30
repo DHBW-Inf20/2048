@@ -13,12 +13,12 @@
             <Font name="Helvetica‭ ‬עבה" size="38.0" />
          </font>
       </ToggleButton>
-      <ToggleButton id="buttonMinMax" fx:id="buttonMinMax" mnemonicParsing="false" onAction="#setGamemodeMinMax" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/modusMenueStyle.css" text="MinMax">
+      <ToggleButton id="buttonMinMax" fx:id="buttonMinMax" mnemonicParsing="false" onAction="#setGamemodeMinMax" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/modusMenueStyle.css" text="MinMax-">
          <font>
             <Font name="Helvetica‭ ‬עבה" size="38.0" />
          </font>
       </ToggleButton>
-      <ToggleButton id="buttonMinMaxCooperative" fx:id="buttonMinMaxCooperative" mnemonicParsing="false" onAction="#setGamemodeMinMaxCooperative" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/modusMenueStyle.css" text="MinMaxCooperative">
+      <ToggleButton id="buttonMinMaxCooperative" fx:id="buttonMinMaxCooperative" mnemonicParsing="false" onAction="#setGamemodeMinMaxCooperative" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/modusMenueStyle.css" text="MinMax+">
          <font>
             <Font name="Helvetica‭ ‬עבה" size="38.0" />
          </font>
