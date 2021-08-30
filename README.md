@@ -9,11 +9,36 @@
 + Reinhold Jooß
 + Felix Wochele
 
-## Kopieren des Repositorys: 
+## Spiel: 
 
+### Steuerung:
+  
++ W - Hoch
++ A - Links
++ S - Runter
++ D - Rechts
+
+### Spielmodi:
+
+## Tables
+
+| Spielmodi | Beschreibung |
+| ------ | ----------- |
+| Kooperativ   | Die Kacheln werden bestmöglich gesetztpassed into templates. |
+| MinMax - Kooperativ | Die Kacheln werden bestmöglich nach dem MinMax-Algorithmus |
+| MinMax - Unkooperativ | Die Kacheln werden schlechtmöglichst nach dem MinMax-Algorithmus gesetzt |
+| Random | Die Kacheln werden zufällig gesetzt |
+
+
+ Zu jedem Mode gibt es einen KI-Modus wo die KI die Steuerung übernimmt.
+
+
+## Commands for the Repositorys: 
+### clone:
 ```shell
 git clone https://github.com/FelixWochele/2048.git
 ```
+### commit & push:
 ```shell
 git add * 
 git commit -m "Commit-Message"
