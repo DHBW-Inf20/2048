@@ -48,6 +48,7 @@ public class MinMaxTileCreator implements ITileCreator
      */
     @Override
     public Tile[][] generateNewNumber(Tile[][] field, double tileSize, int tileCount) { //Hauptmethode
+        dimensions = field.length;
         this.tileCount = tileCount;
         this.tileSize = tileSize;
         Tile[][] originalField = duplicateField(field);
