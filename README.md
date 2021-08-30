@@ -20,8 +20,6 @@
 
 ### Spielmodi:
 
-## Tables
-
 | Spielmodi | Beschreibung |
 | ------ | ----------- |
 | Kooperativ   | Die Kacheln werden bestmöglich gesetztpassed into templates. |
