@@ -32,6 +32,11 @@ public class GameController implements IGameController
     {
     }
 
+    /**
+     * Wird von der GUI verwendet um das neu Spielfeld generieren zu lassen
+     *
+     * @param tileChangeListener tileChangeListener
+     */
     public void setTileChangeListener(TileChangeListener tileChangeListener)
     {
         this.tileChangeListener = tileChangeListener;

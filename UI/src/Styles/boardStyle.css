@@ -182,3 +182,27 @@
      -fx-font-weight: bold;
      -fx-text-alignment: center;
 }
+
+#stackPane2048{
+    -fx-background-color:"#e4c02a";
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+#tileText2048{
+     -fx-fill: "#ffffff";
+     -fx-font: 40pt Helvetica;
+     -fx-font-weight: bold;
+     -fx-text-alignment: center;
+}
+
+#stackPane4096{
+    -fx-background-color:"#e4c02a";
+    -fx-background-radius: 10 10 10 10;
+    -fx-border-radius: 10 10 10 10;
+}
+#tileText4096{
+     -fx-fill: "#ffffff";
+     -fx-font: 40pt Helvetica;
+     -fx-font-weight: bold;
+     -fx-text-alignment: center;
+}

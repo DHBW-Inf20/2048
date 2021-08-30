@@ -620,8 +620,9 @@ public class GameView implements IGameView {
             pane.getChildren().remove(scene.lookup("#winText"));
         }
         else if (gameStatus == 3) {
-            if(aiThread!=null)
-            aiThread.stop();
+            if(aiThread!=null) {
+                aiThread.stop();
+            }
             StackPane loserPane = new StackPane();
             loserPane.setPrefHeight(gameBoardSize);
             loserPane.setPrefWidth(gameBoardSize);
@@ -707,7 +708,9 @@ public class GameView implements IGameView {
      */
     public void onButtonPressHighscore(ActionEvent event) throws IOException
     {
-        aiThread.stop();
+        if(aiThread!=null) {
+            aiThread.stop();
+        }
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Highscore/HighscoreView.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root, windowWidth, windowHeight);

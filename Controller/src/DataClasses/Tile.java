@@ -40,6 +40,7 @@ public class Tile {
 
         //Mehr Tiles -> kleinerer Text
         switch (tileCount) {
+            case 4:
             case 5:
                 text.setStyle("-fx-font: 25pt Helvetica;");
                 break;
