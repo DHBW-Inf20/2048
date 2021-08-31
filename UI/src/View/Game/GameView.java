@@ -22,6 +22,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -90,10 +91,6 @@ public class GameView implements IGameView {
      * Kosntruktor
      */
     public GameView() {
-
-
-
-
         this.gameController = ComponentFactory.getGameController();
         this.highScoreController = ComponentFactory.getHighScoreController();
     }
@@ -171,6 +168,7 @@ public class GameView implements IGameView {
         buttonHighscore.setPrefHeight(scoreBoxSize / 4);
         buttonHighscore.setMaxWidth(scoreBoxSize);
         buttonHighscore.setMaxHeight(scoreBoxSize / 4);
+
 
 
         //Erzeuge die Hintergurnd Tiles wie bei einem 2D-Array
@@ -253,6 +251,38 @@ public class GameView implements IGameView {
                                 var = 1;
                             }
                             setScoreLabel(2 * var);
+                        }
+                        case UP -> {
+                            //Falg das gerade ein Zug ausgeführt wird
+                            inMoveFlag = true;
+                            //Lässt den Controler ein neues Spielfeld erzeugen
+                            gameController.makeMove(Directions.UP);
+                            //Führt den Zug im UI aus
+                            //       move();
+                        }
+                        case DOWN -> {
+                            //Falg das gerade ein Zug ausgeführt wird
+                            inMoveFlag = true;
+                            //Lässt den Controler ein neues Spielfeld erzeugen
+                            gameController.makeMove(Directions.DOWN);
+                            //Führt den Zug im UI aus
+                            //   move();
+                        }
+                        case LEFT-> {
+                            //Falg das gerade ein Zug ausgeführt wird
+                            inMoveFlag = true;
+                            //Lässt den Controler ein neues Spielfeld erzeugen
+                            gameController.makeMove(Directions.LEFT);
+                            //Führt den Zug im UI aus
+                            //  move();
+                        }
+                        case RIGHT -> {
+                            //Falg das gerade ein Zug ausgeführt wird
+                            inMoveFlag = true;
+                            //Lässt den Controler ein neues Spielfeld erzeugen
+                            gameController.makeMove(Directions.RIGHT);
+                            //Führt den Zug im UI aus
+                            //  move();
                         }
                     }
                 }
@@ -339,6 +369,7 @@ public class GameView implements IGameView {
         if(aiThread!=null)
         aiThread.stop();
         this.gameStatus = 3;
+        gameController.calculateElapsedTime(System.currentTimeMillis());
         //Erzeuge eine Szene aus ModusMenueView.fxml
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Menue/MenueView.fxml"));
         Parent root = loader.load();
@@ -623,6 +654,7 @@ public class GameView implements IGameView {
             if(aiThread!=null) {
                 aiThread.stop();
             }
+            gameController.calculateElapsedTime(System.currentTimeMillis());
             StackPane loserPane = new StackPane();
             loserPane.setPrefHeight(gameBoardSize);
             loserPane.setPrefWidth(gameBoardSize);

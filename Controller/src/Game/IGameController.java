@@ -27,4 +27,6 @@ public interface IGameController
     Tile[][] updateField(Directions pDirection, Tile[][] newField);
 
     Tile[][] calculateNewField(Directions direction, Tile[][] virtualField);
+
+    void calculateElapsedTime(long endingTime);
 }

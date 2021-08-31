@@ -18,7 +18,7 @@ import static java.lang.Integer.valueOf;
 public class AIPlayer implements IAIPlayer
 {
     private IGameController aGameController;
-    private int aRounds = 500;
+    private int aRounds = 200;
     private ITileCreator aTileCreator;
     private GameModes aGameMode;
 

@@ -18,6 +18,7 @@ public class GameController implements IGameController
     private int dimensions;
     private GameOptions gameOptions;
     private ScoreChangeListener scoreChangeListener;
+    private long startingTime;
 
     //Für Variables Spielfeld
     private int tileCount;
@@ -71,6 +72,7 @@ public class GameController implements IGameController
         this.aiEnabled = gameOptions.isAiEnabled();
         this.dimensions = gameOptions.getFieldDimensions();
         this.gameOptions = gameOptions;
+        this.startingTime = System.currentTimeMillis();
 
         switch (gameMode)
         {
@@ -364,7 +366,7 @@ public class GameController implements IGameController
             {
                 for (int k = 0; k < field.length; k++)
                 {
-                    if (field[j][k] != null && field[j][k].getNumber() == 1024)
+                    if (field[j][k] != null && field[j][k].getNumber() == 2048)
                     {
                         gameStatus = 1;
                     }
@@ -454,6 +456,7 @@ public class GameController implements IGameController
      */
     public int getGameStatus()
     {
+        if(isGameOver(this.field)) gameStatus = 3;
         return gameStatus;
     }
 
@@ -489,6 +492,13 @@ public class GameController implements IGameController
     public void setDimensions(int dimensions)
     {
         this.dimensions = dimensions;
+    }
+
+    public void calculateElapsedTime(long endingTime)
+    {
+        long difference = endingTime-startingTime;
+        long minutes = difference/1000;
+        System.out.println("Zeit bis zum GameOver (Sek): " +  minutes);
     }
 }
 
