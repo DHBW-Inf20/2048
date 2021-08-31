@@ -1,6 +1,6 @@
 # Programmieren Praxisprojekt - 2048
 
-<img align="right" width="220" height="75" src="DHBW_Logo.png">
+<img align="right" width="220" height="90" src="DHBW_Logo.png">
 
 ### Gruppenmitglieder:
 + Jonas Weis 
