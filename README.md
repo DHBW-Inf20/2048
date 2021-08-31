@@ -46,7 +46,7 @@
 
 ## Commands for the Repositorys: 
 ### start
-2048 -> UI -> src -> View -> MenueView -> Hier liegt die Main-Methode
+2048 -> UI -> src -> View -> Menue -> MenueView -> Hier liegt die Main-Methode
 ### clone:
 ```shell
 git clone https://github.com/FelixWochele/2048.git
