@@ -4,6 +4,14 @@ import java.io.Serializable;
 
 public class GameOptions implements Serializable
 {
+    public GameOptions(boolean aiEnabled, int fieldDimensions, GameModes gameMode, int repetitions)
+    {
+        this.aiEnabled = aiEnabled;
+        this.fieldDimensions = fieldDimensions;
+        this.tileCreator = gameMode;
+        this.aiRepetitions = repetitions;
+    }
+
     public GameOptions(boolean aiEnabled, int fieldDimensions, GameModes gameMode)
     {
         this.aiEnabled = aiEnabled;
@@ -13,6 +21,7 @@ public class GameOptions implements Serializable
 
     private boolean aiEnabled = false;
     private int fieldDimensions = 4;
+    private int aiRepetitions = 250;
     private GameModes tileCreator = GameModes.random;
 
     public boolean isAiEnabled()
@@ -26,7 +35,7 @@ public class GameOptions implements Serializable
         return fieldDimensions;
     }
 
-
+    public int getAiRepetitions(){ return aiRepetitions; }
 
     public GameModes getGameMode()
     {

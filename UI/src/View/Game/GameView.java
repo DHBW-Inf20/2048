@@ -62,6 +62,7 @@ public class GameView implements IGameView {
     private double scoreBoxSize;
 
     private boolean aiMode;
+    private int aiRepetitions;
     private int tileCount;
     private GameModes gameMode;
     private boolean inMoveFlag = false;
@@ -85,6 +86,7 @@ public class GameView implements IGameView {
     private IHighscoreView highscoreView;
 
     private Thread aiThread;
+
 
 
     /**
@@ -169,8 +171,6 @@ public class GameView implements IGameView {
         buttonHighscore.setMaxWidth(scoreBoxSize);
         buttonHighscore.setMaxHeight(scoreBoxSize / 4);
 
-
-
         //Erzeuge die Hintergurnd Tiles wie bei einem 2D-Array
         for (int j = 0; j < tileCount; j++) {
             for (int k = 0; k < tileCount; k++) {
@@ -195,7 +195,7 @@ public class GameView implements IGameView {
         stage.show();
 
         //Setzt die eingestellten Gamoptions im Controler
-        gameOptions = new GameOptions( aiMode, tileCount, gameMode);
+        gameOptions = new GameOptions( aiMode, tileCount, gameMode, aiRepetitions);
         this.aiPlayer = ComponentFactory.getAIPlayer(this.gameOptions);
         //Initalisiert im gameController ein Spielfeld
 
@@ -352,7 +352,6 @@ public class GameView implements IGameView {
     {
         var aiDirection = aiPlayer.calculateNextDirection(prevGameBoard);
         Platform.runLater(() -> {
-            System.out.println("AI-Move");
             gameController.makeMove(aiDirection);});
     }
 
@@ -677,8 +676,9 @@ public class GameView implements IGameView {
      * @param aiMode Der zu setzende Modus
      */
     @Override
-    public void setAiMode(boolean aiMode) {
+    public void setAiMode(boolean aiMode, int repetitions) {
         this.aiMode = aiMode;
+        this.aiRepetitions = repetitions;
     }
 
     /**

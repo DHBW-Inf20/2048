@@ -18,7 +18,7 @@ import static java.lang.Integer.valueOf;
 public class AIPlayer implements IAIPlayer
 {
     private IGameController aGameController;
-    private int aRounds = 200;
+    private int aRounds = 250;
     private ITileCreator aTileCreator;
     private GameModes aGameMode;
 
@@ -26,7 +26,9 @@ public class AIPlayer implements IAIPlayer
     {
         this.aGameController = new GameController();
         this.aGameController.startGame(pGameOptions);
-         aGameMode = pGameOptions.getGameMode();
+        aGameMode = pGameOptions.getGameMode();
+        aRounds = pGameOptions.getAiRepetitions();
+
          switch(aGameMode)
          {
              case random -> {

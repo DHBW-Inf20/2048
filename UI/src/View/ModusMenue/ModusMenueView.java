@@ -2,12 +2,15 @@ package View.ModusMenue;
 
 import DataClasses.GameModes;
 import View.Game.IGameView;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
@@ -25,7 +28,7 @@ public class ModusMenueView implements IModusMenueView {
     private boolean kiMode;
     private GameModes gameMode;
     private IGameView gameView;
-
+    private Slider kiSlider;
     /**
      * Kosntruktor
      */
@@ -48,6 +51,19 @@ public class ModusMenueView implements IModusMenueView {
         ToggleButton toggleButtonMinMax = (ToggleButton) scene.lookup("#buttonMinMax");
         ToggleButton toggleButtonMinMaxCooperative = (ToggleButton) scene.lookup("#buttonMinMaxCooperative");
         ToggleButton toggleButtonCorporate = (ToggleButton) scene.lookup("#buttonCorporate");
+
+        if(kiMode) // Slider falls eine KI ausgewählt wurde
+        {
+            kiSlider = (Slider) scene.lookup("#sliderKi");
+            kiSlider.setVisible(true);
+            TextField kiText = (TextField) scene.lookup("#kiText");
+            kiText.textProperty().bind(Bindings.format(
+                    "%.0f Wiederholungen/Move (KI)",
+                    kiSlider.valueProperty()
+            ));
+            kiSlider.valueProperty().addListener((obs, oldval, newVal) ->
+                    kiSlider.setValue(newVal.intValue()));
+        }
 
         ToggleGroup toggleGroup = new ToggleGroup();
         toggleButtonRamdom.setToggleGroup(toggleGroup);
@@ -82,7 +98,7 @@ public class ModusMenueView implements IModusMenueView {
 
         //WICHTIG: Bei databinding geht es nur so -> Es kann nicht alles (4 Zeilen oben drüber) ausgelagert werden loader.getControler ist notwendig.
         gameView = loader.getController();
-        gameView.setAiMode(kiMode);
+        gameView.setAiMode(kiMode, (int) kiSlider.getValue());
         gameView.setTileCount(tileCount);
         gameView.setGameMode(gameMode);
         gameView.setWindowDimensions(windowWidth, windowHeight, minWindowWidth, minWindowHeight);

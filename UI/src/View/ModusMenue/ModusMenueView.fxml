@@ -6,6 +6,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="400.0" spacing="30.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ModusMenue.ModusMenueView">
    <children>
       <ToggleButton id="buttonCorporate" fx:id="buttonCorporate" mnemonicParsing="false" onAction="#setGamemodeCooperative" prefHeight="60.0" prefWidth="250.0" stylesheets="@../../Styles/modusMenueStyle.css" text="Cooperate">
@@ -34,5 +36,11 @@
             <Font name="Helvetica‭ ‬עבה" size="38.0" />
          </font>
       </Button>
+      <Slider fx:id="sliderKi" max="2000.0" maxWidth="250.0" min="50.0" maxHeight="20" minHeight="20" prefWidth="250.0" value="250.0" visible="false"/>
+      <TextField id="kiText" fx:id="kiText" alignment="CENTER" focusTraversable="false" maxWidth="250.0" prefHeight="20.0" prefWidth="250.0" stylesheets="@../../Styles/menueStyle.css" text="250 Wiederholungen/Move" editable="false">
+         <font>
+            <Font name="Helvetica‭ ‬עבה" size="15.0" />
+         </font>
+      </TextField>
    </children>
 </VBox>
