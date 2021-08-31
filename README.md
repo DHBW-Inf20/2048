@@ -45,6 +45,8 @@
  (Der KI-Spieler für die Spielmodi MinMax - Kooperativ/Unkooperativ ist aufgrund der hohen Berechnungszeit langsam)
 
 ## Commands for the Repositorys: 
+### start
+2048 -> UI -> src -> View -> MenueView -> Hier liegt die Main-Methode
 ### clone:
 ```shell
 git clone https://github.com/FelixWochele/2048.git
