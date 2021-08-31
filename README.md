@@ -15,7 +15,7 @@
 
 ## Spiel: 
 
-Eine ausführbare Version des Spiels kann hier heruntergeladen werden: https://drive.google.com/file/d/1KyhcQW-X99JkM8ez-r2jGSh5meYsEd6k
+Eine ausführbare Version des Spiels kann hier heruntergeladen werden: https://drive.google.com/file/d/1pzkvBPrxrJWdxV0DSwf1j2NJXDaSquh2
 ### Steuerung:
   
 + ↑ W   -  Hoch
