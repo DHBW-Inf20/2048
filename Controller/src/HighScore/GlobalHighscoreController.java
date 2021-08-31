@@ -30,7 +30,7 @@ public class GlobalHighscoreController implements IGlobalHighscoreController
     @Override
     public void submitHighscore(int score, GameOptions gameOptions)
     {
-        Unirest.setTimeouts(1000, 0);
+        Unirest.setTimeouts(1000, 1000);
         try
         {
             HttpResponse<String> response = Unirest.post(serverUrl+"/submitHighscore")
