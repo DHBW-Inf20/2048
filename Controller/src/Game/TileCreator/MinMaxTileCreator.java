@@ -53,8 +53,12 @@ public class MinMaxTileCreator implements ITileCreator
         this.tileSize = tileSize;
         Tile[][] originalField = duplicateField(field);
         ramdomNewTileNumber();
+        if(countFreeTiles(originalField)==0){
+            System.out.println("es sind keine weiteren Plätze auf dem Spielfeld frei");
+            return field;
+        }
         int bewertung = max(gewuenschteTiefe, originalField);
-        if (gespeicherterZug == null || countFreeTiles(originalField) == 0){
+        if (gespeicherterZug == null ){
             System.out.println("es gab keine weiteren Zuege mehr");
             return field;
         }
