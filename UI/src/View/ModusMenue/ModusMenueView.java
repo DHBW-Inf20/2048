@@ -61,6 +61,7 @@ public class ModusMenueView implements IModusMenueView {
                     "%.0f Wiederholungen/Move (KI)",
                     kiSlider.valueProperty()
             ));
+            kiText.setVisible(true);
             kiSlider.valueProperty().addListener((obs, oldval, newVal) ->
                     kiSlider.setValue(newVal.intValue()));
         }
@@ -98,7 +99,12 @@ public class ModusMenueView implements IModusMenueView {
 
         //WICHTIG: Bei databinding geht es nur so -> Es kann nicht alles (4 Zeilen oben drüber) ausgelagert werden loader.getControler ist notwendig.
         gameView = loader.getController();
-        gameView.setAiMode(kiMode, (int) kiSlider.getValue());
+        if(kiMode){
+            gameView.setAiMode(kiMode, (int) kiSlider.getValue());
+        } else
+        {
+            gameView.setAiMode(kiMode, 250);
+        }
         gameView.setTileCount(tileCount);
         gameView.setGameMode(gameMode);
         gameView.setWindowDimensions(windowWidth, windowHeight, minWindowWidth, minWindowHeight);

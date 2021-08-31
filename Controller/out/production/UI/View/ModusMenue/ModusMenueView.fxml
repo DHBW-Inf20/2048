@@ -37,7 +37,7 @@
          </font>
       </Button>
       <Slider fx:id="sliderKi" max="2000.0" maxWidth="250.0" min="10.0" maxHeight="20" minHeight="20" prefWidth="250.0" value="250.0" visible="false"/>
-      <TextField id="kiText" fx:id="kiText" alignment="CENTER" focusTraversable="false" maxWidth="250.0" prefHeight="20.0" prefWidth="250.0" stylesheets="@../../Styles/menueStyle.css" text="250 Wiederholungen/Move" editable="false">
+      <TextField id="kiText" fx:id="kiText" alignment="CENTER" focusTraversable="false" visible="false" maxWidth="250.0" prefHeight="20.0" prefWidth="250.0" stylesheets="@../../Styles/menueStyle.css" text="250 Wiederholungen/Move" editable="false">
          <font>
             <Font name="Helvetica‭ ‬עבה" size="15.0" />
          </font>
