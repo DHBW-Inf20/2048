@@ -37,6 +37,7 @@
 
  Zu jedem Mode gibt es einen KI-Modus, in welchem die KI die Steuerung übernimmt.
  (Einstellbar im Hauptmenü mit "KI: On/Off")
+ (Der KI-Spieler für die Spielmodi MinMax - Kooperativ/Unkooperativ ist aufgrund der hohen Berechnungszeit langsam)
 
 
 ## Commands for the Repositorys: 
