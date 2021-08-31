@@ -22,6 +22,9 @@ public class AIPlayer implements IAIPlayer
     private ITileCreator aTileCreator;
     private GameModes aGameMode;
 
+    /**
+     * @param pGameOptions Übergabe von Spielmodus, Wiederholungen/Move und weiteren relevanten Optionen
+     */
     public AIPlayer(GameOptions pGameOptions)
     {
         this.aGameController = new GameController();
@@ -47,20 +50,19 @@ public class AIPlayer implements IAIPlayer
     }
 
 
-
     /**
-     * @param pField Aktuelles Spielfeld vor nächstem Zug
-     * @return Richtung (Rechts, Links, Hoch, Runter)
+     * @param pField Aktuelles Feld (wie es auch in der GUi angezeigt wird)
+     * @return Direction, welche vom Game Controller und der UI ausgeführt wird
      */
     @Override
     public Directions calculateNextDirection(Tile[][] pField)
     {
 
-        Map<Directions,Integer> appearances = new HashMap<>();
-        appearances.put(Directions.UP,0);
-        appearances.put(Directions.DOWN,0);
-        appearances.put(Directions.LEFT,0);
-        appearances.put(Directions.RIGHT,0);
+        Map<Directions,Long> appearances = new HashMap<>();
+        appearances.put(Directions.UP, 0L);
+        appearances.put(Directions.DOWN,0L);
+        appearances.put(Directions.LEFT,0L);
+        appearances.put(Directions.RIGHT,0L);
         int up, down, left, right;
 
         for(int i = 0; i < aRounds; i++)
@@ -70,10 +72,10 @@ public class AIPlayer implements IAIPlayer
             left = getScore(pField, Directions.LEFT);
             right = getScore(pField, Directions.RIGHT);
 
-            appearances.put(Directions.UP, appearances.get(Directions.UP)+up);
-            appearances.put(Directions.DOWN, appearances.get(Directions.DOWN)+down);
-            appearances.put(Directions.LEFT, appearances.get(Directions.LEFT)+left);
-            appearances.put(Directions.RIGHT, appearances.get(Directions.RIGHT)+right);
+            appearances.put(Directions.UP, appearances.get(Directions.UP)+Long.valueOf(up));
+            appearances.put(Directions.DOWN, appearances.get(Directions.DOWN)+Long.valueOf(down));
+            appearances.put(Directions.LEFT, appearances.get(Directions.LEFT)+Long.valueOf(left));
+            appearances.put(Directions.RIGHT, appearances.get(Directions.RIGHT)+Long.valueOf(right));
         }
         // Findet die maximale Value und gibt zugehörigen Key (also eine Direction) zurück
         var direction =  Collections.max(appearances.entrySet(), Map.Entry.comparingByValue()).getKey();
@@ -83,29 +85,32 @@ public class AIPlayer implements IAIPlayer
 
 
     /**
-     * @param pField Kopiertes Spielfeld vor nächstem Zug (damit nur Value und nicht Refernce übergeben wird)
-     * @param pDirection Richtung des nächsten Zuges, der hier ausgeführt werden soll
-     * @return (Maximale) Anzahl der freien Felder
+     * @param pField Aktuelles Feld (wie es auch in der UI ist) wird übergeben
+     * @param pDirection Eine der vier Richtungen wird zur Simulation übergeben
+     * Spielfeld wird kopiert und auf diesem kopierten Spielfeld dann simuliert
+     * Erster Move durch "pDirection" vorgegeben, danach random Moves bis zum Game Over
+     * @return Score, welcher beim Game Over vorhanden war
      */
     @Override
     public int getScore(Tile[][] pField, Directions pDirection)
     {
-      //  System.out.println("In der Methode getScore");
         Tile[][] newField;
         aTileCreator.generateField(pField.length);
         newField = aGameController.calculateNewField(pDirection, Utilities.copyField(pField));
         newField = aTileCreator.generateNewNumber(newField, 2, 4);
         while(!aGameController.isGameOver(newField))
         {
-         //   System.out.println("Im While");
             newField = aGameController.calculateNewField(makeRandomMove(), newField);
             newField = aTileCreator.generateNewNumber(newField, 2, 4);
         }
-      //  System.out.println("Ausm While");
         return aGameController.getScore();
     }
 
-    private Directions makeRandomMove() {
+    /**
+     * @return Direction
+     * Erzeugt eine Random zahl zwischen 1 und 4 und gibt dementpsrechend eine Richtung zurück
+     */
+    public Directions makeRandomMove() {
         Directions direction;
         int randomNum = ThreadLocalRandom.current().nextInt(1, 4 + 1);
         switch (randomNum)
