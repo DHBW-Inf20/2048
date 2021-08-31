@@ -47,6 +47,10 @@ public class LocalHighscoreController implements ILocalHighScoreController
         os.writeObject(currentHighScoreData);
     }
 
+    /**
+     * @param newScore Neue Punktzahl (wird intern geprüft ob es Highscore wird)
+     * @return
+     */
     @Override
     public boolean submitNewScore(int newScore)
     {

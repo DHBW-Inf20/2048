@@ -15,6 +15,12 @@ public class RandomTileCreator implements ITileCreator
     }
 
 
+    /**
+     * @param inputField aktuelles Spielfeld
+     * @param tileSize   Größe der Spielsteine
+     * @param tileCount  Anzahl der Spielsteine
+     * @return neues spielfeld mit einem Tile mehr
+     */
     @Override
     public Tile[][] generateNewNumber(Tile[][] inputField, double tileSize, int tileCount) {
 
@@ -34,7 +40,13 @@ public class RandomTileCreator implements ITileCreator
     }
 
 
-    //Erzeugt Tile mit Nummer und fügt dieses an eine zufällige Stelle im Spielfeld ein
+    /**
+     * @param field Aktuelles Spielfeld
+     * @param tileSize Größe der Spielsteine
+     * @param tileCount Anzahl der Spielsteine
+     * @param number Nummer des Tiles, das erzeigt werden soll
+     * @return Neues Spielfeld mit einem Tile mehr
+     */
     public Tile[][] insertNumberInField(Tile[][] field, double tileSize, int tileCount, int number)
     {
         int randomNumber;

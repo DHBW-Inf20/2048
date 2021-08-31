@@ -19,10 +19,16 @@ public class CooperativeTileCreator implements ITileCreator
     }
 
 
+    /**
+     * @param inputField Momentanes Spielfeld
+     * @param tileSize   Größe der Spielsteine
+     * @param tileCount  Anzahl der Spielsteine
+     * Generiert eine neues Tile, das möglichst gut für den Spieler spawnt
+     * @return neues Spielfeld mit einem Tile mehr
+     */
     @Override
     public Tile[][] generateNewNumber(Tile[][] inputField, double tileSize, int tileCount)
     {
-
 
         Tile[][] field = Utilities.copyField(inputField);
 
@@ -44,7 +50,6 @@ public class CooperativeTileCreator implements ITileCreator
      * @param number Die Nummer des Spielsteins, für den eine optimale Plazierung gefunden werden soll
      * @return Ein Pair -> Erstes Element: X-Position, Zweites Element: Y-Position
      */
-
 
     private Pair<Integer,Integer> findOptimalPositionForTileInsertion(Tile[][] field, int number)
     {

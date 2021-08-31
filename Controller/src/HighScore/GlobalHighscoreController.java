@@ -23,6 +23,10 @@ public class GlobalHighscoreController implements IGlobalHighscoreController
         this.iPlayerDataManager = iPlayerDataManager;
     }
 
+    /**
+     * @param score Der zu übermittelnde Score
+     * @param gameOptions die Spieloptionen, aus denen die Feldgröße ausgelesen werden kann
+     */
     @Override
     public void submitHighscore(int score, GameOptions gameOptions)
     {
@@ -42,6 +46,9 @@ public class GlobalHighscoreController implements IGlobalHighscoreController
         }
     }
 
+    /**
+     * @return die Highscore-Liste vom Server
+     */
     @Override
     public List<GlobalHighScoreData> getGlobalHighscores()
     {

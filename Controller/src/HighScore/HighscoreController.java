@@ -19,6 +19,9 @@ public class HighscoreController implements IHighscoreController
          globalHighscoreController= new GlobalHighscoreController(iPlayerDataManager);
     }
 
+    /**
+     * @param newScore Neuer Score (wird intern auf Highscore überprüft)
+     */
     @Override
     public void submitNewScore(int newScore)
     {
@@ -40,6 +43,9 @@ public class HighscoreController implements IHighscoreController
         return globalHighscoreController.getGlobalHighscores();
     }
 
+    /**
+     * @param gameOptions Spieloptionen - Wichtig, da verschiedene Spielmodis, Feldgrößen und KI an/aus
+     */
     @Override
     public void setGameOptions(GameOptions gameOptions)
     {

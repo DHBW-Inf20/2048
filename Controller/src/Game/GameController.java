@@ -62,8 +62,7 @@ public class GameController implements IGameController
 
     /**
      * Initalisiert den GameControler mit dem ausgewählten TileCreator
-     *
-     * @param gameOptions
+     * @param gameOptions Optionen die zur intialisierung benötigt werden
      */
     @Override
     public void startGame(GameOptions gameOptions)
@@ -107,7 +106,6 @@ public class GameController implements IGameController
 
     /**
      * Führt den Zug in die gegebene Richtung aus in dem Lokalen Array das vom UI später abgefragt wird
-     *
      * @param direction Richtung des Spielzuges
      */
     @Override
@@ -137,9 +135,9 @@ public class GameController implements IGameController
 
     /**
      * Führt den Zug aus und berechnet den Score
-     *
+     * Auslagerung, da die KI auf calculateNewField zugreifen muss
      * @param direction Richtung zum Zuges
-     * @param virtualField Feld das übergeben werden
+     * @param virtualField Feld das übergeben wurde
      * @return Feld wird mit ausgeführtem Zug zurückgegeben
      */
     public Tile[][] updateField(Directions direction, Tile[][] virtualField)
@@ -155,9 +153,8 @@ public class GameController implements IGameController
 
     /**
      * Führt den eigentlichen Zug aus
-     *
      * @param direction Richtung zum Zuges
-     * @param virtualField Feld das übergeben werden
+     * @param virtualField Feld das übergeben wurde
      * @return Feld wird mit ausgeführtem Zug zurückgegeben
      */
     public Tile[][] calculateNewField(Directions direction, Tile[][] virtualField)
@@ -346,7 +343,7 @@ public class GameController implements IGameController
 
 
     /**
-     * Überprüft das Spielfeld auf gewonnen oder Verloren
+     * Überprüft das Spielfeld auf gewonnen, Verloren oder einfach weiter
      */
     private void checkGameStatus()
     {
@@ -400,6 +397,10 @@ public class GameController implements IGameController
         }
     }
 
+    /**
+     * @param virtualField Übergebenes Spielfeld
+     * @return true wenn gleichwertige Nachbarn (z.B. 4-4), false wenn nicht
+     */
     private boolean checkForNeighbours(Tile[][] virtualField)
     {
 
@@ -451,7 +452,7 @@ public class GameController implements IGameController
 
     /**
      * Gibt den Status des Spiels zurück
-     *
+     * Überprüft zur absoluten Sicherheit beim Aufruf noch auf GameOver
      * @return Status des Spiels
      */
     public int getGameStatus()
@@ -460,6 +461,10 @@ public class GameController implements IGameController
         return gameStatus;
     }
 
+    /**
+     * @return Score beim GameOver, da er nur dort aufgerufen wird
+     * Methode speziell für die KI
+     */
     public int getScore() { // Achtung, setzt Score auf 0!
         int tempScore = this.score;
         this.score = 0;
@@ -494,6 +499,10 @@ public class GameController implements IGameController
         this.dimensions = dimensions;
     }
 
+    /**
+     * @param endingTime Zeitpunkt (in MS), an welchen das Spiel Game Over war
+     * Berechnet die Spielzeit pro Spiel (relevant zur Auswertung der KI)
+     */
     public void calculateElapsedTime(long endingTime)
     {
         long difference = endingTime-startingTime;

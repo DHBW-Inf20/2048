@@ -67,6 +67,9 @@ public class Tile {
     }
 
 
+    /**
+     * Es werden jeweils nur vom größten Tile die zwei Vorgänger benötigt, deren Vorgänger können dann gelöscht werden
+     */
     public void clearPreTiles() {
         this.preFieldA = null;
         this.preFieldB = null;
@@ -100,10 +103,4 @@ public class Tile {
         return preFieldA == null && preFieldB == null;
     }
 
-    public void setPosition(int posX, int posY){
-        //von Felix zum GUI Testen ... um Testfelder zu erzeugen und deren Position setzen (von GameView aus)
-        //Kann später entferne werden wenn die Logik funktioniert
-        this.posX = posX;
-        this.posY = posY;
-    }
 }

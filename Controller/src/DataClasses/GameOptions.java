@@ -43,8 +43,10 @@ public class GameOptions implements Serializable
     }
 
 
-
-
+    /**
+     * @param o übergebenes Objekt
+     * @return prüft auf Gleichheit des Objekte und Gleichheit der Attribute der Objekte
+     */
     @Override
     public boolean equals(Object o)
     {
