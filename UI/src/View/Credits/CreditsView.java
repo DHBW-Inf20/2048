@@ -25,8 +25,7 @@ public class CreditsView implements ICreditsView {
     }
 
     /**
-     * Erstellt die Senen -> wird vom Menü aus aufgerufen
-     *
+     * Erstellt die Szenen -> wird vom Menü aus aufgerufen
      * @param event Event
      * @param scene Scene
      * @throws IOException

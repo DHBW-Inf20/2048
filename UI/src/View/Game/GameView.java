@@ -98,17 +98,12 @@ public class GameView implements IGameView {
     }
 
     /**
-     * Erzeugt einen neue Scene für den Controler, wird vom Modusmenü aufgerufen
-     *
+     * Erzeugt einen neue Scene für den Controller, wird vom Modusmenue aufgerufen
      * @param event
      * @throws IOException
      */
     @Override
     public void createGameScene(Event event, Scene scene) throws IOException {
-
-
-
-
 
         //Variablen mit einstellbaren Konstanten
         gameBoardSize = 450; // Bei verstellen müssen noch die Stadart fxml werte geändert werden -> Schriftgröße/png größen/etc
@@ -288,12 +283,6 @@ public class GameView implements IGameView {
                 }
             });
         }
-        else
-        {
-            //Wenn AI Mode aktiv ist dann starte den AI Loop
-            createAiPlayLoop();
-        }
-
 
         this.gameController.setTileChangeListener(tiles ->
         {
@@ -339,15 +328,10 @@ public class GameView implements IGameView {
         setHighscore(highScoreController.getCurrentHighScoreData().getScore());
     }
 
-    private void createAiPlayLoop()
-    {
-
-     //   ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-      //  executor.scheduleAtFixedRate(() -> {}, 1300, 1300, TimeUnit.MILLISECONDS);
-        //executor.shutdown();
-
-    }
-
+    /**
+     * Ruft die Ai auf, welche den besten Zug berechnet
+     * Führt den zurückgegebenen Zug aus
+     */
     private void makeAIMove()
     {
         var aiDirection = aiPlayer.calculateNextDirection(prevGameBoard);
@@ -357,13 +341,10 @@ public class GameView implements IGameView {
 
     /**
      * Wird beim Drücken des Buttons "Menu" ausgeführt -> Öffnet die Menü Scene
-     *
      * @param event
      * @throws IOException
      */
     public void onButtonPressMenue(Event event) throws IOException {
-
-
 
         if(aiThread!=null)
         aiThread.stop();
@@ -475,7 +456,7 @@ public class GameView implements IGameView {
     }
 
     /**
-     * Führt die Animation des Tiles aus, wenn es keine kinder hat
+     * Führt die Animation des Tiles aus, wenn es keine Kinder hat
      *
      * @param tile                      Tile welches die Animation ausführt
      * @param posX                      Zielposition in X
@@ -497,8 +478,8 @@ public class GameView implements IGameView {
     }
 
     /**
-     * Wenn es keine zusammenführung mehrerer Tiles gibt kann der
-     * zug nach Ende einer kurzen Transition freigegeben werden, was mit dem Aufruf dieser Mehtode passiert
+     * Wenn es keine Zusammenführung mehrerer Tiles gibt kann der
+     * Zug nach Ende einer kurzen Transition freigegeben werden, was mit dem Aufruf dieser Mehtode passiert
      */
     private void afterShortMove(){
         if(inMoveFlagShortMove){
@@ -621,7 +602,7 @@ public class GameView implements IGameView {
     }
 
     /**
-     * Gewinnabrgrage -> Wenn gewonnen zeige Siegerbildschirm
+     * Gewinnabfrage -> Wenn gewonnen zeige Siegerbildschirm, wenn verloren Verliererbildschirm
      */
     private void winLoseScreen() {
 

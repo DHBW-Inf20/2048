@@ -4,6 +4,12 @@ import java.io.Serializable;
 
 public class GameOptions implements Serializable
 {
+    /**
+     * @param aiEnabled Ist die KI aktiviert
+     * @param fieldDimensions Größes des Feldes
+     * @param gameMode Einer der vier Spielmodi
+     * @param repetitions Zahl der Wiederholungen, welche die KI pro Zug berechnet
+     */
     public GameOptions(boolean aiEnabled, int fieldDimensions, GameModes gameMode, int repetitions)
     {
         this.aiEnabled = aiEnabled;

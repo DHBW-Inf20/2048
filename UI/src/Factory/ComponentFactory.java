@@ -20,10 +20,12 @@ public class ComponentFactory
     {
         return new GameController();
     }
+
     public static IHighscoreController getHighScoreController()
     {
         return new HighscoreController(getPlayerDataManager());
     }
+
     public static IAIPlayer getAIPlayer(GameOptions gameOptions)
     {
         return new AIPlayer(gameOptions);

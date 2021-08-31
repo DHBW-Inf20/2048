@@ -28,6 +28,11 @@ public class HighscoreView implements IHighscoreView
     private int minWindowHeight;
 
 
+    /**
+     * Zeigt den Highscore Bildschirm an
+     * @param event
+     * @param scene
+     */
     public void createSceneHighscore(Event event, Scene scene) throws IOException {
         //Erzeuge eine neue Stage für die GameView
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

@@ -169,7 +169,7 @@ public class MenueView extends Application implements Initializable {
     }
 
     /**
-     * Wird durch den toggle button ausgeführt
+     * Wird durch den Toggle Button der KI ausgeführt
      */
     public void switchKiMode() {
         kiMode = !kiMode;
