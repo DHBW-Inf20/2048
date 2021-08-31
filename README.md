@@ -28,7 +28,7 @@
 | Random | Die Kacheln werden zufällig gesetzt |
 
 
- Zu jedem Mode gibt es einen KI-Modus wo die KI die Steuerung übernimmt.
+ Zu jedem Mode gibt es einen KI-Modus, in welchem die KI die Steuerung übernimmt.
 
 
 ## Commands for the Repositorys: 
