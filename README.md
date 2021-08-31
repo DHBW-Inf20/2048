@@ -17,10 +17,10 @@
 
 ### Steuerung:
   
-+ W - Hoch
-+ A - Links
-+ S - Runter
-+ D - Rechts
++ ↑ W   -  Hoch
++ ← A   -  Links
++ ↓ S   -  Runter
++ → D   -  Rechts
 
 ### Starten des Spiels:
 
