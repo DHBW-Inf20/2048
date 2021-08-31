@@ -1,6 +1,6 @@
 # Programmieren Praxisprojekt - 2048
 
-<img align="right" width="220" height="75" src="DHBW_Logo.png">
+<img align="right" width="220" height="90" src="DHBW_Logo.png">
 
 ### Gruppenmitglieder:
 + Jonas Weis 
@@ -8,6 +8,10 @@
 + Adrian Liehner
 + Reinhold Jooß
 + Felix Wochele
+
+### Dokumentationen der Mitglieder:
+
+[Hier gehts zu den Dokumentationen!](https://github.com/FelixWochele/2048/wiki)
 
 ## Spiel: 
 
@@ -18,7 +22,7 @@
 + S - Runter
 + D - Rechts
 
-### Starten des Spiels
+### Starten des Spiels:
 
 + Im Hauptmenü lässt sich durch Betätigen des Sliders die Spielfeldgröße (4x4 bis 7x7) bestimmen
 + In einem Textfeld lässt sich der Spielername eintragen, welcher beim Erreichen eines Highscores (nur in Spielmodus "Random") in die Highschoreliste eingetragen wird
@@ -36,8 +40,8 @@
 
 
  Zu jedem Mode gibt es einen KI-Modus, in welchem die KI die Steuerung übernimmt.
- (Einstellbar im Hauptmenü mit "KI: On/Off")
-
+ (Einstellbar im Hauptmenü mit "KI: On/Off")<br>
+ (Der KI-Spieler für die Spielmodi MinMax - Kooperativ/Unkooperativ ist aufgrund der hohen Berechnungszeit langsam)
 
 ## Commands for the Repositorys: 
 ### clone:
